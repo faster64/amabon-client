@@ -56,7 +56,7 @@ export class FilesInFolderComponent extends BaseComponent {
 
   loadFileInFolder(folderName: string) {
     this.isLoading = true;
-    this.amazonFileService.loadFilesInFolder(folderName, this.paginationRequest).subscribe({
+    this.amazonFileService.loadFilesInFolder(folderName).subscribe({
       next: response => {
         this.isLoading = false;
         if (response.success) {

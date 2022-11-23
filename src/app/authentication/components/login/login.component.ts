@@ -93,7 +93,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
    */
   checkLoggedIn() {
     if (this.authenticationService.getLoginStatus() === LoginStatus.LoggedIn) {
-      this.router.navigate([Routing.DASHBOARD]);
+      this.router.navigate([Routing.DASHBOARD.path]);
     }
   }
 
@@ -180,7 +180,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             confirmText: 'Xác minh ngay',
           });
           message.callback = () => {
-            this.router.navigateByUrl(`/${Routing.VERIFY_REGISTER}/${cred.userName}`);
+            this.router.navigateByUrl(`/${Routing.VERIFY_REGISTER.path}/${cred.userName}`);
           }
 
           MessageBox.confirm(message);
@@ -208,7 +208,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.authenticationService.saveAuthConfig(response);
     localStorage.setItem(`${environment.team}_${LocalStorageKey.LOGGED_IN}`, '1');
     this.transfer.initHeader.emit();
-    this.router.navigateByUrl(`/${Routing.DASHBOARD}`);
+    this.router.navigateByUrl(`/${Routing.DASHBOARD.path}`);
   }
 
   loginWithGoogle(): void {

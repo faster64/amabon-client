@@ -96,10 +96,10 @@ export class AmazonStoreCreateComponent extends BaseComponent implements AfterVi
           MessageBox.information(new Message(this, { content: "Success" }));
 
           if (this.formMode === FormMode.Add) {
-            this.router.navigateByUrl(`/${Routing.AMAZON_STORAGE}`);
+            this.router.navigateByUrl(`/${Routing.AMAZON_STORAGE.path}`);
           }
           else {
-            this.router.navigateByUrl(`/${Routing.AMAZON_STORAGE}/view/${this.maserId}`);
+            this.router.navigateByUrl(`/${Routing.AMAZON_STORAGE.path}/view/${this.maserId}`);
           }
 
         } else {
@@ -114,7 +114,7 @@ export class AmazonStoreCreateComponent extends BaseComponent implements AfterVi
   }
 
   cancel() {
-    this.router.navigateByUrl(`/${Routing.AMAZON_STORAGE}`);
+    this.router.navigateByUrl(`/${Routing.AMAZON_STORAGE.path}`);
   }
 
   validateBeforeSave(): boolean {
@@ -132,6 +132,6 @@ export class AmazonStoreCreateComponent extends BaseComponent implements AfterVi
   }
 
   redirectToEditForm() {
-    this.router.navigateByUrl(`/${Routing.AMAZON_STORAGE}/edit/${this.maserId}`);
+    this.router.navigateByUrl(`/${Routing.AMAZON_STORAGE.path}/edit/${this.maserId}`);
   }
 }

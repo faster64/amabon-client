@@ -82,7 +82,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
    */
   checkLoggedIn() {
     if (this.authenticationService.getLoginStatus() === LoginStatus.LoggedIn) {
-      this.router.navigate([Routing.DASHBOARD]);
+      this.router.navigate([Routing.DASHBOARD.path]);
     }
   }
 
@@ -171,7 +171,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         snackBarParameter.message = "Đăng ký tài khoản thành công. Kiểm tra mail để xác thực tài khoản. Xin cảm ơn!";
         snackBarParameter.duration = SnackBar.forever;
         snackBarParameter.afterDismissedCallback = () => {
-          this.router.navigateByUrl(`/${Routing.VERIFY_REGISTER}/${btoa(mail)}`)
+          this.router.navigateByUrl(`/${Routing.VERIFY_REGISTER.path}/${btoa(mail)}`)
         }
         SnackBar.openSnackBarSuccess(snackBarParameter);
       } else {

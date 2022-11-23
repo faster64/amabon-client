@@ -16,9 +16,14 @@ export class AmazonFileService extends BaseService {
     this.controller = "folder";
   }
 
-  loadFilesInFolder(folderName: string, paginationRequest: PaginationRequest) {
+  loadFilesInFolder(folderName: string) {
     const url = `${this.getApiUrl()}/${this.serviceName}/amazon-file/files-in-folder?folderName=${folderName}`;
     return this.takeOriginHttpClient().get<ServiceResult>(url);
+  }
+
+  loadFilesPaging(folderName: string, paginationRequest: PaginationRequest) {
+    const url = `${this.getApiUrl()}/${this.serviceName}/amazon-file/files-paging?folderName=${folderName}`;
+    return this.takeOriginHttpClient().post<ServiceResult>(url, paginationRequest);
   }
 
   clearCache(folderName: string) {

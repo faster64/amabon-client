@@ -27,7 +27,7 @@ export class BaseGuard implements CanActivate {
         if (response === "pong")
           return of(true);
 
-        this.router.navigate([`/${Routing.LOGIN}`]);
+        this.router.navigate([`/${Routing.LOGIN.path}`]);
         return of(false);
       })
     )

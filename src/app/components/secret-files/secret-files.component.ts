@@ -86,7 +86,7 @@ export class SecretFilesComponent extends BaseComponent {
   }
 
   redirectToFolder(folderName: string) {
-    this.router.navigateByUrl(`/${Routing.SECRET_FILES}/view-files/${folderName}`);
+    this.router.navigateByUrl(`/${Routing.SECRET_FILES.path}/view-files/${folderName}`);
   }
 
   createFolder() {

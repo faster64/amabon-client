@@ -74,14 +74,14 @@ export class VerifyFormComponent implements OnInit {
    * Về home
    */
   backToHome() {
-    this.router.navigate([Routing.DASHBOARD]);
+    this.router.navigate([Routing.DASHBOARD.path]);
   }
 
   /**
    * Nếu không đc phép vào page này
    */
   executeOnNotAllowAccess() {
-    this.router.navigateByUrl(`/${Routing.NOT_FOUND}`);
+    this.router.navigateByUrl(`/${Routing.NOT_FOUND.path}`);
   }
 
   /**

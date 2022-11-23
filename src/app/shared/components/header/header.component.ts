@@ -124,8 +124,8 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
   defaultModules() {
     this.modules = [];
     this.modules.push({
-      path: Routing.DASHBOARD,
-      moduleName: 'Tổng quan',
+      path: Routing.DASHBOARD.path,
+      moduleName: Routing.DASHBOARD.name,
       iconPosition: '0 -272px',
       iconCheckedPosition: '0px -288px',
     });
@@ -136,26 +136,26 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
     //   iconCheckedPosition: '-16px -304px',
     // });
     this.modules.push({
-      path: Routing.SECRET_FILES,
-      moduleName: 'AWS Files Console',
+      path: Routing.SECRET_FILES.path,
+      moduleName: Routing.SECRET_FILES.name,
       iconPosition: '-128px -272px',
       iconCheckedPosition: '-128px -287px',
     });
     this.modules.push({
-      path: Routing.AMAZON_STORAGE,
-      moduleName: 'Amazon storage',
+      path: Routing.AMAZON_STORAGE.path,
+      moduleName: Routing.AMAZON_STORAGE.name,
       iconPosition: '-16px -48px',
       iconCheckedPosition: '-144px -240px',
     });
     this.modules.push({
-      path: Routing.CALENDAR_CONVERTER,
-      moduleName: 'Bộ chuyển đổi lịch',
+      path: Routing.CALENDAR_CONVERTER.path,
+      moduleName: Routing.CALENDAR_CONVERTER.name,
       iconPosition: '-63px -272px',
       iconCheckedPosition: '-63px -288px',
     });
     this.modules.push({
-      path: Routing.CONTACT,
-      moduleName: 'Liên hệ',
+      path: Routing.CONTACT.path,
+      moduleName: Routing.CONTACT.name,
       iconPosition: '0px -64px',
       iconCheckedPosition: '-384px -272px',
     });
@@ -223,17 +223,17 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
     this.transfer.listenInProgress.emit(true);
     this.authenticationService.logout(() => {
       this.transfer.listenInProgress.emit(false);
-      this.router.navigateByUrl(`/${Routing.LOGIN}`);
+      this.router.navigateByUrl(`/${Routing.LOGIN.path}`);
       this.logoutBtn.isFinished = true;
     });
   }
 
   goToDashboard() {
-    this.router.navigate([`/${Routing.DASHBOARD}`]);
+    this.router.navigate([`/${Routing.DASHBOARD.path}`]);
   }
 
   goToLogin() {
-    this.router.navigate([`/${Routing.LOGIN}`]);
+    this.router.navigate([`/${Routing.LOGIN.path}`]);
   }
 
   redirect(path: string, index: number) {

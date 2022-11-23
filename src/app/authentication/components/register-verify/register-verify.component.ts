@@ -36,7 +36,7 @@ export class RegisterVerifyComponent extends VerifyFormComponent {
       confirmText: 'OK',
     });
     message.callback = () => {
-      this.router.navigateByUrl(`/${Routing.LOGIN}`);
+      this.router.navigateByUrl(`/${Routing.LOGIN.path}`);
     }
 
     MessageBox.confirm(message);

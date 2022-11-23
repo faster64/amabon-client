@@ -153,7 +153,7 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
   logout() {
     this.authenticationService.logout((response: AuthResult) => {
       SnackBar.openSnackBarDanger(new SnackBarParameter(null, PerrmisionConstant.SESSION_EXPRIED, '', 2000));
-      return this.router.navigateByUrl(`/${Routing.LOGIN}`);
+      return this.router.navigateByUrl(`/${Routing.LOGIN.path}`);
     });
   }
 }
