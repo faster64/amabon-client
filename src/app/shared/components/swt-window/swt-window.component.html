@@ -1,0 +1,11 @@
+<div class="swt-window" [draggable]="true">
+    <div class="window-title">{{title}}</div>
+    <mat-dialog-content>
+        <ng-content select="[window-content]">
+        </ng-content>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <ng-content select="[window-actions]">
+        </ng-content>
+    </mat-dialog-actions>
+</div>

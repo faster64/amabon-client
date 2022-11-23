@@ -1,0 +1,152 @@
+.list-dynamic {
+    height: 100%;
+    .fn {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 64px;
+        padding: 8px 16px;
+        .fn-left {
+            display: flex;
+            align-items: center;
+        }
+        .fn-right {
+            display: flex;
+            align-items: center;
+            .reload,
+            .export-excel,
+            .more {
+                width: 24px;
+                height: 24px;
+                margin-right: 16px;
+                background-image: url(../../../../assets/img/icons.svg);
+                background-repeat: no-repeat;
+                cursor: pointer;
+            }
+            .reload {
+                background-position: -423px -201px;
+                &:hover {
+                    background-position: -1097px -88px;
+                }
+            }
+            .export-excel {
+                background-position: -704px -200px;
+                &:hover {
+                    background-position: -704px -256px;
+                }
+            }
+            .more {
+                width: 32px;
+                height: 38px;
+                margin: 0 0 0 16px;
+                border: 1px solid #ddd;
+                border-radius: 2px;
+                background-position: -1026px -351px;
+                background-color: #fff;
+                transform: rotate(90deg);
+                transition: all 0.3s;
+                &:hover {
+                    background-color: #ddd;
+                }
+            }
+            .delete {
+                margin-right: 16px;
+            }
+        }
+    }
+    .grid {
+        position: relative;
+        height: calc(100% - 64px);
+        .loading-bottom {
+            position: absolute;
+            bottom: 100px;
+            left: calc(50% - 60px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 120px;
+            height: 36px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            font-weight: bold;
+            z-index: 998;
+        }
+    }
+    .customize-above-grid {
+        padding: 8px 16px;
+    }
+}
+
+::ng-deep {
+    .more-content {
+        .item {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            transition: all 0.3s;
+            cursor: pointer;
+            .icon {
+                width: 24px;
+                height: 24px;
+                margin-right: 8px;
+                background-image: url(../../../../assets/img/icons.svg);
+                background-repeat: no-repeat;
+            }
+            &:hover {
+                background-color: #ddd;
+            }
+        }
+        .item.print {
+            .icon {
+                background-position: -1990px -306px;
+            }
+        }
+        .item.import {
+            .icon {
+                background-position: -798px -309px;
+            }
+        }
+        .item.reload {
+            display: none;
+            .icon {
+                background-position: -423px -201px;
+            }
+        }
+        .item.export {
+            display: none;
+            .icon {
+                background-position: -704px -200px;
+            }
+        }
+    }
+    .mat-menu-panel {
+        min-height: 16px !important;
+        .mat-menu-content:not(:empty) {
+            padding: 0;
+        }
+    }
+}
+
+@media screen and (max-width: 576px) {
+     ::ng-deep {
+        .fn-left {
+            .search-input {
+                width: 160px !important;
+            }
+        }
+        .fn-right {
+            .export-excel,
+            .reload {
+                display: none !important;
+            }
+        }
+        .more-content {
+            .item.export,
+            .item.reload {
+                display: flex !important;
+            }
+        }
+    }
+}

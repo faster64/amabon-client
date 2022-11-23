@@ -1,0 +1,29 @@
+<div class="amazon-store-create">
+    <div class="body">
+        <div class="title">
+            <dx-text-box #titleInput height="36" label="Tiêu đề" class="required" [(value)]="article.title" [readOnly]="formMode === FormMode.None || formMode === FormMode.View"></dx-text-box>
+        </div>
+        <div class="editor">
+            <swt-editor #editor [valueContent]="article.content" [readOnly]="formMode === FormMode.None || formMode === FormMode.View"></swt-editor>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-left">
+            <swt-button #cancelBtn text="Hủy" [width]="72" [height]="32" [color]="ButtonColor.BASIC" (onClick)="cancel()">
+            </swt-button>
+        </div>
+        <div class="footer-right">
+            <swt-button *ngIf="formMode === FormMode.Add" #saveBtn [actionPermissions]="[ActionPermission.Add]" text="Lưu" [width]="80" [height]="32" [color]="ButtonColor.PRIMARY" (onClick)="save()">
+            </swt-button>
+
+            <swt-button *ngIf="formMode === FormMode.Edit" #saveBtn [actionPermissions]="[ActionPermission.Edit]" text="Lưu" [width]="80" [height]="32" [color]="ButtonColor.PRIMARY" (onClick)="save()">
+            </swt-button>
+
+            <swt-button *ngIf="formMode === FormMode.View" #saveBtn [actionPermissions]="[ActionPermission.Edit]" text="Sửa" [width]="80" [height]="32" [color]="ButtonColor.BASIC" (onClick)="redirectToEditForm()">
+            </swt-button>
+        </div>
+    </div>
+
+    <skeleton-loading *ngIf="isLoading"></skeleton-loading>
+</div>

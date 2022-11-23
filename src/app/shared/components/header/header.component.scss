@@ -1,0 +1,251 @@
+@import url("../../../../assets/css/var-other.css");
+.common-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--top);
+  padding: 0 16px;
+  border-bottom: 1px solid rgb(182, 182, 182);
+  .first-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 52px;
+    .header-left {
+      display: flex;
+      align-items: center;
+      .logo {
+        display: flex;
+        align-items: center;
+        width: 280px;
+        height: 52px;
+        background-color: #fff;
+        .img {
+          width: 60px;
+          height: 100%;
+          background-image: url(../../../../assets/img/aws_logo.png);
+          background-position-x: 8px;
+          background-position-y: center;
+          background-size: 48px;
+          background-repeat: no-repeat;
+          cursor: pointer;
+          margin-top: 12px;
+          margin-right: 12px;
+        }
+        .text {
+          height: 100%;
+          line-height: 52px;
+          font-size: 16px;
+          font-weight: 600;
+          cursor: pointer;
+        }
+      }
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      .manager {
+        display: flex;
+        align-items: center;
+        .manager-item {
+          margin-right: 12px;
+        }
+        .user {
+          width: 32px;
+          height: 32px;
+          background-image: url(../../../../assets/img/icons_v2.svg);
+          background-position: -95px -555px;
+          background-repeat: no-repeat;
+          background-size: cover;
+          border-radius: 50%;
+          background-color: rgb(199, 98, 98);
+          cursor: pointer;
+          .logout {
+            color: #fff;
+          }
+        }
+
+        .upload {
+          position: relative;
+          // width: 100px;
+          height: 32px;
+        }
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .manager-content {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    .item {
+      flex-basis: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 6px 0;
+      transition: all 0.3s;
+      .icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+        background-image: url(../../../../assets/img/icons.svg);
+        background-repeat: no-repeat;
+      }
+    }
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      background-image: url(../../../../assets/img/icons.svg);
+      background-position: -612px -1148px;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    .full-name {
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .feedback,
+    .help,
+    .setting {
+      justify-content: initial;
+      cursor: pointer;
+      &:hover {
+        background-color: #ddd;
+      }
+    }
+    .feedback {
+      .icon {
+        background-position: -747px -356px;
+      }
+    }
+    .help {
+      .icon {
+        background-position: -1594px -307px;
+      }
+    }
+    .setting {
+      .icon {
+        background-position: -506px -308px;
+      }
+    }
+    .logout {
+      margin-top: 24px;
+    }
+  }
+}
+
+::ng-deep {
+  .second-row {
+    position: relative;
+    height: 40px;
+    .text {
+      text-decoration: none;
+    }
+  }
+  .modules,
+  .other-module {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    overflow: hidden;
+    .module {
+      height: calc(100% - 0px);
+      border-radius: 2px;
+      padding: 4px 16px;
+      // transition: all 0.3s;
+      cursor: pointer;
+      .inner-module {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: min-content;
+        height: 100%;
+        .icon {
+          width: 16px;
+          height: 16px;
+          margin-right: 8px;
+          background-image: url(../../../../assets/img/icons_v2.svg);
+          background-repeat: no-repeat;
+        }
+        .text {
+          color: #586074;
+          white-space: nowrap;
+          text-decoration: none;
+        }
+      }
+      &:hover {
+        background-color: #f0f2f4;
+      }
+      &.checked {
+        .inner-module {
+          border-bottom: 3px solid #4262f0;
+          .text {
+            color: #4262f0;
+          }
+        }
+      }
+    }
+    .module.other {
+      .icon {
+        background-position: -48px -272px;
+      }
+    }
+    .module.other.checked {
+      .icon {
+        background-position: -48px -287px !important;
+      }
+    }
+    .inner-module.approval-post,
+    .inner-module.generator {
+      .text {
+        span {
+          color: rgb(252, 47, 47);
+          font-weight: 500;
+        }
+      }
+    }
+  }
+  .other-module {
+    flex-wrap: wrap;
+    padding: 2px 8px;
+    .module {
+      flex-basis: 100%;
+      padding: 8px;
+      .inner-module {
+        display: flex;
+        justify-content: flex-start;
+        min-width: min-content;
+      }
+      &.checked {
+        .inner-module {
+          border: none;
+        }
+      }
+      .inner-module.approval-post,
+      .inner-module.generator {
+        .text {
+          span {
+            color: rgb(252, 47, 47);
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}
+
+:host::ng-deep {
+  .second-row {
+    .skeleton-loading {
+      left: -24px !important;
+      right: -24px !important;
+    }
+  }
+}

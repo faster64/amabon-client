@@ -1,0 +1,13 @@
+<div class="common-sidebar" #sidebar>
+    <div class="inner-sidebar">
+        <div class="menu-item">
+            <div class="item" *ngFor="let item of items; index as i" [ngClass]="currentIndex == i ? 'checked' : ''" (click)="redirect(item.path, i)" [matTooltip]="item.displayText">
+                <div class="icon" [ngStyle]="{backgroundPosition: item.iconPosition}"></div>
+                <div class="text">{{item.displayText}}</div>
+            </div>
+        </div>
+
+        <div class="change-size" [matTooltip]="status === 'collapse' ? 'Expand the sidebar' : 'Collapse the sidebar'" (click)="changeSize()" [ngClass]="status === 'collapse' ? 'sidebar-collapse' : 'sidebar-expand'">
+        </div>
+    </div>
+</div>

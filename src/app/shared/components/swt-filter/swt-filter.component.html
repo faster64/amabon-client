@@ -1,0 +1,25 @@
+<div class="swt-filter">
+    <div class="header2">
+        <h3>BỘ TÌM KIẾM</h3>
+    </div>
+    <div class="body">
+        <div class="condition row" *ngFor="let condition of conditions; index as i">
+            <div class="condition-item required condition-field col-6 col-md-4">
+                <dx-select-box [dataSource]="columns" [(value)]="condition.fieldName" displayExpr="displayText" valueExpr="column" width="100%" label="Trường" placeholder="Chọn...">
+                </dx-select-box>
+            </div>
+            <div class="condition-item required condition-type col-6 col-md-3">
+                <dx-select-box [dataSource]="conditionTypes" [(value)]="condition.condition" displayExpr="text" valueExpr="value" width="100%" label="Điều kiện" placeholder="Chọn...">
+                </dx-select-box>
+            </div>
+            <div class="condition-item required condition-value col-12 col-md-5">
+                <dx-text-box width="100%" label="Giá trị tìm kiếm"></dx-text-box>
+            </div>
+        </div>
+
+        <div class="btn-add-condition">
+            <swt-button #addConditionBtn text="Thêm điều kiện" [buttonType]="ButtonType.STROKED" [width]="140" [height]="32" [iconButtonType]="IconButtonType.ADD" (onClick)="addCondition()"></swt-button>
+        </div>
+    </div>
+    <div class="footer"></div>
+</div>

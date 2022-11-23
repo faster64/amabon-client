@@ -1,0 +1,46 @@
+.amazon-store-create {
+    height: 100%;
+    padding: 16px;
+    overflow: auto;
+    .body {
+        position: relative;
+        height: calc(100% - 60px);
+        overflow: auto;
+        margin-bottom: 12px;
+        .title {
+            height: 48px;
+            margin-bottom: 8px;
+            padding: 4px 0;
+        }
+        .editor {
+            height: calc(100% - 56px);
+        }
+    }
+    .footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 48px;
+        padding: 8px;
+        background-color: #f7f7f7;
+    }
+     ::ng-deep {
+        .dx-fileuploader-wrapper {
+            padding: 0 !important;
+        }
+        .dx-texteditor-label {
+            font-weight: 500;
+        }
+        .required {
+            .dx-texteditor-label {
+                .dx-label {
+                    span::after {
+                        content: "*";
+                        color: red;
+                        margin-left: 4px;
+                    }
+                }
+            }
+        }
+    }
+}

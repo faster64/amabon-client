@@ -1,0 +1,39 @@
+@import url("../assets/css/var-other.css");
+#app {
+    position: relative;
+    width: 100vw;
+    height: calc(var(--vh, 1vh) * 100);
+    max-width: 100vw;
+    max-height: 100vh;
+    overflow: hidden;
+    .app-content {
+        position: absolute;
+        top: var(--top);
+        left: var(--left);
+        right: 0;
+        bottom: 0;
+        background-color: #fff;
+        overflow: hidden;
+        transition: all 0.4s;
+    }
+}
+
+::ng-deep {
+    .mat-progress-bar {
+        z-index: 1000 !important;
+        height: 3px !important;
+        border-radius: 2px;
+    }
+    .mat-progress-bar-fill::after {
+        background-color: #F48225;
+        background: linear-gradient( 100deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, .5) 50%, rgba(255, 255, 255, 0) 60%) #F48225;
+        background-size: 200% 100%;
+        background-position-x: 180%;
+        animation: 1.8s shine linear infinite !important;
+    }
+    @keyframes shine {
+        to {
+            background-position-x: -200%;
+        }
+    }
+}

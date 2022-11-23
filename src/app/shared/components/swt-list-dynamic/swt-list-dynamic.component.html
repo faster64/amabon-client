@@ -1,0 +1,60 @@
+<div class="list-dynamic">
+    <div class="fn">
+        <div class="fn-left">
+            <dx-text-box *ngIf="enableSearch" mode="search" placeholder="Tìm kiếm..." class="search-input" (click)="openFilter()"></dx-text-box>
+            <div class="unselect" *ngIf="isShowDeleteBtn" (click)="grid.changeAllCheckBox(false)">
+                <span style="margin-right: 8px;">Bỏ chọn {{selectedItemCount | NumberFormatPipe}} bản ghi</span>
+            </div>
+            <div class="delete">
+                <swt-button #deleteBtn *ngIf="isShowDeleteBtn" [actionPermissions]="[ActionPermission.Delete]" [buttonType]="ButtonType.STROKED" text="Xóa" [color]="ButtonColor.WARN" [width]="80" [height]="32" (onClick)="confirmDelete()"></swt-button>
+            </div>
+        </div>
+        <div class="fn-right">
+            <div class="reload" (click)="reload()" matTooltip="Tải lại dữ liệu"></div>
+            <div class="export-excel" (click)="openPopupExport()" matTooltip="Xuất khẩu dữ liệu ra file excel"></div>
+            <div class="btns" *ngIf="!gridOnly">
+                <swt-button [buttonType]="ButtonType.STROKED" [width]="88" [height]="32" text="Thêm" (onClick)="toAddForm()" [actionPermissions]="[ActionPermission.Add]" [iconButtonType]="IconButtonType.ADD"></swt-button>
+            </div>
+            <div class="more" [matMenuTriggerFor]="more"></div>
+        </div>
+    </div>
+
+    <div class="customize-above-grid">
+        <ng-content selector=".customize-above-grid-content"></ng-content>
+    </div>
+
+    <div class="grid">
+        <swt-grid #grid [data]="data" [isLoading]="isLoading && isFirstLoad" [displayColumn]="displayColumn" [current]="current" [total]="total" [scrollPosition]="200" [enableEmitScroll]="enableEmitScroll" (rowDblClick)="toViewForm($event)" (detectScrollToAnPosition)="onScrollToPosition($event)"
+            (checkedEvent)="decideToShowDelete($event)" (sort)="sortGrid($event)">
+        </swt-grid>
+
+        <div class="loading-bottom" *ngIf="isLoading && !isFirstLoad">
+            Đang tải...
+        </div>
+    </div>
+</div>
+
+
+<mat-menu #more="matMenu" class="list-dynamic-mat-menu">
+    <div class="more-content">
+        <div class="item reload" (click)="reload()" matTooltip="Tải lại dữ liệu">
+            <div class="icon"></div>
+            <div class="text">Tải lại</div>
+        </div>
+
+        <div class="item print" (click)="print()">
+            <div class="icon"></div>
+            <div class="text">In</div>
+        </div>
+
+        <div class="item import" (click)="Utility.featureIsDeveloping($event)" *ngIf="!gridOnly">
+            <div class="icon"></div>
+            <div class="text">Nhập khẩu</div>
+        </div>
+
+        <div class="item export" (click)="openPopupExport()" matTooltip="Xuất khẩu dữ liệu ra file excel">
+            <div class="icon"></div>
+            <div class="text">Xuất khẩu</div>
+        </div>
+    </div>
+</mat-menu>

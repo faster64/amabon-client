@@ -1,0 +1,20 @@
+.not-found {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: 100%;
+  background-color: #fff;
+  img {
+    display: block;
+    width: 320px;
+    height: 320px;
+    margin: 0 auto;
+  }
+  .back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 24px 12px;
+  }
+}

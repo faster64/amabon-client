@@ -1,0 +1,83 @@
+<div class="base-button" #baseBtn *ngIf="buttonType === ButtonType.RAISED">
+  <button
+    mat-raised-button
+    [color]="color"
+    [disabled]="disabled"
+    [ngClass]="class"
+    [ngStyle]="style"
+    [draggable]="draggable"
+    [autofocus]="autofocus"
+    [name]="name"
+    [value]="value"
+    [hidden]="hidden"
+    (click)="clickExecute($event)"
+    (dblclick)="dlclickExecute($event)"
+  >
+    <div
+      style="
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <mat-icon *ngIf="isFinished && iconButtonType === IconButtonType.DONE"
+        >done</mat-icon
+      >
+      <mat-icon *ngIf="isFinished && iconButtonType === IconButtonType.ADD"
+        >add</mat-icon
+      >
+      <mat-icon *ngIf="isFinished && iconButtonType === IconButtonType.SAVE"
+        >save</mat-icon
+      >
+      <mat-icon *ngIf="isFinished && iconButtonType === IconButtonType.BACK"
+        >arrow_back_ios</mat-icon
+      >
+
+      <span *ngIf="isFinished">{{ text }}</span>
+      <mat-spinner *ngIf="!isFinished"></mat-spinner>
+    </div>
+  </button>
+</div>
+
+<div class="base-button" #baseBtn *ngIf="buttonType === ButtonType.STROKED">
+  <button
+    mat-stroked-button
+    [color]="color"
+    [disabled]="disabled"
+    [ngClass]="class"
+    [ngStyle]="style"
+    [draggable]="draggable"
+    [autofocus]="autofocus"
+    [name]="name"
+    [value]="value"
+    [hidden]="hidden"
+    (click)="clickExecute($event)"
+    (dblclick)="dlclickExecute($event)"
+  >
+    <div
+      style="
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <mat-icon *ngIf="isFinished && iconButtonType === IconButtonType.DONE"
+        >done</mat-icon
+      >
+      <mat-icon *ngIf="isFinished && iconButtonType === IconButtonType.ADD"
+        >add</mat-icon
+      >
+      <mat-icon *ngIf="isFinished && iconButtonType === IconButtonType.SAVE"
+        >save</mat-icon
+      >
+      <mat-icon *ngIf="isFinished && iconButtonType === IconButtonType.BACK"
+        >arrow_back_ios</mat-icon
+      >
+
+      <span *ngIf="isFinished">{{ text }}</span>
+      <mat-spinner *ngIf="!isFinished"></mat-spinner>
+    </div>
+  </button>
+</div>

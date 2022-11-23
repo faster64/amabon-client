@@ -1,0 +1,24 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { SecretFilesRoutingModule } from './secret-files-routing.module';
+import { SecretFilesComponent } from './secret-files.component';
+import { DxTextBoxModule } from 'devextreme-angular';
+import { SwtButtonModule } from 'src/app/shared/components/swt-button/swt-button.module';
+import { SwtLoadingModule } from 'src/app/shared/components/loading/swt-loading.module';
+import { FilesInFolderComponent } from './files-in-folder/files-in-folder.component';
+import { MatMenuModule } from '@angular/material/menu';
+
+@NgModule({
+  declarations: [SecretFilesComponent, FilesInFolderComponent],
+  imports: [
+    CommonModule,
+    SecretFilesRoutingModule,
+    DxTextBoxModule,
+    SwtButtonModule,
+    SwtLoadingModule,
+    MatMenuModule,
+  ],
+  exports: [SecretFilesComponent, FilesInFolderComponent],
+})
+export class SecretFilesModule { }

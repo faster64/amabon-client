@@ -1,0 +1,33 @@
+<div class="export-menu">
+    <p class="title" *ngIf="!isDone">Chọn loại xuất khẩu</p>
+    <div class="close-popup" (click)="data.callback()"></div>
+    <div class="content">
+        <mat-radio-group *ngIf="!isDone" aria-label="Vui lòng chọn một loại xuất khẩu" [value]="exportTypeSelected" (change)="updateExportTypeSelected($event)">
+            <mat-radio-button [value]="ExportType.OnScreen" (click)="$event.stopPropagation()">
+                Xuất khẩu dữ liệu đang hiển thị
+            </mat-radio-button>
+            <mat-radio-button [value]="ExportType.All" (click)="$event.stopPropagation()">Xuất khẩu toàn bộ dữ liệu
+            </mat-radio-button>
+        </mat-radio-group>
+
+        <div *ngIf="!isDone" class="info-export-type">
+            <p *ngIf="exportTypeSelected === ExportType.OnScreen" [matTooltip]="infoExportOnScreen"><span>*</span> {{infoExportOnScreen}}</p>
+            <p *ngIf="exportTypeSelected === ExportType.All" [matTooltip]="infoExportAll"><span>*</span> {{infoExportAll}}</p>
+        </div>
+
+        <div class="message" *ngIf="isShowMessage && !downloadSuccess" [matTooltip]="message">{{message}}</div>
+
+        <div *ngIf="isDone && !downloadSuccess" class="download" (click)="download()">
+            <div class="icon"></div>
+            <div class="text">Tải tệp</div>
+        </div>
+
+        <div class="download-success" *ngIf="downloadSuccess">
+            <div class="icon"></div>
+            <div class="text">Tải thành công</div>
+        </div>
+    </div>
+    <div *ngIf="!isDone" class="btn">
+        <swt-button #exportBtn [actionPermissions]="[ActionPermission.Export]" [color]="ButtonColor.BASIC" text="Xuất khẩu" [width]="120" [height]="32" (onClick)="export()"></swt-button>
+    </div>
+</div>

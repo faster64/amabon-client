@@ -1,0 +1,97 @@
+<div class="common-header">
+    <!-- Dòng đầu  -->
+    <div class="first-row">
+        <div class="header-left">
+            <div class="logo">
+                <div class="img" (click)="goToDashboard()"></div>
+                <div class="text" (click)="goToDashboard()">Amazon Web Service</div>
+            </div>
+            <!-- <div class="greeting">
+                <span style="font-weight: bold; color: #7b7b7b">Hello, {{ fullName }}</span>
+            </div> -->
+        </div>
+
+        <div class="header-right">
+            <div class="manager" *ngIf="loginStatus === LoginStatus.LoggedIn">
+              <div class="manager-item upload">
+              </div>
+              <div class="manager-item user" [matMenuTriggerFor]="menu"></div>
+            </div>
+            <div class="login-btn" *ngIf="loginStatus === LoginStatus.UnLoggedIn">
+              <swt-button text="Đăng nhập" [width]="120" [height]="32" (onClick)="goToLogin()"></swt-button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dòng thứ 2  -->
+    <div class="second-row">
+        <div class="modules">
+            <ng-container *ngFor="let module of modules; index as i">
+                <div #modules *ngIf="i < breakPointIndex" class="module" [ngClass]="currentIndex == i ? 'checked' : ''" (click)="redirect(module.path, i)" [matTooltip]="module.moduleName">
+                    <div class="inner-module" [ngClass]="module.path">
+                        <div class="icon" [ngStyle]="{
+                backgroundPosition:
+                  currentIndex != i
+                    ? module.iconPosition
+                    : module.iconCheckedPosition
+              }"></div>
+                        <a class="text" [routerLink]="'/' + module.path" [innerHTML]="module.moduleName"></a>
+                    </div>
+                </div>
+            </ng-container>
+
+            <div *ngIf="modules.length >= breakPointIndex" class="module other" [ngClass]="currentIndex >= breakPointIndex ? 'checked' : ''" [matTooltip]="'Các danh mục khác'" [matMenuTriggerFor]="otherModule">
+                <div class="inner-module">
+                    <div class="icon"></div>
+                    <div class="text">Khác</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- skeleton loading  -->
+        <skeleton-loading *ngIf="isLoadingModule"></skeleton-loading>
+    </div>
+</div>
+
+<mat-menu #menu="matMenu">
+    <div class="manager-content" style="padding: 12px 24px">
+        <div class="item">
+            <div class="avatar"></div>
+        </div>
+        <div class="item full-name">{{ fullName }}</div>
+        <div class="item feedback" (click)="Utility.featureIsDeveloping($event)">
+            <div class="icon"></div>
+            <div class="text">Góp ý sản phẩm</div>
+        </div>
+        <div class="item help" (click)="Utility.featureIsDeveloping($event)">
+            <div class="icon"></div>
+            <div class="text">Trợ giúp & Hỗ trợ</div>
+        </div>
+        <div class="item setting" (click)="Utility.featureIsDeveloping($event)">
+            <div class="icon"></div>
+            <div class="text">Cài đặt</div>
+        </div>
+        <div class="item logout">
+            <swt-button #logoutBtn [color]="ButtonColor.WARN" text="Đăng xuất" (onClick)="logout()" [width]="240" [height]="36">
+            </swt-button>
+        </div>
+    </div>
+</mat-menu>
+
+<mat-menu #otherModule>
+    <div class="other-module">
+        <ng-container *ngFor="let module of modules; index as i">
+            <div #modulesR *ngIf="i >= breakPointIndex" class="module" [ngClass]="currentIndex == i ? 'checked' : ''" (click)="redirect(module.path, i)" [matTooltip]="module.moduleName">
+                <div class="inner-module" [ngClass]="module.path">
+                    <div class="icon" [ngStyle]="{
+              backgroundPosition:
+                currentIndex != i
+                  ? module.iconPosition
+                  : module.iconCheckedPosition
+            }"></div>
+                    <a class="text" [routerLink]="'/' + module.path" [innerHTML]="module.moduleName"></a>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</mat-menu>

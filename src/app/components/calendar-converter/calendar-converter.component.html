@@ -1,0 +1,25 @@
+<div class="calendar-converter">
+  <div class="calendar-item today col-12 col-md-5">
+    <p class="title">Hôm nay</p>
+    <div class="info-wrapper">
+      <div class="info-item solar">
+        <span class="type-name">Dương lịch: </span>
+        <span class="type-value">{{DateHelper.getDayVietnamName()}}, {{solarDate}}</span>
+      </div>
+      <div class="info-item lunar">
+        <span class="type-name">Âm lịch: </span>
+        <span class="type-value">{{lunarDate}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="calendar-item day-to-holiday col-12 col-md-5">
+    <p class="title">Thông tin khác</p>
+    <div class="info-wrapper">
+      <div class="info-item tet-holiday" *ngFor="let holiday of holidays">
+        <span class="type-name">{{holiday.name}} </span>
+        <span class="type-value">({{holiday.diffDays}} ngày nữa)</span>
+      </div>
+    </div>
+  </div>
+</div>

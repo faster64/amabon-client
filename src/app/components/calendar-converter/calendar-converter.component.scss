@@ -1,0 +1,37 @@
+.calendar-converter {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 16px;
+  .calendar-item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    min-height: 160px;
+    padding: 12px;
+    background-image: url(../../../assets/img/tu-vi-tron-doi-bg.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    .title {
+      flex-basis: 100%;
+      margin-bottom: 12px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    .info-wrapper {
+      .info-item {
+        margin-bottom: 16px;
+        .type-name {
+          font-weight: bold;
+          font-size: 15px;
+        }
+        .type-value {
+          font-weight: 400;
+          font-size: 15px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+<div id="app" #app>
+    <mat-progress-bar mode="determinate" [value]="progressValue" *ngIf="inProgress"></mat-progress-bar>
+
+    <swt-header #header></swt-header>
+    <div class="app-content" #appContent>
+        <router-outlet></router-outlet>
+    </div>
+</div>
+
+<app-snackbar></app-snackbar>
+<message-box></message-box>

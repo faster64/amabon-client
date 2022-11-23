@@ -1,0 +1,66 @@
+@import url(../../../../assets/css/var-other.css);
+.common-sidebar {
+    position: absolute;
+    top: var(--top);
+    left: 0;
+    width: var(--left);
+    bottom: 0;
+    background-color: #373737;
+    transition: width 0.4s;
+    .inner-sidebar {
+        position: relative;
+        height: 100%;
+        .menu-item {
+            overflow: hidden;
+            .item {
+                display: flex;
+                align-items: center;
+                padding: 8px 12px;
+                height: 42px;
+                overflow: hidden;
+                cursor: pointer;
+                transition: all 0.3s;
+                &:hover {
+                    background-color: #838383;
+                }
+                &.checked {
+                    background-color: #838383;
+                }
+                .text {
+                    color: #fff;
+                }
+                .icon {
+                    width: 24px;
+                    height: 24px;
+                    margin-right: 8px;
+                    background-image: url(../../../../assets/img/icons.svg);
+                    background-repeat: no-repeat;
+                }
+            }
+        }
+        .change-size {
+            position: absolute;
+            top: calc(50% - 18px);
+            right: -20px;
+            width: 30px;
+            height: 36px;
+            background-color: #8ab7e7;
+            border: 1px solid #8ab7e7;
+            border-radius: 50%;
+            background-image: url(../../../../assets/img/icons.svg);
+            background-position: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            z-index: 998;
+            &:hover {
+                background-color: #ddd;
+            }
+            &.sidebar-expand {
+                background-position: -27px -351px;
+            }
+            &.sidebar-collapse {
+                background-position: -72px -351px;
+            }
+        }
+    }
+}

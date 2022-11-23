@@ -1,0 +1,56 @@
+.files-in-folder {
+    height: 100%;
+    padding: 16px;
+    overflow-y: auto;
+    .files {
+        .file {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 28px;
+            border: 1px solid #ddd;
+            img,
+            video,
+            .player {
+                width: 100%;
+                max-width: 500px;
+            }
+        }
+        .total-and-upload {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+            padding: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            background-color: #fff7f7;
+            .total {
+                flex-basis: 100%;
+                margin-top: 8px;
+                margin-right: 12px;
+                margin-bottom: 12px;
+                text-align: center;
+            }
+            .btns {
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                width: 100%;
+            }
+        }
+    }
+}
+
+.upload-form {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 16px;
+    min-height: 100px;
+    .uploadInp {
+        flex-basis: 100%;
+        margin-bottom: 12px;
+    }
+}
