@@ -121,7 +121,7 @@ const routes: Routes = [
   },
   {
     path: "**",
-    redirectTo: `/${Routing.NOT_FOUND}`,
+    redirectTo: `/${Routing.NOT_FOUND.path}`,
     pathMatch: 'full'
   }
 ];
