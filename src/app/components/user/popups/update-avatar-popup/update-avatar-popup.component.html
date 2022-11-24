@@ -1,3 +1,47 @@
 <div class="update-avatar-popup">
+  <div class="widget-container flex-box">
+    <div
+      id="dropzone-external"
+      class="flex-box"
+      [ngClass]="
+        isDropZoneActive
+          ? ['dx-theme-accent-as-border-color', 'dropzone-active']
+          : ['dx-theme-border-color']
+      "
+    >
+      <img id="dropzone-image" [src]="imageSource" *ngIf="imageSource" alt="" />
+      <div id="dropzone-text" class="flex-box" *ngIf="textVisible">
+        <span>Kéo và thả ảnh vào đây</span>
+        <span>Hoặc ấn vào để chọn ảnh</span>
+      </div>
+      <dx-progress-bar
+        #uploadProgress
+        [min]="0"
+        [max]="100"
+        width="30%"
+        [showStatus]="false"
+        [visible]="progressVisible"
+        [value]="progressValue"
+      ></dx-progress-bar>
+    </div>
+    <dx-file-uploader
+      #fileUploader
+      dialogTrigger="#dropzone-external"
+      dropZone="#dropzone-external"
+      [multiple]="false"
+      [allowedFileExtensions]="['.jpg', '.jpeg', '.gif', '.png']"
+      uploadMode="instantly"
+      [visible]="false"
+      uploadMethod="POST"
+      name="avatar"
+      [uploadHeaders]="headers"
+      [uploadUrl]="'http://localhost:5001/api/gateway/ums/avatar/update-avatar'"
+      (onDropZoneEnter)="onDropZoneEnter($event)"
+      (onDropZoneLeave)="onDropZoneLeave($event)"
+      (onUploaded)="onUploaded($event)"
+      (onProgress)="onProgress($event)"
+      (onUploadStarted)="onUploadStarted($event)"
+    ></dx-file-uploader>
+  </div>
 
 </div>

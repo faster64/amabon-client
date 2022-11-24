@@ -1,11 +1,14 @@
 import { Location } from '@angular/common';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { DialogPosition, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DxoCommonPaneSettingsComponent } from 'devextreme-angular/ui/nested';
 import { of } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { LoginStatus } from 'src/app/authentication/shared/enums/login.enum';
 import { AuthenticationService } from 'src/app/authentication/shared/services/authentication.service';
 import { environment } from 'src/environments/environment';
+import { BreakPoint } from '../../constants/break-point.constant';
 import { ButtonColor } from '../../constants/button.constant';
 import { Routing } from '../../constants/common.constant';
 import { CookieKey } from '../../constants/cookie.key';
@@ -283,7 +286,33 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
 
   openUpdateAvatarPopup(e: any) {
     e.preventDefault();
-    const ref = this.avatarService.openUpdateAvatarPopup();
-    const x = 1;
+
+    const config = new MatDialogConfig();
+    const position: DialogPosition = {};
+    position.top = '50px';
+
+    const currentScreenWidth = window.innerWidth;
+    let configWidth = '80%';
+    let configHeight = '280px';
+    const maxWidth = '80%';
+    const maxHeight = '80%';
+
+    if (currentScreenWidth < BreakPoint.SM) {
+      configWidth = '80%';
+      configHeight = '160px';
+    } else if (currentScreenWidth >= BreakPoint.SM && currentScreenWidth < BreakPoint.MD) {
+      configWidth = '400px';
+    } else {
+      configWidth = '440px';
+    }
+
+    config.minWidth = configWidth;
+    config.maxWidth = maxWidth;
+    config.minHeight = configHeight;
+    config.maxHeight = maxHeight;
+    config.position = position;
+
+    const ref = this.avatarService.openUpdateAvatarPopup(config);
+    ref.afterClosed().pipe(takeUntil(this._onDestroySub)).subscribe( () => this.getAvatarUrl());
   }
 }

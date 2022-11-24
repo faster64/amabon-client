@@ -9,6 +9,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { HeaderModule } from "./components/header/header.module";
 import { SwtFilterModule } from "./components/swt-filter/swt-filter.module";
+import { DxFileUploaderModule, DxProgressBarModule } from "devextreme-angular";
 
 @NgModule({
   declarations: [
@@ -24,6 +25,8 @@ import { SwtFilterModule } from "./components/swt-filter/swt-filter.module";
     MatProgressBarModule,
     MatTooltipModule,
     SwtFilterModule,
+    DxFileUploaderModule,
+    DxProgressBarModule,
   ],
   exports: [
     SwtLoadingModule,
@@ -35,6 +38,8 @@ import { SwtFilterModule } from "./components/swt-filter/swt-filter.module";
     MatProgressBarModule,
     MatTooltipModule,
     SwtFilterModule,
+    DxFileUploaderModule,
+    DxProgressBarModule,
   ]
 })
 export class SharedModule { }

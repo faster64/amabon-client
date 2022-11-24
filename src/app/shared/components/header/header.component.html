@@ -17,7 +17,7 @@
                 </div>
                 <div class="manager-item user" [matMenuTriggerFor]="menu">
                     <skeleton-loading *ngIf="isLoadingAvatar"></skeleton-loading>
-                    <img *ngIf="!isLoadingAvatar && avatarUrl !== ''" class="user-avatar" [src]="avatarUrl" />
+                    <div *ngIf="!isLoadingAvatar && avatarUrl !== ''" class="user-avatar" [ngStyle]="{'backgroundImage': 'url(' + avatarUrl + ')'}"></div>
                     <div *ngIf="!isLoadingAvatar && avatarUrl === ''" class="user-avatar-default">
                         <span>{{avatarNameDefault}}</span>
                     </div>
@@ -64,11 +64,13 @@
         <div class="item">
             <div class="avatar">
                 <skeleton-loading *ngIf="isLoadingAvatar"></skeleton-loading>
-                <img *ngIf="!isLoadingAvatar && avatarUrl !== ''" class="user-avatar" [src]="avatarUrl" (click)="openUpdateAvatarPopup($event)" />
-                <div *ngIf="!isLoadingAvatar && avatarUrl === ''" class="user-avatar-default" (click)="openUpdateAvatarPopup($event)">
+                <div *ngIf="!isLoadingAvatar && avatarUrl !== ''" class="user-avatar" [ngStyle]="{'backgroundImage': 'url(' + avatarUrl + ')'}"></div>
+                <div *ngIf="!isLoadingAvatar && avatarUrl === ''" class="user-avatar-default">
                     <span>{{avatarNameDefault}}</span>
                 </div>
-                <div class="upload-avatar-icon"></div>
+                <div class="upload-avatar" (click)="openUpdateAvatarPopup($event)">
+                  <div class="icon"></div>
+                </div>
             </div>
         </div>
         <div class="item full-name">{{ fullName }}</div>
