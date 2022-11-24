@@ -13,12 +13,18 @@
 
         <div class="header-right">
             <div class="manager" *ngIf="loginStatus === LoginStatus.LoggedIn">
-              <div class="manager-item upload">
-              </div>
-              <div class="manager-item user" [matMenuTriggerFor]="menu"></div>
+                <div class="manager-item upload">
+                </div>
+                <div class="manager-item user" [matMenuTriggerFor]="menu">
+                    <skeleton-loading *ngIf="isLoadingAvatar"></skeleton-loading>
+                    <img *ngIf="!isLoadingAvatar && avatarUrl !== ''" class="user-avatar" [src]="avatarUrl" />
+                    <div *ngIf="!isLoadingAvatar && avatarUrl === ''" class="user-avatar-default">
+                        <span>{{avatarNameDefault}}</span>
+                    </div>
+                </div>
             </div>
             <div class="login-btn" *ngIf="loginStatus === LoginStatus.UnLoggedIn">
-              <swt-button text="Đăng nhập" [width]="120" [height]="32" (onClick)="goToLogin()"></swt-button>
+                <swt-button text="Đăng nhập" [width]="120" [height]="32" (onClick)="goToLogin()"></swt-button>
             </div>
         </div>
     </div>
@@ -56,7 +62,14 @@
 <mat-menu #menu="matMenu">
     <div class="manager-content" style="padding: 12px 24px">
         <div class="item">
-            <div class="avatar"></div>
+            <div class="avatar">
+                <skeleton-loading *ngIf="isLoadingAvatar"></skeleton-loading>
+                <img *ngIf="!isLoadingAvatar && avatarUrl !== ''" class="user-avatar" [src]="avatarUrl" (click)="openUpdateAvatarPopup($event)" />
+                <div *ngIf="!isLoadingAvatar && avatarUrl === ''" class="user-avatar-default" (click)="openUpdateAvatarPopup($event)">
+                    <span>{{avatarNameDefault}}</span>
+                </div>
+                <div class="upload-avatar-icon"></div>
+            </div>
         </div>
         <div class="item full-name">{{ fullName }}</div>
         <div class="item feedback" (click)="Utility.featureIsDeveloping($event)">

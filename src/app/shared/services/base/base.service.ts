@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
+import { CookieKey } from '../../constants/cookie.key';
+import { CookieHelper } from '../../helpers/cookie.hepler';
 import { PaginationRequest } from '../../models/base/pagination-request';
 import { ServiceResult } from '../../models/base/service-result';
 import { HttpService } from './http.service';
@@ -16,16 +18,23 @@ export class BaseService {
 
   controller = "";
 
+  userId = '';
+
   _http!: HttpService;
 
   constructor(
     public http: HttpService
   ) {
     this._http = http;
+    this.getUserId();
   }
 
   takeOriginHttpClient() {
     return this._http.http;
+  }
+
+  getUserId() {
+    this.userId = CookieHelper.getCookie(`${environment.team}_${CookieKey.USER_ID}`) || '';
   }
 
   /**

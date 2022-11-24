@@ -8,11 +8,16 @@ import { AuthenticationService } from 'src/app/authentication/shared/services/au
 import { environment } from 'src/environments/environment';
 import { ButtonColor } from '../../constants/button.constant';
 import { Routing } from '../../constants/common.constant';
+import { CookieKey } from '../../constants/cookie.key';
 import { ActionPermission } from '../../enumerations/permission.enum';
+import { CookieHelper } from '../../helpers/cookie.hepler';
+import { PermissionHelper } from '../../helpers/permission.helper';
+import { StringHelper } from '../../helpers/string.helper';
 import { PaginationRequest } from '../../models/base/pagination-request';
 import { ServiceResult } from '../../models/base/service-result';
 import { BaseService } from '../../services/base/base.service';
 import { TransferDataService } from '../../services/transfer/transfer-data.service';
+import { AvatarService } from '../../services/user/avatar.service';
 import { Utility } from '../../utils/utility';
 import { BaseComponent } from '../base-component';
 import { SwtButton } from '../swt-button/swt-button.component';
@@ -34,6 +39,8 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
 
   Utility = Utility;
 
+  LoginStatus = LoginStatus;
+
   @ViewChildren("modules")
   moduleInstances!: QueryList<ElementRef>;
 
@@ -53,21 +60,24 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
 
   fullName = '';
 
+  avatarUrl = '';
+
+  avatarNameDefault = '';
+
   timer: any;
 
   isLoadingModule = false;
 
-  waitPostNumber = 0;
+  isLoadingAvatar = true;
 
   loginStatus: LoginStatus = LoginStatus.Unknown;
-
-  LoginStatus = LoginStatus;
 
   constructor(
     baseService: BaseService,
     public router: Router,
     public location: Location,
     public authenticationService: AuthenticationService,
+    public avatarService: AvatarService,
     public transfer: TransferDataService,
     public cdr: ChangeDetectorRef
   ) {
@@ -76,14 +86,12 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
 
 
   ngOnInit(): void {
-    // location.reload();
-    super.ngOnInit();
     this.checkLoginStatus();
-    if(this.loginStatus === LoginStatus.Unknown) {
+    if (this.loginStatus === LoginStatus.Unknown) {
       this.loginStatus = LoginStatus.UnLoggedIn;
     }
 
-    this.initData();
+    super.ngOnInit();
   }
 
   ngAfterViewInit(): void {
@@ -100,6 +108,7 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
     this.setFullName();
     this.intiModules();
     this.findCurrentModule();
+    this.getAvatarUrl();
   }
 
   checkLoginStatus() {
@@ -107,9 +116,40 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
   }
 
   setFullName() {
-    const firstName = localStorage.getItem(`${environment.team}_first_name`) || '';
-    const lastName = localStorage.getItem(`${environment.team}_last_name`) || '';
+    const firstName = CookieHelper.getCookie(`${environment.team}_first_name`) || '';
+    const lastName = CookieHelper.getCookie(`${environment.team}_last_name`) || '';
     this.fullName = `${firstName} ${lastName}`;
+  }
+
+  getAvatarUrl() {
+    this.avatarService.getAvatarUrl().subscribe(
+      response => {
+        this.isLoadingAvatar = false;
+        if (response.success) {
+          if (StringHelper.isNullOrEmpty(response.data)) {
+            this.avatarNameDefault = this.getAvatarNameDefault();
+          } else {
+            this.avatarUrl = response.data;
+          }
+
+        } else {
+          this.avatarNameDefault = this.getAvatarNameDefault();
+        }
+      },
+      error => {
+        this.isLoadingAvatar = false;
+        this.avatarNameDefault = this.getAvatarNameDefault();
+      }
+    )
+  }
+
+  getAvatarNameDefault() {
+    const lastName = CookieHelper.getCookie(`${environment.team}_${CookieKey.LAST_NAME}`);
+    if (lastName === null || lastName.length === 0) {
+      return "";
+    }
+
+    return lastName[0].toUpperCase();
   }
 
   /**
@@ -184,7 +224,7 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
   }
 
   getWaitPostCount() {
-    if (Utility.getUserPermission() !== ActionPermission.All) {
+    if (PermissionHelper.getUserPermission() !== ActionPermission.All) {
       const result = new ServiceResult();
       result.success = false;
       return of(result);
@@ -239,5 +279,11 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
   redirect(path: string, index: number) {
     this.currentIndex = index;
     this.router.navigateByUrl(`/${path}`);
+  }
+
+  openUpdateAvatarPopup(e: any) {
+    e.preventDefault();
+    const ref = this.avatarService.openUpdateAvatarPopup();
+    const x = 1;
   }
 }

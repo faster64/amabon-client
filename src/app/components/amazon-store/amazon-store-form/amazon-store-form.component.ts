@@ -7,7 +7,7 @@ import { SwtButton } from 'src/app/shared/components/swt-button/swt-button.compo
 import { SwtEditorComponent } from 'src/app/shared/components/swt-editor/swt-editor.component';
 import { Routing } from 'src/app/shared/constants/common.constant';
 import { FormMode } from 'src/app/shared/enumerations/common.enum';
-import { StringHelper } from 'src/app/shared/helpers/string-helper';
+import { StringHelper } from 'src/app/shared/helpers/string.helper';
 import { Article } from 'src/app/shared/models/amazon-storage/article.model';
 import { Message } from 'src/app/shared/models/message/message';
 import { AmazonStorageService } from 'src/app/shared/services/amazon-storage/amazon-storage.service';

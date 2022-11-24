@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { BreakPoint } from '../../constants/break-point.constant';
 import { IconButtonType } from '../../constants/button.constant';
 import { ExportType, FormMode } from '../../enumerations/common.enum';
-import { ObjectHelper } from '../../helpers/object-helper';
+import { ObjectHelper } from '../../helpers/object.helper';
 import { BaseModel } from '../../models/base/base-model';
 import { ColumnGrid } from '../../models/base/column-grid.model';
 import { PaginationRequest } from '../../models/base/pagination-request';

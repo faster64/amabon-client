@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Routing } from '../../constants/common.constant';
-import { LocalStorageKey } from '../../constants/localstorage.key';
 import { Message } from '../../models/message/message';
 import { SwtButton } from '../swt-button/swt-button.component';
 import { MessageBox } from '../message-box/message-box.component';

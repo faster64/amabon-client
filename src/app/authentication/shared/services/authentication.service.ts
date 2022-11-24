@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LocalStorageKey } from 'src/app/shared/constants/localstorage.key';
-import { StringHelper } from 'src/app/shared/helpers/string-helper';
+import { StringHelper } from 'src/app/shared/helpers/string.helper';
 import { HttpService } from 'src/app/shared/services/base/http.service';
 import { TransferDataService } from 'src/app/shared/services/transfer/transfer-data.service';
 import { environment } from 'src/environments/environment';
@@ -15,6 +14,9 @@ import { VerifyModel } from '../models/requests/verify-model';
 import { VerifyOtpResult } from '../models/responses/verify-otp-result';
 import { LoginStatus } from '../enums/login.enum';
 import { ServiceResult } from 'src/app/shared/models/base/service-result';
+import { Utility } from 'src/app/shared/utils/utility';
+import { CookieHelper } from 'src/app/shared/helpers/cookie.hepler';
+import { CookieKey } from 'src/app/shared/constants/cookie.key';
 
 @Injectable({
   providedIn: 'root'
@@ -26,17 +28,19 @@ export class AuthenticationService {
    */
   private auth_api_url = `${environment.api_url}/aus`;
 
+  public cookieExprie = 7;
+
   /**
    * List clear khi logout
    */
   private clearListLocal = [
-    LocalStorageKey.USER_ID,
-    LocalStorageKey.ACCESS_TOKEN,
-    LocalStorageKey.ROLE_NAME,
-    LocalStorageKey.REFRESH_TOKEN,
-    LocalStorageKey.FIRST_NAME,
-    LocalStorageKey.LAST_NAME,
-    LocalStorageKey.SETTING,
+    CookieKey.USER_ID,
+    CookieKey.ACCESS_TOKEN,
+    CookieKey.ROLE_NAME,
+    CookieKey.REFRESH_TOKEN,
+    CookieKey.FIRST_NAME,
+    CookieKey.LAST_NAME,
+    CookieKey.SETTING,
   ];
 
   private clearListSession = [
@@ -61,32 +65,31 @@ export class AuthenticationService {
   ) { }
 
   public getUserId() {
-    return localStorage.getItem(`${environment.team}_${LocalStorageKey.USER_ID}`) || "";
+    return CookieHelper.getCookie(`${environment.team}_${CookieKey.USER_ID}`) || "";
   }
 
-  public getToken() {
-    return localStorage.getItem(`${environment.team}_${LocalStorageKey.ACCESS_TOKEN}`) || "";
+  public getAccessToken() {
+    return CookieHelper.getCookie(`${environment.team}_${CookieKey.ACCESS_TOKEN}`) || "";
   }
 
   public getRefreshToken() {
-    return localStorage.getItem(`${environment.team}_${LocalStorageKey.REFRESH_TOKEN}`) || "";
+    return CookieHelper.getCookie(`${environment.team}_${CookieKey.REFRESH_TOKEN}`) || "";
   }
 
   /**
    * Lưu user config
    */
-  saveTokenConfig(accessToken: string) {
+  saveAccessTokenConfig(accessToken: string) {
     const config = StringHelper.parseJwt(accessToken);
     const keys = Object.keys(config);
 
-    localStorage.setItem(`${environment.team}_${LocalStorageKey.ACCESS_TOKEN}`, accessToken);
+    CookieHelper.setCookie(`${environment.team}_${CookieKey.ACCESS_TOKEN}`, accessToken, this.cookieExprie);
     keys.forEach(key => {
       let snakeCaseKey = key.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
       if (!snakeCaseKey.startsWith('_')) {
         snakeCaseKey = `_${snakeCaseKey}`;
       }
-
-      localStorage.setItem(`${environment.team}${snakeCaseKey}`, config[key]);
+      CookieHelper.setCookie(`${environment.team}${snakeCaseKey}`, config[key], this.cookieExprie);
     });
   }
 
@@ -94,12 +97,15 @@ export class AuthenticationService {
    * Lưu config
    */
   saveAuthConfig(config: AuthResult) {
-    this.saveTokenConfig(config.accessToken);
-    localStorage.setItem(`${environment.team}_${LocalStorageKey.REFRESH_TOKEN}`, config.refreshToken);
+    this.saveAccessTokenConfig(config.accessToken);
+    CookieHelper.setCookie(`${environment.team}_${CookieKey.REFRESH_TOKEN}`, config.refreshToken, this.cookieExprie);
   }
 
+  /**
+   * Trả về login status
+   */
   getLoginStatus(): LoginStatus {
-    const loggedIn = localStorage.getItem(`${environment.team}_${LocalStorageKey.LOGGED_IN}`);
+    const loggedIn = CookieHelper.getCookie(`${environment.team}_${CookieKey.LOGGED_IN}`);
     if (loggedIn === '1') {
       return LoginStatus.LoggedIn;
 
@@ -149,16 +155,16 @@ export class AuthenticationService {
 
     this._httpService.get<AuthResult>(url).subscribe(
       response => {
-        this.clearListLocal.forEach(item => localStorage.removeItem(`${environment.team}_${item}`));
+        this.clearListLocal.forEach(item => CookieHelper.removeCookie(`${environment.team}_${item}`));
         this.clearListSession.forEach(item => sessionStorage.removeItem(`${environment.team}_${item}`));
 
-        localStorage.setItem(`${environment.team}_${LocalStorageKey.LOGGED_IN}`, "0");
+        CookieHelper.setCookie(`${environment.team}_${CookieKey.LOGGED_IN}`, "0", this.cookieExprie);
         if (callback) {
           callback(response);
         }
       },
       err => {
-        localStorage.setItem(`${environment.team}_${LocalStorageKey.LOGGED_IN}`, "0");
+        CookieHelper.setCookie(`${environment.team}_${CookieKey.LOGGED_IN}`, "0", this.cookieExprie);
         if (callback) {
           callback(err);
         }

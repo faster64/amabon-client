@@ -12,8 +12,9 @@ import { environment } from 'src/environments/environment';
 import { MessageBox } from '../components/message-box/message-box.component';
 import { SnackBar } from '../components/snackbar/snackbar.component';
 import { CommonConstant, ErrorMessageConstant, PerrmisionConstant, Routing } from '../constants/common.constant';
-import { LocalStorageKey } from '../constants/localstorage.key';
+import { CookieKey } from '../constants/cookie.key';
 import { NotMessage } from '../constants/not-message.constant';
+import { CookieHelper } from '../helpers/cookie.hepler';
 import { Message } from '../models/message/message';
 import { SnackBarParameter } from '../models/snackbar/snackbar.param';
 import { TransferDataService } from '../services/transfer/transfer-data.service';
@@ -100,7 +101,7 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
           this.authenticationService.isRefreshing = false;
           // success thì tiếp tục request
           if (response.code == HttpStatusCode.Ok) {
-            localStorage.setItem(`${environment.team}_${LocalStorageKey.LOGGED_IN}`, '1');
+            CookieHelper.setCookie(`${environment.team}_${CookieKey.LOGGED_IN}`, '1', this.authenticationService.cookieExprie);
             this.authenticationService.saveAuthConfig(response);
             this.refreshTokenSubject.next(response.accessToken);
 
@@ -131,7 +132,7 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
         // 'Content-Type': 'application/json; charset=utf-8',
         // 'Accept': 'application/json',
         'Accept': '*/*',
-        'Authorization': `Bearer ${this.authenticationService.getToken()}`,
+        'Authorization': `Bearer ${this.authenticationService.getAccessToken()}`,
       },
     });
   }

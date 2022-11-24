@@ -6,7 +6,6 @@ import { LoginStatus } from 'src/app/authentication/shared/enums/login.enum';
 import { AuthenticationService } from 'src/app/authentication/shared/services/authentication.service';
 import { environment } from 'src/environments/environment';
 import { Routing } from '../constants/common.constant';
-import { LocalStorageKey } from '../constants/localstorage.key';
 
 @Injectable({
   providedIn: 'root' // you can change to any level if needed

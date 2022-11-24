@@ -5,8 +5,9 @@ import { MessageBox } from 'src/app/shared/components/message-box/message-box.co
 import { SnackBar } from 'src/app/shared/components/snackbar/snackbar.component';
 import { SwtButton } from 'src/app/shared/components/swt-button/swt-button.component';
 import { ErrorMessageConstant, Routing } from 'src/app/shared/constants/common.constant';
-import { LocalStorageKey } from 'src/app/shared/constants/localstorage.key';
+import { CookieKey } from 'src/app/shared/constants/cookie.key';
 import { HttpStatusCodeExtension } from 'src/app/shared/enumerations/http-status-code-extension.enum';
+import { CookieHelper } from 'src/app/shared/helpers/cookie.hepler';
 import { Message } from 'src/app/shared/models/message/message';
 import { SnackBarParameter } from 'src/app/shared/models/snackbar/snackbar.param';
 import { SettingService } from 'src/app/shared/services/base/setting.service';
@@ -206,7 +207,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   handleLoggedIn(response: AuthResult) {
     this.authenticationService.saveAuthConfig(response);
-    localStorage.setItem(`${environment.team}_${LocalStorageKey.LOGGED_IN}`, '1');
+    CookieHelper.setCookie(`${environment.team}_${CookieKey.LOGGED_IN}`, '1', this.authenticationService.cookieExprie);
     this.transfer.initHeader.emit();
     this.router.navigateByUrl(`/${Routing.DASHBOARD.path}`);
   }

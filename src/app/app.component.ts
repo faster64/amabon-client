@@ -6,7 +6,6 @@ import { HeaderComponent } from 'src/app/shared/components/header/header.compone
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from './authentication/shared/services/authentication.service';
 import { Routing } from './shared/constants/common.constant';
-import { LocalStorageKey } from './shared/constants/localstorage.key';
 import { SettingService } from './shared/services/base/setting.service';
 import { TransferDataService } from './shared/services/transfer/transfer-data.service';
 

@@ -1,7 +1,8 @@
 import { environment } from "src/environments/environment";
 import { SnackBar } from "../components/snackbar/snackbar.component";
-import { LocalStorageKey } from "../constants/localstorage.key";
-import { StringHelper } from "../helpers/string-helper";
+import { CookieKey } from "../constants/cookie.key";
+import { CookieHelper } from "../helpers/cookie.hepler";
+import { StringHelper } from "../helpers/string.helper";
 import { SnackBarParameter } from "../models/snackbar/snackbar.param";
 
 export class Utility {
@@ -23,18 +24,5 @@ export class Utility {
   public static formatCurrency(value: string | number) {
     const re = '\\d(?=(\\d{3})+$)';
     return parseInt(value + "").toFixed(Math.max(0, ~~0)).replace(new RegExp(re, 'g'), '$&,');
-  }
-
-  public static getUserPermission() {
-    try {
-      const accessToken = localStorage.getItem(`${environment.team}_${LocalStorageKey.ACCESS_TOKEN}`);
-      if (accessToken) {
-        const permission = StringHelper.parseJwt(accessToken)["permission"];
-        return parseInt(permission + "");
-      }
-    } catch (e) {
-      return 0;
-    }
-    return 0;
   }
 }

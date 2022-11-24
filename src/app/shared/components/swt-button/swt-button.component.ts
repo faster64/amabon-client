@@ -3,13 +3,14 @@ import { ButtonColor, ButtonType, IconButtonType } from '../../constants/button.
 import { PerrmisionConstant } from '../../constants/common.constant';
 import { SnackBarParameter, SnackBarType } from '../../models/snackbar/snackbar.param';
 import { TransferDataService } from '../../services/transfer/transfer-data.service';
-import { ObjectHelper } from '../../helpers/object-helper';
+import { ObjectHelper } from '../../helpers/object.helper';
 import { SnackBar } from '../snackbar/snackbar.component';
 import { environment } from 'src/environments/environment';
-import { LocalStorageKey } from '../../constants/localstorage.key';
 import { Utility } from '../../utils/utility';
-import { StringHelper } from '../../helpers/string-helper';
+import { StringHelper } from '../../helpers/string.helper';
 import { ActionPermission } from '../../enumerations/permission.enum';
+import { CookieHelper } from '../../helpers/cookie.hepler';
+import { CookieKey } from '../../constants/cookie.key';
 
 @Component({
   selector: 'swt-button',
@@ -200,7 +201,7 @@ export class SwtButton implements OnInit, AfterViewInit, OnDestroy {
    */
   getUserPermission(): number {
     try {
-      const accessToken = localStorage.getItem(`${environment.team}_${LocalStorageKey.ACCESS_TOKEN}`);
+      const accessToken = CookieHelper.getCookie(`${environment.team}_${CookieKey.ACCESS_TOKEN}`);
       if (accessToken) {
         const permission = StringHelper.parseJwt(accessToken)["permission"];
         return parseInt(permission + "");

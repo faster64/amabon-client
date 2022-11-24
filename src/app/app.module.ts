@@ -13,6 +13,7 @@ import './shared/extension-methods/array-extension';
 import './shared/extension-methods/string-extension';
 import { RequestHandlingInterceptor } from './shared/interceptors/request.interceptor';
 import { SharedModule } from './shared/shared.module';
+import { UpdateAvatarPopupComponent } from './components/user/popups/update-avatar-popup/update-avatar-popup.component';
 // import {
 //   SocialLoginModule,
 //   SocialAuthServiceConfig,
@@ -26,6 +27,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
+    UpdateAvatarPopupComponent,
   ],
   imports: [
     BrowserModule,

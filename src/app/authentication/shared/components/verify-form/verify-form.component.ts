@@ -5,7 +5,7 @@ import { SnackBar } from 'src/app/shared/components/snackbar/snackbar.component'
 import { ErrorMessageConstant, Routing } from 'src/app/shared/constants/common.constant';
 import { Message } from 'src/app/shared/models/message/message';
 import { SnackBarParameter } from 'src/app/shared/models/snackbar/snackbar.param';
-import { ObjectHelper } from 'src/app/shared/helpers/object-helper';
+import { ObjectHelper } from 'src/app/shared/helpers/object.helper';
 import { AuthenticationService } from '../../services/authentication.service';
 import { VerifyModel } from '../../models/requests/verify-model';
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from 'src/app/shared/components/base-component';
-import { DateHelper } from 'src/app/shared/helpers/date-helper';
+import { DateHelper } from 'src/app/shared/helpers/date.helper';
 import { BaseService } from 'src/app/shared/services/base/base.service';
 
 declare const moment: any;

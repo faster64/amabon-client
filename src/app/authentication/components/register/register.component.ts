@@ -5,7 +5,7 @@ import { SnackBar } from 'src/app/shared/components/snackbar/snackbar.component'
 import { SwtButton } from 'src/app/shared/components/swt-button/swt-button.component';
 import { Routing } from 'src/app/shared/constants/common.constant';
 import { ErrorCode } from 'src/app/shared/enumerations/error-code.enum';
-import { ObjectHelper } from 'src/app/shared/helpers/object-helper';
+import { ObjectHelper } from 'src/app/shared/helpers/object.helper';
 import { SnackBarParameter } from 'src/app/shared/models/snackbar/snackbar.param';
 import { TransferDataService } from 'src/app/shared/services/transfer/transfer-data.service';
 import { environment } from 'src/environments/environment';
