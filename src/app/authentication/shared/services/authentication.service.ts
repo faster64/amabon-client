@@ -135,7 +135,7 @@ export class AuthenticationService {
    * Đăng ký
    */
   register(userInfo: any) {
-    const url = `${this.auth_api_url}/authentication/register`;
+    const url = `${this.auth_api_url}/authentication/create-account`;
     return this._httpService.post<AuthResult>(url, userInfo);
   }
 

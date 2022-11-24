@@ -2,6 +2,8 @@
 export class User {
   public id = 0;
 
+  public userName = "";
+
   /// Số điện thoại
   public phoneNumber = "";
 

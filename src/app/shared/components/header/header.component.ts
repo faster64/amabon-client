@@ -111,7 +111,9 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
     this.setFullName();
     this.intiModules();
     this.findCurrentModule();
-    this.getAvatarUrl();
+    if(this.loginStatus === LoginStatus.LoggedIn) {
+      this.getAvatarUrl();
+    }
   }
 
   checkLoginStatus() {

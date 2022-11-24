@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   @ViewChild("registerBtn")
   registerBtn!: SwtButton;
 
-  @ViewChild("email") emailInput!: ElementRef;
+  @ViewChild("userName") userNameInput!: ElementRef;
   @ViewChild("password") passwordInput!: ElementRef;
   @ViewChild("confirmPassword") confirmPasswordInput!: ElementRef;
   @ViewChild("firstName") firstNameInput!: ElementRef;
@@ -66,7 +66,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       this.user.address = "154 Đình Thôn, Mỹ Đình, Hà Nội"
       this.acceptPolicy = true;
     }
-    this.emailInput.nativeElement.focus();
+    this.userNameInput.nativeElement.focus();
   }
 
   setBackground() {
@@ -113,13 +113,15 @@ export class RegisterComponent implements OnInit, AfterViewInit {
    * Validate thông tin
    */
   validateInfo(): boolean {
-    if (this.user.email.isNullOrEmpty()) {
-      return this.executeOnError("email", "Email không được để trống");
+    if (this.user.userName.isNullOrEmpty()) {
+      return this.executeOnError("userName", "Tài khoản không được để trống");
 
-    } else if (this.user.email.isMail() === false) {
-      return this.executeOnError("email", "Email không đúng định dạng");
+    }
+    // else if (this.user.email.isMail() === false) {
+    //   return this.executeOnError("email", "Email không đúng định dạng");
 
-    } else if (this.user.password.isNullOrEmpty()) {
+    // }
+    else if (this.user.password.isNullOrEmpty()) {
       return this.executeOnError("password", "Mật khẩu không được để trống");
 
     } else if (this.user.confirmPassword.isNullOrEmpty()) {
