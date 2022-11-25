@@ -27,7 +27,7 @@ const routes: Routes = [
   },
   {
     path: Routing.REGISTER.path,
-    loadChildren: () => import('./authentication/components/register/register.module').then(m => m.RegisterModule),
+    loadChildren: () => import('./authentication/components/register-v2/register-v2.module').then(m => m.RegisterV2Module),
     resolve: {
       resolver: BaseResolver,
     },

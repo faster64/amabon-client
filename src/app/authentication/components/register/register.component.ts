@@ -22,12 +22,13 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   user = new UserRegister();
 
+  loginUrl = Routing.LOGIN.path;
+
   acceptPolicy = false;
 
   defaultGender = "0";
 
-  @ViewChild("registerBtn")
-  registerBtn!: SwtButton;
+  @ViewChild("registerBtn") registerBtn!: SwtButton;
 
   @ViewChild("userName") userNameInput!: ElementRef;
   @ViewChild("password") passwordInput!: ElementRef;

@@ -29,14 +29,17 @@ declare var gapi: any;
 })
 export class LoginComponent implements OnInit, AfterViewInit {
 
-  @ViewChild("email") emailInput!: ElementRef;
-  @ViewChild("password") passwordInput!: ElementRef;
-  @ViewChild("loginBtn")
-  loginBtn!: SwtButton;
-  @ViewChild("googleBtn")
-  googleBtn!: ElementRef;
+  registerUrl = Routing.REGISTER.path;
 
   userCred = new UserCred();
+
+  @ViewChild("email") emailInput!: ElementRef;
+
+  @ViewChild("password") passwordInput!: ElementRef;
+
+  @ViewChild("loginBtn") loginBtn!: SwtButton;
+
+  @ViewChild("googleBtn") googleBtn!: ElementRef;
 
   constructor(
     private transfer: TransferDataService,
