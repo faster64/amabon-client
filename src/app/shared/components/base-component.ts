@@ -1,6 +1,7 @@
 import { Directive, OnDestroy, OnInit } from "@angular/core";
 import { Subject } from "rxjs";
 import { ButtonColor, ButtonType } from "../constants/button.constant";
+import { Routing } from "../constants/common.constant";
 import { ActionPermission } from "../enumerations/permission.enum";
 import { PaginationRequest } from "../models/base/pagination-request";
 import { BaseService } from "../services/base/base.service";
@@ -13,6 +14,8 @@ export class BaseComponent implements OnInit, OnDestroy {
   ButtonColor = ButtonColor;
 
   ActionPermission = ActionPermission;
+
+  Routing = Routing;
 
   isLoading: boolean = false;
 

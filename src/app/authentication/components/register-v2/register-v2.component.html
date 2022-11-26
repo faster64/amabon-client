@@ -1,1 +1,33 @@
-<p>register-v2 works!</p>
+<div class="register-v2">
+  <div class="logo dis-flex">
+    <div class="logo-icon">
+    </div>
+  </div>
+  <div class="step-by-step dis-flex">
+    <div class="step-left dis-flex">
+      <div class="text">
+        Explore Free Tier products with a new AWS account.
+      </div>
+      <div class="img"></div>
+    </div>
+    <div class="step-center"></div>
+    <div class="step-right">
+      <h1 class="title">Đăng ký tài khoản AWS</h1>
+      <div class="step">
+        <app-register-step1 *ngIf="currentStep === RegisterStep.RequiredInformation" [currentStep]="currentStep" [(currentInfo)]="currentInfo" (next)="nextBtn.clickExecute($event)" ></app-register-step1>
+        <app-register-step2 *ngIf="currentStep === RegisterStep.Verification" [currentStep]="currentStep" [(currentInfo)]="currentInfo" (next)="nextBtn.clickExecute($event)" ></app-register-step2>
+        <app-register-step3 *ngIf="currentStep === RegisterStep.Password" [currentStep]="currentStep" [(currentInfo)]="currentInfo" (next)="nextBtn.clickExecute($event)" ></app-register-step3>
+        <app-register-step4 *ngIf="currentStep === RegisterStep.CoreInformation" [currentStep]="currentStep" [(currentInfo)]="currentInfo" (next)="nextBtn.clickExecute($event)" ></app-register-step4>
+        <!-- <app-register-completed *ngIf="currentStep === RegisterStep.Completed"></app-register-completed> -->
+      </div>
+      <div class="next-btn">
+        <swt-button #nextBtn text="Tiếp tục" [height]="32" (onClick)="next()"></swt-button>
+        <div class="has-account">Đã có có tài khoản? <a [routerLink]="['/' + Routing.LOGIN.path]">Đăng nhập</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer dis-flex">
+    <p>Amazon Web Services, Inc. or its affiliates. All rights reserved.</p>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="register-step1">
+  <div class="item">
+    <div class="caption">
+      Địa chỉ email dùng để khôi phục tài khoản, đăng nhập và một số chức năng quản trị
+    </div>
+    <dx-text-box label="Địa chỉ email" class="required" (onEnterKey)="emitNext()" [(value)]="currentInfo.email"></dx-text-box>
+  </div>
+  <div class="item">
+    <div class="caption">
+      Tên tài khoản dùng để đăng nhập
+    </div>
+    <dx-text-box label="Tên tài khoản" class="required" (onEnterKey)="emitNext()" [(value)]="currentInfo.username"></dx-text-box>
+  </div>
+</div>

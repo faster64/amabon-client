@@ -17,6 +17,8 @@ import { ServiceResult } from 'src/app/shared/models/base/service-result';
 import { Utility } from 'src/app/shared/utils/utility';
 import { CookieHelper } from 'src/app/shared/helpers/cookie.hepler';
 import { CookieKey } from 'src/app/shared/constants/cookie.key';
+import { User } from '../models/user-model';
+import { CreateAccountRequest } from '../../components/register-v2/base-step/base-register-step.component';
 
 @Injectable({
   providedIn: 'root'
@@ -137,6 +139,11 @@ export class AuthenticationService {
   register(userInfo: any) {
     const url = `${this.auth_api_url}/authentication/create-account`;
     return this._httpService.post<AuthResult>(url, userInfo);
+  }
+
+  getCurrentInfo(refId: string) {
+    const url = `${this.auth_api_url}/authentication/reg/get-current-info?refId=${refId}`;
+    return this._httpService.get<ServiceResult>(url);
   }
 
   /**

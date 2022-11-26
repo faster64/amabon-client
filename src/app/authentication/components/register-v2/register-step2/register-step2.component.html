@@ -1,0 +1,12 @@
+<div class="register-step2">
+  <div class="item">
+    <div class="caption">
+      <p>Một OTP đã được gửi về <strong>{{currentInfo.email}}</strong></p>
+      <ul>
+        <li>Mã có hiệu lực trong vòng <strong>15 phút</strong></li>
+        <li>Nếu không thấy, vui lòng kiểm tra trong <strong>Thư rác</strong></li>
+      </ul>
+    </div>
+    <dx-text-box label="Mã OTP" class="required" [(value)]="currentInfo.otp" (onEnterKey)="emitNext()" [disabled]="isLoading"></dx-text-box>
+  </div>
+</div>

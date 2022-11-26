@@ -1,8 +1,8 @@
+import { BaseModel } from "src/app/shared/models/base/base-model";
 
-export class User {
-  public id = 0;
+export class User extends BaseModel{
 
-  public userName = "";
+  public username = "";
 
   /// Số điện thoại
   public phoneNumber = "";
@@ -30,10 +30,4 @@ export class User {
 
   /// Giới tính.0 - Nam, 1 - Nữ, 2 - Khác
   public gender = 0;
-
-  /// Đã Verify hay chưa?
-  public isVerified = false;
-
-  /// Đã verify phone hay chưa?
-  public isPhoneVerified = false;
 }

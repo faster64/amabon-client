@@ -1,0 +1,23 @@
+<div class="register-step3">
+  <div class="item">
+    <div class="caption">
+      <p>Mật khẩu, sử dụng để đăng nhập</p>
+      <p>Mật khẩu phải bao gồm</p>
+      <ul>
+        <li>Từ 8 tới 64 ký tự</li>
+        <li>Ít nhất 1 chữ hoa</li>
+        <li>Ít nhất 1 chữ thường</li>
+        <li>Ít nhất 1 chữ số</li>
+        <li>Ít nhất 1 chữ ký tự đặc biệt</li>
+      </ul>
+    </div>
+    <dx-text-box label="Mật khẩu" class="required" mode="password" [(value)]="currentInfo.password" (onEnterKey)="emitNext()" [disabled]="isLoading"></dx-text-box>
+  </div>
+
+  <div class="item">
+    <div class="caption">
+      Mật khẩu xác nhận
+    </div>
+    <dx-text-box label="Mật khẩu xác nhận" class="required" mode="password" [(value)]="currentInfo.confirmPassword" (onEnterKey)="emitNext()" [disabled]="isLoading"></dx-text-box>
+  </div>
+</div>

@@ -1,17 +1,14 @@
 import { BaseMessageResponse } from "src/app/shared/models/base/base-message-response";
 import { ValidateField } from "src/app/shared/models/base/validate-field";
+import { Step } from "./step.model";
 
 export class AuthResult extends BaseMessageResponse {
 
-  /// Access token
   public accessToken: string = "";
 
-  /// Refresh Token
   public refreshToken: string = "";
 
-  /// OTP
-  public otp: string = "";
+  public step = new Step();
 
-  /// Thông tin validate
   public validateInfo! : ValidateField[];
 }

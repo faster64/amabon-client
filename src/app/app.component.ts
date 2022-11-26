@@ -60,7 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
       { path: Routing.NOT_FOUND.path, type: PageRouteType.Equal },
       { path: Routing.ACCESS_DENIED.path, type: PageRouteType.Equal },
       { path: Routing.LOGIN.path, type: PageRouteType.Equal },
-      { path: Routing.REGISTER.path, type: PageRouteType.Equal },
+      { path: Routing.REGISTER.path, type: PageRouteType.StartWith },
       { path: Routing.VERIFY.path, type: PageRouteType.Equal },
       { path: Routing.VERIFY_REGISTER.path, type: PageRouteType.StartWith },
       { path: Routing.VERIFY_LOGIN.path, type: PageRouteType.StartWith },

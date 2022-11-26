@@ -114,7 +114,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
    * Validate thông tin
    */
   validateInfo(): boolean {
-    if (this.user.userName.isNullOrEmpty()) {
+    if (this.user.username.isNullOrEmpty()) {
       return this.executeOnError("userName", "Tài khoản không được để trống");
 
     }

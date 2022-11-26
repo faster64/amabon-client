@@ -1,0 +1,17 @@
+.register-completed {
+  height: 100%;
+  background-image: url(../../../../../assets/img/register-completed.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  .congratulation {
+    flex-wrap: wrap;
+    span, a {
+      flex-basis: 100%;
+      margin-bottom: 12px;
+      font-size: 24px;
+      color: #fff;
+      text-align: center;
+    }
+  }
+}

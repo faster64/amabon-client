@@ -1,0 +1,21 @@
+<div class="register-step3">
+  <div class="item">
+    <!-- <div class="caption">Họ</div> -->
+    <dx-text-box label="Họ" class="required" [(value)]="currentInfo.lastName" (onEnterKey)="emitNext()" [disabled]="isLoading"></dx-text-box>
+  </div>
+
+  <div class="item">
+    <!-- <div class="caption">Tên</div> -->
+    <dx-text-box label="Tên" class="required" [(value)]="currentInfo.firstName" (onEnterKey)="emitNext()" [disabled]="isLoading"></dx-text-box>
+  </div>
+
+  <div class="item">
+    <!-- <div class="caption">Số điện thoại</div> -->
+    <dx-text-box label="Số điện thoại" [(value)]="currentInfo.phoneNumber" (onEnterKey)="emitNext()" [disabled]="isLoading"></dx-text-box>
+  </div>
+
+  <div class="item">
+    <!-- <div class="caption">Địa chỉ</div> -->
+    <dx-text-box label="Địa chỉ" [(value)]="currentInfo.address" (onEnterKey)="emitNext()" [disabled]="isLoading"></dx-text-box>
+  </div>
+</div>
