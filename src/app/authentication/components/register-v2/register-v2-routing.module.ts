@@ -18,25 +18,25 @@ const routes: Routes = [
     }
   },
   {
-    path: 'step2/:refId',
+    path: 'step2',
     component: RegisterV2Component,
     data: {
       step: RegisterStep.Verification
     }
   },
   {
-    path: 'step3/:refId',
+    path: 'step3',
     component: RegisterV2Component,
     data: {
       step: RegisterStep.Password
     }
   },
   {
-    path: 'step4/:refId',
+    path: 'step4',
     component: RegisterV2Component,
     data: {
       step: RegisterStep.CoreInformation
-    }
+    },
   },
   {
     path: 'completed',

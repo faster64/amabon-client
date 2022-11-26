@@ -50,7 +50,7 @@ export class RegisterV2Component extends BaseComponent {
       if (response.success) {
         if (!response.step.isCompleted) {
           this.currentStep = response.step.currentStep;
-          this.router.navigate([`/${Routing.REGISTER.path}/step${this.currentStep}/${response.step.refId}`]);
+          this.router.navigateByUrl(`/${Routing.REGISTER.path}/step${this.currentStep}?refId=${response.step.refId}`);
         } else {
           this.router.navigate([`/${Routing.REGISTER.path}/completed`]);
         }

@@ -44,7 +44,8 @@ export class BaseRegisterStepComponent extends BaseComponent {
   }
 
   checkRefId() {
-    this.refId = this.activatedRoute.snapshot.params["refId"]
+    console.log(this.activatedRoute.snapshot.queryParams)
+    this.refId = this.activatedRoute.snapshot.queryParams["refId"];
     if (StringHelper.isNullOrEmpty(this.refId) || this.refId.length !== 36) {
       this.router.navigate([`/${Routing.REGISTER.path}/step1`]);
     }
@@ -68,7 +69,7 @@ export class BaseRegisterStepComponent extends BaseComponent {
 
         if (this.currentStep !== response.data["currentStep"]) {
           this.currentStep = response.data["currentStep"];
-          this.router.navigate([`/${Routing.REGISTER.path}/step${this.currentStep}/${this.refId}`]);
+          this.router.navigateByUrl(`/${Routing.REGISTER.path}/step${this.currentStep}?refId=${this.refId}`);
         }
       } else {
         MessageBox.information(new Message(null, { content: response.message }));
