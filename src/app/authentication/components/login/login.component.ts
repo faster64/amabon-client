@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    // this.setBackground();
+    this.setBackground();
     this.checkLoggedIn();
   }
 
