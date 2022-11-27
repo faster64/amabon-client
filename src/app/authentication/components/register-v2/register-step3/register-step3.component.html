@@ -11,13 +11,13 @@
         <li>Ít nhất 1 chữ ký tự đặc biệt</li>
       </ul>
     </div>
-    <dx-text-box label="Mật khẩu" class="required" mode="password" [(value)]="currentInfo.password" (onEnterKey)="emitNext()" [disabled]="isLoading"></dx-text-box>
+    <dx-text-box label="Mật khẩu" class="required" mode="password" [(value)]="currentInfo.password" (onEnterKey)="emitNext()" height="38" [disabled]="isLoading"></dx-text-box>
   </div>
 
   <div class="item">
     <div class="caption">
       Mật khẩu xác nhận
     </div>
-    <dx-text-box label="Mật khẩu xác nhận" class="required" mode="password" [(value)]="currentInfo.confirmPassword" (onEnterKey)="emitNext()" [disabled]="isLoading"></dx-text-box>
+    <dx-text-box label="Mật khẩu xác nhận" class="required" mode="password" [(value)]="currentInfo.confirmPassword" (onEnterKey)="emitNext()" height="38" [disabled]="isLoading"></dx-text-box>
   </div>
 </div>

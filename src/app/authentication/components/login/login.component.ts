@@ -14,6 +14,7 @@ import { SettingService } from 'src/app/shared/services/base/setting.service';
 import { TransferDataService } from 'src/app/shared/services/transfer/transfer-data.service';
 import { environment } from 'src/environments/environment';
 import { LoginStatus } from '../../shared/enums/login.enum';
+import { RegisterStep } from '../../shared/enums/register-step.enum';
 import { UserCred } from '../../shared/models/requests/user-cred';
 import { AuthResult } from '../../shared/models/responses/auth-result';
 import { AuthenticationService } from '../../shared/services/authentication.service';
@@ -106,7 +107,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
    */
   initForm() {
     if (!environment.production) {
-      this.userCred.userName = "admin";
+      this.userCred.userName = "admin12";
       this.userCred.password = "admin12@@";
     }
     this.emailInput.nativeElement.focus();
@@ -209,10 +210,17 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   handleLoggedIn(response: AuthResult) {
-    this.authenticationService.saveAuthConfig(response);
-    CookieHelper.setCookie(`${environment.team}_${CookieKey.LOGGED_IN}`, '1', this.authenticationService.cookieExprie);
-    this.transfer.initHeader.emit();
-    this.router.navigateByUrl(`/${Routing.DASHBOARD.path}`);
+    if(response.step && response.step.currentStep !== RegisterStep.RequiredInformation) {
+      MessageBox.information(new Message(this, {content: 'Tài khoản của bạn cần bổ sung thêm thông tin. Bổ sung ngay?'})).subscribe( () => {
+        this.router.navigate([`${Routing.REGISTER.path}/step${response.step.currentStep}`], {queryParams: {refId: response.step.refId}});
+      })
+    }
+    else {
+      this.authenticationService.saveAuthConfig(response);
+      CookieHelper.setCookie(`${environment.team}_${CookieKey.LOGGED_IN}`, '1', this.authenticationService.cookieExprie);
+      this.transfer.initHeader.emit();
+      this.router.navigateByUrl(`/${Routing.DASHBOARD.path}`);
+    }
   }
 
   loginWithGoogle(): void {
