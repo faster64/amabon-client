@@ -146,6 +146,11 @@ export class AuthenticationService {
     return this._httpService.get<ServiceResult>(url);
   }
 
+  resendRegisterOtp(refId: string) {
+    const url = `${this.auth_api_url}/authentication/register-otp?refId=${refId}`;
+    return this._httpService.get<ServiceResult>(url);
+  }
+
   /**
    * Đăng nhập
    */
