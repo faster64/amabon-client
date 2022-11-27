@@ -15,6 +15,8 @@ import { BaseRegisterStepComponent } from '../base-step/base-register-step.compo
 })
 export class RegisterStep2Component extends BaseRegisterStepComponent {
 
+  enabledResend = true;
+
   constructor(
     baseService: BaseService,
     activatedRoute: ActivatedRoute,
@@ -26,15 +28,24 @@ export class RegisterStep2Component extends BaseRegisterStepComponent {
 
   resendOTP(e: any) {
     e.preventDefault();
-    this.authenticationService.resendRegisterOtp(this.refId).subscribe(response => {
-      if (response.success) {
-        MessageBox.information(new Message(null, { content: 'Gửi lại OTP thành công!' }));
-      }
-      else {
-        MessageBox.information(new Message(null, { content: response.message }));
-      }
-    },
-      error => MessageBox.information(new Message(null, { content: ErrorMessageConstant.HAS_ERROR_MESSAGE }))
-    )
+    if (this.enabledResend) {
+      this.enabledResend = false;
+      this.authenticationService.resendRegisterOtp(this.refId).subscribe(
+        response => {
+          this.enabledResend = true;
+          if (response.success) {
+            MessageBox.information(new Message(null, { content: 'Gửi lại OTP thành công!' }));
+          }
+          else {
+            MessageBox.information(new Message(null, { content: response.message }));
+          }
+        },
+        error => {
+          this.enabledResend = true;
+          MessageBox.information(new Message(null, { content: ErrorMessageConstant.HAS_ERROR_MESSAGE }))
+        }
+      )
+    }
+
   }
 }

@@ -42,8 +42,6 @@ export class RegisterV2Component extends BaseComponent {
 
   initData(): void {
     this.currentStep = this.activatedRoute.snapshot.data["step"];
-    this.currentInfo.email = "cuongnguyen.ftdev@gmail.com";
-    this.currentInfo.username = "test123";
   }
 
   next() {
