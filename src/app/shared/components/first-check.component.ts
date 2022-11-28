@@ -16,10 +16,10 @@ export class FirstCheckComponent implements OnInit {
 
   ngOnInit(): void {
     const alreadyLoggedIn = CookieHelper.getCookie(`${environment.team}_${CookieKey.LOGGED_IN}`);
-    console.log('first-check');
+    console.log('first-check', alreadyLoggedIn);
 
     setTimeout(() => {
-      if (alreadyLoggedIn) {
+      if (alreadyLoggedIn === '1') {
         this.router.navigate([`/${Routing.DASHBOARD.path}`]);
       } else {
         this.router.navigate([`/${Routing.LOGIN.path}`]);
