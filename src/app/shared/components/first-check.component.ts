@@ -1,9 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginStatus } from 'src/app/authentication/shared/enums/login.enum';
+import { AuthenticationService } from 'src/app/authentication/shared/services/authentication.service';
 import { environment } from 'src/environments/environment';
 import { Routing } from '../constants/common.constant';
-import { CookieKey } from '../constants/cookie.key';
-import { CookieHelper } from '../helpers/cookie.hepler';
 
 @Component({
   selector: 'first-check',
@@ -12,14 +12,14 @@ import { CookieHelper } from '../helpers/cookie.hepler';
 })
 export class FirstCheckComponent implements OnInit {
 
-  constructor(public router: Router) { }
+  constructor(public router: Router, public authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
-    const alreadyLoggedIn = CookieHelper.getCookie(`${environment.team}_${CookieKey.LOGGED_IN}`);
-    console.log('first-check', alreadyLoggedIn);
+    const status = this.authenticationService.getLoginStatus();
+    console.log('first-check', status);
 
     setTimeout(() => {
-      if (alreadyLoggedIn === '1') {
+      if (environment.app_allows_guests || status === LoginStatus.LoggedIn) {
         this.router.navigate([`/${Routing.DASHBOARD.path}`]);
       } else {
         this.router.navigate([`/${Routing.LOGIN.path}`]);

@@ -1,6 +1,7 @@
 import { HttpStatusCode } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { BaseComponent } from 'src/app/shared/components/base-component';
 import { MessageBox } from 'src/app/shared/components/message-box/message-box.component';
 import { SnackBar } from 'src/app/shared/components/snackbar/snackbar.component';
 import { SwtButton } from 'src/app/shared/components/swt-button/swt-button.component';
@@ -10,8 +11,10 @@ import { HttpStatusCodeExtension } from 'src/app/shared/enumerations/http-status
 import { CookieHelper } from 'src/app/shared/helpers/cookie.hepler';
 import { Message } from 'src/app/shared/models/message/message';
 import { SnackBarParameter } from 'src/app/shared/models/snackbar/snackbar.param';
+import { BaseService } from 'src/app/shared/services/base/base.service';
 import { SettingService } from 'src/app/shared/services/base/setting.service';
 import { TransferDataService } from 'src/app/shared/services/transfer/transfer-data.service';
+import { Utility } from 'src/app/shared/utils/utility';
 import { environment } from 'src/environments/environment';
 import { LoginStatus } from '../../shared/enums/login.enum';
 import { RegisterStep } from '../../shared/enums/register-step.enum';
@@ -28,7 +31,9 @@ declare var gapi: any;
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, AfterViewInit {
+export class LoginComponent extends BaseComponent implements AfterViewInit {
+
+  Utility = Utility;
 
   registerUrl = Routing.REGISTER.path;
 
@@ -43,15 +48,18 @@ export class LoginComponent implements OnInit, AfterViewInit {
   @ViewChild("googleBtn") googleBtn!: ElementRef;
 
   constructor(
+    baseService: BaseService,
     private transfer: TransferDataService,
     private authenticationService: AuthenticationService,
     private router: Router,
     private cdr: ChangeDetectorRef,
     private settingService: SettingService,
     // private socialAuthService: SocialAuthService
-  ) { }
+  ) {
+    super(baseService);
+  }
 
-  ngOnInit(): void {
+  initData(): void {
     this.setBackground();
     this.checkLoggedIn();
   }

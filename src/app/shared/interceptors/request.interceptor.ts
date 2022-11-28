@@ -18,6 +18,7 @@ import { NotMessage } from './not-message';
 import { CookieHelper } from '../helpers/cookie.hepler';
 import { Message } from '../models/message/message';
 import { SnackBarParameter } from '../models/snackbar/snackbar.param';
+import { LoginStatus } from 'src/app/authentication/shared/enums/login.enum';
 @Injectable()
 export class RequestHandlingInterceptor implements HttpInterceptor {
 
@@ -146,8 +147,11 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
   }
 
   logout() {
+    const currentStatus = this.authenticationService.getLoginStatus();
     this.authenticationService.logout((response: AuthResult) => {
-      SnackBar.openSnackBarDanger(new SnackBarParameter(null, PerrmisionConstant.SESSION_EXPRIED, '', 2000));
+      if (currentStatus === LoginStatus.LoggedIn) {
+        SnackBar.openSnackBarDanger(new SnackBarParameter(null, PerrmisionConstant.SESSION_EXPRIED, '', 2000));
+      }
       return this.router.navigateByUrl(`/${Routing.LOGIN.path}`);
     });
   }
