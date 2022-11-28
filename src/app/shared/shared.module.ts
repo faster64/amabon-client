@@ -10,12 +10,14 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { HeaderModule } from "./components/header/header.module";
 import { SwtFilterModule } from "./components/swt-filter/swt-filter.module";
 import { DxFileUploaderModule, DxProgressBarModule } from "devextreme-angular";
+import { FirstCheckComponent } from './components/first-check.component';
 
 @NgModule({
   declarations: [
     DateVietnamPipe,
     CountDownPipe,
     NumberFormatPipe,
+    FirstCheckComponent,
   ],
   imports: [
     CommonModule,

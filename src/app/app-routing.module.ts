@@ -1,19 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FirstCheckComponent } from './shared/components/first-check.component';
 import { Routing } from './shared/constants/common.constant';
 import { BaseGuard } from './shared/guard/base.guard';
 import { BaseResolver } from './shared/resolver/base.resolver';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: Routing.DASHBOARD.path,
-    pathMatch: 'full',
-    resolve: {
-      resolver: BaseResolver,
-    },
-    data: {
-      title: Routing.DASHBOARD.name,
-    }
+    component: FirstCheckComponent,
   },
   {
     path: Routing.ACCESS_DENIED.path,

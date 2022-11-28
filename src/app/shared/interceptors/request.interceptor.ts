@@ -1,4 +1,5 @@
 import {
+  HttpClient,
   HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpStatusCode
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -13,11 +14,10 @@ import { MessageBox } from '../components/message-box/message-box.component';
 import { SnackBar } from '../components/snackbar/snackbar.component';
 import { CommonConstant, ErrorMessageConstant, PerrmisionConstant, Routing } from '../constants/common.constant';
 import { CookieKey } from '../constants/cookie.key';
-import { NotMessage } from '../constants/not-message.constant';
+import { NotMessage } from './not-message';
 import { CookieHelper } from '../helpers/cookie.hepler';
 import { Message } from '../models/message/message';
 import { SnackBarParameter } from '../models/snackbar/snackbar.param';
-import { TransferDataService } from '../services/transfer/transfer-data.service';
 @Injectable()
 export class RequestHandlingInterceptor implements HttpInterceptor {
 
@@ -41,7 +41,6 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private transfer: TransferDataService,
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -59,11 +58,12 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
           MessageBox.information(new Message(this, { content: "Chú request hơi nhiều rồi đọ" }));
 
         } else if (this.errorStatus.includes(error.status)) {
-          const enableShowError = environment.enableShowError;
-          if (!enableShowError && !NotMessage.endpoints.map(e => `${environment.api_url}/${e}`).includes(`${error.url}`)) {
-            MessageBox.information(new Message(this, { content: ErrorMessageConstant.HAS_ERROR_MESSAGE }));
 
-          } else if (!NotMessage.endpoints.map(e => `${environment.api_url}/${e}`).includes(`${error.url}`)) {
+          const enableShowError = environment.enableShowError;
+          if (!enableShowError && this.checkShowMessgae(error)) {
+            MessageBox.information(new Message(this, { content: ErrorMessageConstant.HAS_ERROR_MESSAGE }));
+          }
+          else if (this.checkShowMessgae(error)) {
             MessageBox.information(new Message(this, { content: `${error.message}` }));
           }
         }
@@ -137,9 +137,6 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
     });
   }
 
-  /**
-   * Refresh token
-   */
   refreshToken() {
     const refresh = new RefreshTokenModel();
     refresh.userId = this.authenticationService.getUserId() || CommonConstant.ZERO_GUID;
@@ -148,13 +145,14 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
     return this.authenticationService.refreshToken(refresh);
   }
 
-  /**
-   * Đăng xuất
-   */
   logout() {
     this.authenticationService.logout((response: AuthResult) => {
       SnackBar.openSnackBarDanger(new SnackBarParameter(null, PerrmisionConstant.SESSION_EXPRIED, '', 2000));
       return this.router.navigateByUrl(`/${Routing.LOGIN.path}`);
     });
+  }
+
+  checkShowMessgae(error: HttpErrorResponse): boolean {
+    return NotMessage.endpoints.findIndex(endpoint => error.url == `${environment.api_url}/${endpoint}`) === -1;
   }
 }

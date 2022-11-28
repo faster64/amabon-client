@@ -1,5 +1,5 @@
 export class NotMessage {
   public static readonly endpoints = [
-    "setting",
+    "ums/avatar/get-avatar",
   ];
 }
