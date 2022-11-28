@@ -55,6 +55,9 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
   @ViewChild("logoutBtn")
   logoutBtn!: SwtButton;
 
+  @ViewChild("loginBtn")
+  loginBtn!: SwtButton;
+
   modules: ModuleHeader[] = [];
 
   currentIndex = 0;
@@ -279,6 +282,7 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
 
   goToLogin() {
     this.router.navigate([`/${Routing.LOGIN.path}`]);
+    this.loginBtn.isFinished = true;
   }
 
   redirect(path: string, index: number) {

@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="login-btn" *ngIf="loginStatus === LoginStatus.UnLoggedIn">
-                <swt-button text="Đăng nhập" [width]="120" [height]="32" (onClick)="goToLogin()"></swt-button>
+                <swt-button text="Đăng nhập" #loginBtn [width]="120" [height]="32" [buttonType]="ButtonType.STROKED" (onClick)="goToLogin()"></swt-button>
             </div>
         </div>
     </div>
@@ -69,7 +69,7 @@
                     <span>{{avatarNameDefault}}</span>
                 </div>
                 <div class="upload-avatar" (click)="openUpdateAvatarPopup($event)">
-                  <div class="icon"></div>
+                    <div class="icon"></div>
                 </div>
             </div>
         </div>

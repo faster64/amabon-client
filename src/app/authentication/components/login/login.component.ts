@@ -107,7 +107,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
    */
   initForm() {
     if (!environment.production) {
-      this.userCred.userName = "admin12";
+      this.userCred.userName = "vnapi.mail.helper3@gmail.com";
       this.userCred.password = "admin12@@";
     }
     this.emailInput.nativeElement.focus();

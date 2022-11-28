@@ -67,6 +67,13 @@ export class BaseRegisterStepComponent extends BaseComponent {
           return;
         }
 
+        if (response.data["currentStep"] == RegisterStep.VerifiedWithoutPassword) {
+          MessageBox.information(new Message(null, { content: 'Có vẻ như bạn đã tạo tài khoản với địa chỉ email này trước đây nhưng chưa tạo mật khẩu. Chúng tôi đã gửi một mật khẩu mặc định về địa chỉ email của bạn. Kiểm tra thư và sử dụng mật khẩu mặc định để đăng nhập.' })).subscribe(() => {
+            this.router.navigate([`/${Routing.LOGIN.path}`]);
+          });
+          return;
+        }
+
         if (this.currentStep !== response.data["currentStep"]) {
           this.currentStep = response.data["currentStep"];
           this.router.navigateByUrl(`/${Routing.REGISTER.path}/step${this.currentStep}?refId=${this.refId}`);
