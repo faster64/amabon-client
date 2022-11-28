@@ -24,6 +24,7 @@
         "@angular/router": "~12.0.5",
         "@ngx-translate/core": "^14.0.0",
         "@ngx-translate/http-loader": "^7.0.0",
+        "@vercel/analytics": "^0.1.5",
         "angularx-social-login": "^4.1.0",
         "devextreme": "22.1.4",
         "devextreme-angular": "22.1.4",
