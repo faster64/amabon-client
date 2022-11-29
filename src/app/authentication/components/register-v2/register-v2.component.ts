@@ -45,25 +45,28 @@ export class RegisterV2Component extends BaseComponent {
   }
 
   next() {
-    this.authenticationService.register(this.currentInfo).subscribe(response => {
-      this.nextBtn.isFinished = true;
-      if (response.success) {
-        if (!response.step.isCompleted) {
-          if (response.step.currentStep == RegisterStep.VerifiedWithoutPassword) {
-            MessageBox.information(new Message(null, { content: 'Có vẻ như bạn đã tạo tài khoản với địa chỉ email này trước đây nhưng chưa tạo mật khẩu. Chúng tôi đã gửi một mật khẩu mặc định về địa chỉ email của bạn. Kiểm tra thư và sử dụng mật khẩu mặc định để đăng nhập.' })).subscribe(() => {
-              this.router.navigate([`/${Routing.LOGIN.path}`]);
-            });
-            return;
-          }
+    this.authenticationService.register(this.currentInfo).subscribe(
+      response => {
+        this.nextBtn.isFinished = true;
+        if (response.success) {
+          if (!response.step.isCompleted) {
+            if (response.step.currentStep == RegisterStep.VerifiedWithoutPassword) {
+              MessageBox.information(new Message(null, { content: 'Có vẻ như bạn đã tạo tài khoản với địa chỉ email này trước đây nhưng chưa tạo mật khẩu. Chúng tôi đã gửi một mật khẩu mặc định về địa chỉ email của bạn. Kiểm tra thư và sử dụng mật khẩu mặc định để đăng nhập.' })).subscribe(() => {
+                this.router.navigate([`/${Routing.LOGIN.path}`]);
+              });
+              return;
+            }
 
-          this.currentStep = response.step.currentStep;
-          this.router.navigateByUrl(`/${Routing.REGISTER.path}/step${this.currentStep}?refId=${response.step.refId}`);
+            this.currentStep = response.step.currentStep;
+            this.router.navigateByUrl(`/${Routing.REGISTER.path}/step${this.currentStep}?refId=${response.step.refId}`);
+          } else {
+            this.router.navigate([`/${Routing.REGISTER.path}/completed`]);
+          }
         } else {
-          this.router.navigate([`/${Routing.REGISTER.path}/completed`]);
+          MessageBox.information(new Message(this, { content: response.message }));
         }
-      } else {
-        MessageBox.information(new Message(this, { content: response.message }));
-      }
-    })
+      },
+      error => this.nextBtn.isFinished = true
+    )
   }
 }
