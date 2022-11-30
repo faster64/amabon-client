@@ -1,5 +1,6 @@
 import { Component, ComponentFactoryResolver, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { OnlineStatusService, OnlineStatusType } from 'ngx-online-status';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
@@ -37,12 +38,17 @@ export class AppComponent implements OnInit, OnDestroy {
 
   _onDestroySub: Subject<void> = new Subject<void>();
 
+  status!: OnlineStatusType; //Enum provided by ngx-online-status
+
+  onlineStatusCheck: any = OnlineStatusType;
+
   constructor(
     private transfer: TransferDataService,
     private authenticationService: AuthenticationService,
     private router: Router,
     private cfr: ComponentFactoryResolver,
-    private settingService: SettingService
+    private settingService: SettingService,
+    private onlineStatusService: OnlineStatusService
   ) {
 
   }
@@ -50,6 +56,11 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initData();
     this.eventSubscribe();
+    this.onlineStatusService.status.subscribe((status: OnlineStatusType) => {
+      // Retrieve Online status Type
+      this.status = status;
+      console.log(this.status);
+    });
   }
 
   /**

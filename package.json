@@ -31,6 +31,7 @@
         "leaflet": "1.6.0",
         "leaflet-routing-machine": "^3.2.12",
         "ng-otp-input": "^1.8.5",
+        "ngx-online-status": "^2.0.0",
         "rxjs": "~6.6.0",
         "tslib": "^2.1.0",
         "zone.js": "~0.11.4"
