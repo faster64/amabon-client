@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { BaseMessageResponse } from '../../../shared/models/base/base-message-response';
 import { SessionStorageKey } from 'src/app/shared/constants/sessionstorage.key';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
-import { AuthResult } from '../models/responses/auth-result';
+import { AuthenticationResponse } from '../models/responses/authentication-response';
 import { RefreshTokenModel } from '../models/requests/refresh-token-model';
 import { UserCred } from '../models/requests/user-cred';
 import { VerifyModel } from '../models/requests/verify-model';
@@ -98,7 +98,7 @@ export class AuthenticationService {
   /**
    * Lưu config
    */
-  saveAuthConfig(config: AuthResult) {
+  saveAuthConfig(config: AuthenticationResponse) {
     this.saveAccessTokenConfig(config.accessToken);
     CookieHelper.setCookie(`${environment.team}_${CookieKey.REFRESH_TOKEN}`, config.refreshToken, this.cookieExprie);
   }
@@ -122,7 +122,7 @@ export class AuthenticationService {
    */
   refreshToken(refresh: RefreshTokenModel) {
     const url = `${this.auth_api_url}/authentication/refresh-token`;
-    return this._httpService.post<AuthResult>(url, refresh);
+    return this._httpService.post<AuthenticationResponse>(url, refresh);
   }
 
   /**
@@ -138,7 +138,7 @@ export class AuthenticationService {
    */
   register(userInfo: any) {
     const url = `${this.auth_api_url}/authentication/create-account`;
-    return this._httpService.post<AuthResult>(url, userInfo);
+    return this._httpService.post<AuthenticationResponse>(url, userInfo);
   }
 
   getCurrentInfo(refId: string) {
@@ -156,7 +156,7 @@ export class AuthenticationService {
    */
   login(userCred: UserCred) {
     const url = `${this.auth_api_url}/authentication/login`;
-    return this._httpService.post<AuthResult>(url, userCred);
+    return this._httpService.post<AuthenticationResponse>(url, userCred);
   }
 
   /**
@@ -165,7 +165,7 @@ export class AuthenticationService {
   logout(callback?: Function) {
     const url = `${this.auth_api_url}/authentication/logout?uid=${this.getUserId()}`;
 
-    this._httpService.get<AuthResult>(url).subscribe(
+    this._httpService.get<AuthenticationResponse>(url).subscribe(
       response => {
         this.clearListLocal.forEach(item => CookieHelper.removeCookie(`${environment.team}_${item}`));
         this.clearListSession.forEach(item => sessionStorage.removeItem(`${environment.team}_${item}`));

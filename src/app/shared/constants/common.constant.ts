@@ -26,8 +26,8 @@ export class Routing {
   public static readonly LOGIN = new RoutingConfig('login', 'Đăng nhập');
   public static readonly REGISTER = new RoutingConfig('register', 'Đăng ký');
   public static readonly VERIFY = new RoutingConfig('verify', 'Xác thực');
-  public static readonly VERIFY_REGISTER = new RoutingConfig('auth/verify-register', 'Xác thực');
-  public static readonly VERIFY_LOGIN = new RoutingConfig('auth/verify-login', 'Xác thực bảo mật');
+  public static readonly VERIFY_REGISTER = new RoutingConfig('authentication/verify-register', 'Xác thực');
+  public static readonly VERIFY_LOGIN = new RoutingConfig('authentication/verify-login', 'Xác thực bảo mật');
   public static readonly DASHBOARD = new RoutingConfig('dashboard', 'Tổng quan');
   public static readonly SECRET_FILES = new RoutingConfig('secret-files', 'Amazon3 Files Console');
   public static readonly AMAZON_STORAGE = new RoutingConfig('amazon-storage', 'Amazon3 Store');

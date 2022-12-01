@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, switchMap, take } from 'rxjs/operators';
 import { RefreshTokenModel } from 'src/app/authentication/shared/models/requests/refresh-token-model';
-import { AuthResult } from 'src/app/authentication/shared/models/responses/auth-result';
+import { AuthenticationResponse } from 'src/app/authentication/shared/models/responses/authentication-response';
 import { AuthenticationService } from 'src/app/authentication/shared/services/authentication.service';
 import { environment } from 'src/environments/environment';
 import { MessageBox } from '../components/message-box/message-box.component';
@@ -148,7 +148,7 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
 
   logout() {
     const currentStatus = this.authenticationService.getLoginStatus();
-    this.authenticationService.logout((response: AuthResult) => {
+    this.authenticationService.logout((response: AuthenticationResponse) => {
       if (currentStatus === LoginStatus.LoggedIn) {
         SnackBar.openSnackBarDanger(new SnackBarParameter(null, PerrmisionConstant.SESSION_EXPRIED, '', 2000));
       }

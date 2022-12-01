@@ -1,3 +1,4 @@
+import { query } from '@angular/animations';
 import { HttpStatusCode } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -19,7 +20,7 @@ import { environment } from 'src/environments/environment';
 import { LoginStatus } from '../../shared/enums/login.enum';
 import { RegisterStep } from '../../shared/enums/register-step.enum';
 import { UserCred } from '../../shared/models/requests/user-cred';
-import { AuthResult } from '../../shared/models/responses/auth-result';
+import { AuthenticationResponse } from '../../shared/models/responses/authentication-response';
 import { AuthenticationService } from '../../shared/services/authentication.service';
 
 declare var google: any;
@@ -217,11 +218,15 @@ export class LoginComponent extends BaseComponent implements AfterViewInit {
     }
   }
 
-  handleLoggedIn(response: AuthResult) {
+  handleLoggedIn(response: AuthenticationResponse) {
     if(response.step && response.step.currentStep !== RegisterStep.RequiredInformation) {
       MessageBox.information(new Message(this, {content: 'Tài khoản của bạn cần bổ sung thêm thông tin. Bổ sung ngay?'})).subscribe( () => {
         this.router.navigate([`${Routing.REGISTER.path}/step${response.step.currentStep}`], {queryParams: {refId: response.step.refId}});
       })
+    }
+    else if(response.requiredMFA) {
+      MessageBox.information(new Message(this, {content: response.message}));
+      this.router.navigateByUrl(`/${Routing.VERIFY_LOGIN.path}?username=${this.userCred.userName}`);
     }
     else {
       this.authenticationService.saveAuthConfig(response);

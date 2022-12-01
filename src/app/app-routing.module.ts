@@ -40,7 +40,7 @@ const routes: Routes = [
     }
   },
   {
-    path: `${Routing.VERIFY_REGISTER.name}/:mailEncode`,
+    path: `${Routing.VERIFY_REGISTER.path}/:mailEncode`,
     loadChildren: () => import('./authentication/components/register-verify/register-verify.module').then(m => m.RegisterVerifyModule),
     resolve: {
       resolver: BaseResolver,
