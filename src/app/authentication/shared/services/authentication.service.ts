@@ -187,9 +187,9 @@ export class AuthenticationService {
   /**
    * Gửi mã OTP
    */
-  sendOtpAsync(verifyModel: VerifyModel, endpoint: string) {
-    const url = `${this.auth_api_url}/authentication/${endpoint}`;
-    return this._httpService.post<VerifyOtpResult>(url, verifyModel);
+  verifyLoginOtp(username: string, otp: string) {
+    const url = `${this.auth_api_url}/authentication/verify-login-otp?username=${username}&otp=${otp}`;
+    return this._httpService.get<AuthenticationResponse>(url);
   }
 
   /**

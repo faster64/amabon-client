@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FirstCheckComponent } from './shared/components/first-check.component';
 import { Routing } from './shared/constants/common.constant';
 import { BaseGuard } from './shared/guard/base.guard';
+import { SignInUpGuard } from './shared/guard/sign-in-up.guard';
 import { BaseResolver } from './shared/resolver/base.resolver';
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
   {
     path: Routing.REGISTER.path,
     loadChildren: () => import('./authentication/components/register-v2/register-v2.module').then(m => m.RegisterV2Module),
+    canActivate: [SignInUpGuard],
     resolve: {
       resolver: BaseResolver,
     },
@@ -32,6 +34,7 @@ const routes: Routes = [
   {
     path: Routing.LOGIN.path,
     loadChildren: () => import('./authentication/components/login/login.module').then(m => m.LoginModule),
+    canActivate: [SignInUpGuard],
     resolve: {
       resolver: BaseResolver,
     },
@@ -40,18 +43,9 @@ const routes: Routes = [
     }
   },
   {
-    path: `${Routing.VERIFY_REGISTER.path}/:mailEncode`,
-    loadChildren: () => import('./authentication/components/register-verify/register-verify.module').then(m => m.RegisterVerifyModule),
-    resolve: {
-      resolver: BaseResolver,
-    },
-    data: {
-      title: Routing.VERIFY_REGISTER.name,
-    }
-  },
-  {
     path: Routing.VERIFY_LOGIN.path,
-    loadChildren: () => import('./authentication/components/login-verify/login-verify.module').then(m => m.LoginVerifyModule),
+    loadChildren: () => import('./authentication/components/login-verification/login-verification.module').then(m => m.LoginVerificationModule),
+    canActivate: [SignInUpGuard],
     resolve: {
       resolver: BaseResolver,
     },

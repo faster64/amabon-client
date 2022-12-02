@@ -1,4 +1,4 @@
-@import url("../../../../../assets/css/var-spacing.css");
+@import url("../../../../assets/css/var-spacing.css");
 .verify-box {
     display: inline-block;
     padding: 4px 8px;
@@ -12,9 +12,13 @@
         margin-top: 12px;
         text-align: center;
         .resend {
+            color: #3838ff;
             margin-left: 4px;
             font-weight: bold;
             cursor: pointer;
+            &:hover {
+                text-decoration: underline;
+            }
         }
     }
 }

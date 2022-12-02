@@ -4,12 +4,12 @@
     </div>
 
     <div class="verify-btn">
-        <swt-button #verifyBtn [text]="verifyText" [disabled]="disabledBtn" [ngClass]="'full-width'" (onClick)="fireOTP($event)"></swt-button>
+        <swt-button #verificationBtn [text]="verifyText" [disabled]="disabledBtn" [ngClass]="'full-width'" (onClick)="fireOTP($event)"></swt-button>
     </div>
 
-    <div class="re-provide-otp">
+    <div class="re-provide-otp" *ngIf="allowResend">
         <span>Không nhận được mã? </span>
         <span *ngIf="!isShowResend" style="font-weight: bold;">{{countdown | CountDownPipe}}</span>
-        <span *ngIf="isShowResend" class="resend" (click)="resend($event)">Gửi mã mới</span>
+        <span *ngIf="isShowResend" class="resend" (click)="resend($event)">Gửi lại ngay</span>?
     </div>
 </div>

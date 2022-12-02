@@ -1,0 +1,11 @@
+<div class="login-verification dis-flex">
+    <div class="otp-form dis-flex">
+        <div class="title">
+            <p>Tài khoản của bạn được bảo mật bằng xác thực đa yếu tố (MFA). Để hoàn tất đăng nhập, hãy nhập mã xác thực bên dưới.</p>
+            <p>Email: <strong>{{email}}</strong></p>
+        </div>
+        <div class="otp">
+            <otp-box [allowResend]="false" [allowNumbersOnly]="true" [length]="6" (onReady)="verify($event)"></otp-box>
+        </div>
+    </div>
+</div>

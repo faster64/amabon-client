@@ -62,7 +62,6 @@ export class LoginComponent extends BaseComponent implements AfterViewInit {
 
   initData(): void {
     this.setBackground();
-    this.checkLoggedIn();
   }
 
   ngAfterViewInit(): void {
@@ -100,15 +99,6 @@ export class LoginComponent extends BaseComponent implements AfterViewInit {
 
   logout() {
     gapi.auth2.getAuthInstance().signOut();
-  }
-
-  /**
-   * Nếu đã logged in thì đẩy vào dashboard
-   */
-  checkLoggedIn() {
-    if (this.authenticationService.getLoginStatus() === LoginStatus.LoggedIn) {
-      this.router.navigate([Routing.DASHBOARD.path]);
-    }
   }
 
   /**
@@ -225,8 +215,7 @@ export class LoginComponent extends BaseComponent implements AfterViewInit {
       })
     }
     else if(response.requiredMFA) {
-      MessageBox.information(new Message(this, {content: response.message}));
-      this.router.navigateByUrl(`/${Routing.VERIFY_LOGIN.path}?username=${this.userCred.userName}`);
+      this.router.navigateByUrl(`/${Routing.VERIFY_LOGIN.path}?u=${btoa(this.userCred.userName)}&e=${btoa(response.message)}`);
     }
     else {
       this.authenticationService.saveAuthConfig(response);

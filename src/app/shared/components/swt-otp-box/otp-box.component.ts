@@ -4,18 +4,18 @@ import { NgOtpInputComponent } from 'ng-otp-input';
 import { SwtButton } from 'src/app/shared/components/swt-button/swt-button.component';
 import { Message } from 'src/app/shared/models/message/message';
 import { TransferDataService } from 'src/app/shared/services/transfer/transfer-data.service';
-import { VerifyOtpResult } from '../../models/responses/verify-otp-result';
+import { VerifyOtpResult } from '../../../authentication/shared/models/responses/verify-otp-result';
 
 
 @Component({
-  selector: 'verify-box',
-  templateUrl: './verify-box.component.html',
-  styleUrls: ['./verify-box.component.scss']
+  selector: 'otp-box',
+  templateUrl: './otp-box.component.html',
+  styleUrls: ['./otp-box.component.scss']
 })
-export class VerifyBoxComponent implements OnInit {
+export class OtpBoxComponent implements OnInit {
   private _length: number = 6;
-  private _verifyTextDefault = "Verify";
-  private _verifyingTextDefault = "Verifying...";
+  private _verifyTextDefault = "Gửi";
+  private _verifyingTextDefault = "Đang gửi...";
 
   @Input()
   verifyText = this._verifyTextDefault;
@@ -49,6 +49,9 @@ export class VerifyBoxComponent implements OnInit {
   placeholder = "";
 
   @Input()
+  allowResend = true;
+
+  @Input()
   requiredTime = 60;
 
   @Output()
@@ -57,8 +60,8 @@ export class VerifyBoxComponent implements OnInit {
   @Output()
   onResend = new EventEmitter<any>();
 
-  @ViewChild("verifyBtn")
-  verifyBtn!: SwtButton;
+  @ViewChild("verificationBtn")
+  verificationBtn!: SwtButton;
 
   @ViewChild(NgOtpInputComponent, { static: false }) otpInput!: NgOtpInputComponent;
 
@@ -71,9 +74,7 @@ export class VerifyBoxComponent implements OnInit {
    */
   disabledBtn = true;
 
-  constructor(
-    private _transfer: TransferDataService
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
@@ -85,12 +86,12 @@ export class VerifyBoxComponent implements OnInit {
     if (e.length === this._length) {
       this.disabledBtn = false;
       setTimeout( () => {
-        this.verifyBtn.clickExecute(e);
+        this.verificationBtn.clickExecute(e);
       }, 10);
     } else {
       this.disabledBtn = true;
-      this.verifyBtn.isFinished = true;
-      this.verifyBtn.disabled = true;
+      this.verificationBtn.isFinished = true;
+      this.verificationBtn.disabled = true;
     }
   }
 
@@ -106,7 +107,8 @@ export class VerifyBoxComponent implements OnInit {
 
     const message = new Message(this, otp);
     message.callback = (response: VerifyOtpResult) => {
-      this.verifyBtn.isFinished = true;
+      this.verificationBtn.isFinished = true;
+      otp = "";
     }
     this.onReady.emit(message);
 

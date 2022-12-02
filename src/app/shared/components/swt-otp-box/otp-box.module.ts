@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VerifyBoxComponent } from './verify-box.component';
+import { OtpBoxComponent } from './otp-box.component';
 import { NgOtpInputModule } from  'ng-otp-input';
 import { SwtButtonModule } from 'src/app/shared/components/swt-button/swt-button.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
-  declarations: [VerifyBoxComponent],
+  declarations: [OtpBoxComponent],
   imports: [
     CommonModule,
     SwtButtonModule,
     NgOtpInputModule,
     SharedModule
   ],
-  exports: [VerifyBoxComponent]
+  exports: [OtpBoxComponent]
 })
-export class VerifyBoxModule { }
+export class OtpBoxModule { }
