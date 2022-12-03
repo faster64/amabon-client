@@ -29,12 +29,7 @@ export class SwtButton implements OnInit, AfterViewInit, OnDestroy {
 
   set isFinished(value: boolean) {
     this._isFinished = value;
-
-    if (value === false) {
-      this.disabled = true;
-    } else {
-      this.disabled = false;
-    }
+    this.disabled = !value;
   }
 
   //#region Input

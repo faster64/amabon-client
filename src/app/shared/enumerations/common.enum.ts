@@ -35,6 +35,12 @@ export enum OtpType {
   TFA = 3,
 }
 
+export enum MfaType {
+  None = 0,
+  Email = 1,
+  Phone = 2,
+}
+
 export enum MessageBoxType {
   None = 0,
   Confirm = 1,

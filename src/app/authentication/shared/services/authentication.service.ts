@@ -19,6 +19,7 @@ import { CookieHelper } from 'src/app/shared/helpers/cookie.hepler';
 import { CookieKey } from 'src/app/shared/constants/cookie.key';
 import { User } from '../models/user-model';
 import { CreateAccountRequest } from '../../components/register-v2/base-step/base-register-step.component';
+import { MFA } from '../models/mfa-model';
 
 @Injectable({
   providedIn: 'root'
@@ -207,5 +208,21 @@ export class AuthenticationService {
   verifySecretKey(secretKey: string) {
     const url = `${this.auth_api_url}/authentication/verify-secret-key?secretKey=${btoa(secretKey)}`;
     return this._httpService.get<ServiceResult>(url);
+  }
+
+  /**
+   * Trả về MFA setting
+   */
+  getMfaSetting() {
+    const url = `${this.auth_api_url}/authentication/mfa-setting`;
+    return this._httpService.get<ServiceResult>(url);
+  }
+
+  /**
+   * set MFA
+   */
+  setMfa(mfa: MFA) {
+    const url = `${this.auth_api_url}/authentication/set-mfa`;
+    return this._httpService.post<ServiceResult>(url, mfa);
   }
 }

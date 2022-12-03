@@ -1,0 +1,21 @@
+<div class="setting dis-flex">
+  <div class="main-options">
+    <div *ngFor="let option of optionValues" class="main-option dis-flex"
+      [ngClass]="(option.path === optionUrl ? 'actived' : '') + ' ' + option.path" (click)="redirect(option.path)">
+      <div class="icon"></div>
+      <div class="text">{{option.text}}</div>
+    </div>
+  </div>
+
+  <div class="option-values">
+    <div class="content">
+      <app-security #security *ngIf="optionUrl === SettingOption.SECURITY" (loaded)="loaded = $event"></app-security>
+    </div>
+
+    <div class="save-btn">
+      <swt-button #saveBtn text="Cập nhật" [height]="48" (onClick)="saveChanges()" [disabled]="!loaded"></swt-button>
+    </div>
+  </div>
+
+
+</div>

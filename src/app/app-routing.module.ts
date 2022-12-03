@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { SettingComponent } from './components/setting/setting.component';
 import { FirstCheckComponent } from './shared/components/first-check.component';
 import { Routing } from './shared/constants/common.constant';
 import { BaseGuard } from './shared/guard/base.guard';
@@ -51,6 +52,17 @@ const routes: Routes = [
     },
     data: {
       title: Routing.VERIFY_LOGIN.name,
+    }
+  },
+  {
+    path: Routing.SETTING.path,
+    loadChildren: () => import('./components/setting/setting.module').then(m => m.SettingModule),
+    canActivate: [BaseGuard],
+    resolve: {
+      resolver: BaseResolver,
+    },
+    data: {
+      title: Routing.SETTING.name,
     }
   },
   {

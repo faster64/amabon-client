@@ -7,9 +7,8 @@ import { inject } from '@vercel/analytics';
 
 if (environment.production) {
   enableProdMode();
+  inject();
 }
-
-inject();
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));

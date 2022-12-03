@@ -82,9 +82,9 @@
             <div class="icon"></div>
             <div class="text">Trợ giúp & Hỗ trợ</div>
         </div>
-        <div class="item setting" (click)="Utility.featureIsDeveloping($event)">
+        <div class="item setting" [routerLink]="['/' + Routing.SETTING.path]">
             <div class="icon"></div>
-            <div class="text">Cài đặt</div>
+            <div class="text">Cài đặt & quyền riêng tư</div>
         </div>
         <div class="item logout">
             <swt-button #logoutBtn [color]="ButtonColor.WARN" text="Đăng xuất" (onClick)="logout()" [width]="240" [height]="44">

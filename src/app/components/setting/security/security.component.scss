@@ -1,0 +1,50 @@
+.security {
+  height: 100%;
+  padding: 24px;
+  .security-item {
+    flex-basis: 100%;
+    margin-bottom: 12px;
+    cursor: pointer;
+
+    .title {
+      span {
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
+
+    .content {
+      position: relative;
+      min-height: 120px;
+      margin-top: 8px;
+      .item-content {
+        padding: 4px 4px 4px 20px;
+        margin-top: 4px;
+      }
+
+      .icon-dropdown {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    &.mfa {
+      .title {
+        display: flex;
+        align-items: center;
+        .icon-dropdown {
+          margin-left: 4px;
+          background-image: url(../../../../assets/img/icons_v2.svg);
+          background-repeat: no-repeat;
+          background-position: -47px -29px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .security {
+    padding: 0;
+  }
+}
