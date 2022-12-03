@@ -35,7 +35,7 @@
       uploadMethod="POST"
       name="avatar"
       [uploadHeaders]="headers"
-      [uploadUrl]="'http://localhost:5001/api/gateway/ums/avatar/update-avatar'"
+      [uploadUrl]="uploadUrl"
       (onDropZoneEnter)="onDropZoneEnter($event)"
       (onDropZoneLeave)="onDropZoneLeave($event)"
       (onUploaded)="onUploaded($event)"
