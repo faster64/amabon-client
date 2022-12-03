@@ -34,6 +34,8 @@ export class UpdateAvatarPopupComponent extends BaseComponent {
 
   headers: any;
 
+  uploadUrl = `${environment.api_url}/ums/avatar/update-avatar`;
+
   @ViewChild("fileUploader")
   fileUploader!: DxFileUploaderComponent;
 
