@@ -1,34 +1,36 @@
 <div class="security">
-    <div class="mfa security-item">
-        <div class="title">
-            <span>Xác thực đa yếu tố</span>
-        </div>
-
-        <div class="content">
-            <div class="item-content">
-                <dx-check-box text="Bật xác thực đa yếu tố" [(value)]="mfa.enabled">
-                </dx-check-box>
-            </div>
-
-            <div class="item-content" *ngIf="mfa.enabled">
-                <dx-select-box [dataSource]="mfaOptions" displayExpr="text" valueExpr="value" placeholder="Phương thức xác thực" width="200" [(value)]="mfa.type"></dx-select-box>
-            </div>
-            <skeleton-loading *ngIf="isLoadingMfa"></skeleton-loading>
-        </div>
-
+  <div class="mfa security-item">
+    <div class="title">
+      <span>Xác thực đa yếu tố</span>
     </div>
 
-    <div class="login-history security-item">
-        <div class="title">
-            <span>Lịch sử đăng nhập</span>
-        </div>
+    <div class="content">
+      <div class="item-content">
+        <dx-check-box text="Bật xác thực đa yếu tố" [(value)]="mfa.enabled">
+        </dx-check-box>
+      </div>
 
-        <div class="content">
-            <div class="item-content">
-                <swt-grid *ngIf="!isLoadingLoginLog" [displayColumn]="displayColumn" [isLoading]="false" [data]="logs" [enabledCheck]="false" [enabledPagination]="false" [autoAdjust]="false"></swt-grid>
-            </div>
-            <skeleton-loading *ngIf="isLoadingLoginLog"></skeleton-loading>
-        </div>
-
+      <div class="item-content" *ngIf="mfa.enabled">
+        <dx-select-box [dataSource]="mfaOptions" displayExpr="text" valueExpr="value" placeholder="Phương thức xác thực"
+          width="200" [(value)]="mfa.type"></dx-select-box>
+      </div>
+      <skeleton-loading *ngIf="isLoadingMfa"></skeleton-loading>
     </div>
+
+  </div>
+
+  <div class="login-history security-item">
+    <div class="title">
+      <span>Lịch sử đăng nhập</span>
+    </div>
+
+    <div class="content">
+      <div class="item-content">
+        <swt-grid *ngIf="!isLoadingLoginLog" [displayColumn]="displayColumn" [isLoading]="false" [data]="logs"
+          [enabledCheck]="false" [enabledPagination]="false" [autoAdjust]="false"></swt-grid>
+      </div>
+      <skeleton-loading *ngIf="isLoadingLoginLog"></skeleton-loading>
+    </div>
+
+  </div>
 </div>

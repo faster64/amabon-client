@@ -61,6 +61,10 @@ export class SecurityComponent extends BaseComponent {
         if (response.success) {
           this.logs = [];
           this.logs = response.data.map((item: any) => JSON.parse(item.json));
+          this.logs = this.logs.map((log: LoginLog) => {
+            return Object.assign(log, { ...log.IPInformation, Address:  log.IPInformation.City + ' - ' + log.IPInformation.Country});
+          });
+          console.log(this.logs);
         }
       },
       () => this.isLoadingLoginLog = false
@@ -73,10 +77,11 @@ export class SecurityComponent extends BaseComponent {
   }
 
   initDisplayColumn() {
-    this.displayColumn.push({displayText: "Thiết bị", column: "Device", width: 140, sortable: false});
-    this.displayColumn.push({displayText: "Trình duyệt", column: "Browser", width: 150, sortable: false});
-    this.displayColumn.push({displayText: "Hệ điều hành", column: "OS", width: 140, sortable: false});
-    this.displayColumn.push({displayText: "IP", column: "IP", width: 120, sortable: false});
-    this.displayColumn.push({displayText: "Thời gian", column: "Other", width: 160, sortable: false});
+    this.displayColumn.push({ displayText: "Thời gian", column: "Other", width: 160, sortable: false });
+    this.displayColumn.push({ displayText: "Thiết bị", column: "Device", width: 140, sortable: false });
+    this.displayColumn.push({ displayText: "Địa chỉ", column: "Address", width: 190, sortable: false });
+    this.displayColumn.push({ displayText: "Trình duyệt", column: "Browser", width: 150, sortable: false });
+    this.displayColumn.push({ displayText: "Hệ điều hành", column: "OS", width: 140, sortable: false });
+    this.displayColumn.push({ displayText: "IP", column: "IP", width: 120, sortable: false });
   }
 }

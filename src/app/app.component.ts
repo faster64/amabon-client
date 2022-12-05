@@ -187,7 +187,6 @@ export class AppComponent implements OnInit, OnDestroy {
     const deviceType = Utility.getDevice();
     console.log(navigator.userAgent);
     console.log("Phát hiện loại thiết bị đang sử dụng: " + (deviceType === DeviceType.Mobile ? '[MOBILE]' : '[DESKTOP]'));
-    this.authenticationService.getIpAddress();
   }
 
   /**

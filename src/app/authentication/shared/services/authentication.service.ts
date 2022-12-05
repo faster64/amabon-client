@@ -34,6 +34,8 @@ export class AuthenticationService {
 
   public cookieExprie = 7;
 
+  public ipInformation: any;
+
   /**
    * List clear khi logout
    */
@@ -64,9 +66,11 @@ export class AuthenticationService {
    */
   public isRefreshing = false;
 
+  public takingInfo = false;
+
   constructor(
-    private _httpService: HttpService,
-    private _transfer: TransferDataService
+    public _httpService: HttpService,
+    public _transfer: TransferDataService
   ) { }
 
   public getUserId() {
@@ -136,10 +140,8 @@ export class AuthenticationService {
     return this._httpService.get<string>(url);
   }
 
-  getIpAddress() {
-    this._httpService.get('https://cors-anywhere.herokuapp.com/https://checkip.amazonaws.com').subscribe(response => {
-      console.log(response);
-    });
+  getIpInformation() {
+    return this._httpService.get('https://ipinfo.io?token=cd6d6696ae1c97');
   }
 
   /**

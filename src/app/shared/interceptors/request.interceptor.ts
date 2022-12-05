@@ -19,6 +19,7 @@ import { CookieHelper } from '../helpers/cookie.hepler';
 import { Message } from '../models/message/message';
 import { SnackBarParameter } from '../models/snackbar/snackbar.param';
 import { LoginStatus } from 'src/app/authentication/shared/enums/login.enum';
+import { HttpStatusCodeExtension } from '../enumerations/http-status-code-extension.enum';
 @Injectable()
 export class RequestHandlingInterceptor implements HttpInterceptor {
 
@@ -27,6 +28,9 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
   // Refresh Token Subject tracks the current token, or is null if no token is currently
   // available (e.g. refresh pending).
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+
+  private takeInfomationSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+
 
   errorStatus: HttpStatusCode[] = [
     0,
@@ -55,6 +59,10 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
         } else if (error.status === HttpStatusCode.Forbidden) {
           SnackBar.openSnackBarDanger(new SnackBarParameter(null, PerrmisionConstant.NOT_PERMISSION, '', SnackBar.forever));
 
+        }
+        else if (error.status === HttpStatusCodeExtension.MissingClientInfo) {
+          return this.handle901(request, next);
+
         } else if (error.status === HttpStatusCode.TooManyRequests) {
           MessageBox.information(new Message(this, { content: "Chú request hơi nhiều rồi đọ" }));
 
@@ -72,6 +80,33 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
         return throwError(error.error);
       })
     );
+  }
+
+  handle901(request: HttpRequest<unknown>, next: HttpHandler) {
+    if (this.authenticationService.takingInfo) {
+      return this.takeInfomationSubject.pipe(
+        filter(token => token != null),
+        take(1),
+        switchMap(() => {
+          return next.handle(this.injectToken(request));
+        })
+      );
+    }
+    this.authenticationService.takingInfo = true;
+    return this.authenticationService.getIpInformation().pipe(
+      switchMap(response => {
+
+        this.authenticationService.takingInfo = false;
+        this.authenticationService.ipInformation = response;
+        this.takeInfomationSubject.next(response);
+
+        return next.handle(this.injectToken(request));
+      }),
+      catchError(error => {
+        this.authenticationService.takingInfo = false;
+        return throwError(error.error);
+      })
+    )
   }
 
   /**
@@ -134,6 +169,7 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
         // 'Accept': 'application/json',
         'Accept': '*/*',
         'Authorization': `Bearer ${this.authenticationService.getAccessToken()}`,
+        'X-Amazon3-Client': this.authenticationService.ipInformation ? JSON.stringify(this.authenticationService.ipInformation) : ""
       },
     });
   }
