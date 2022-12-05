@@ -48,6 +48,15 @@ export class SwtGridComponent extends BaseGridComponent implements OnChanges, On
   @Input()
   enableEmitScroll = true;
 
+  @Input()
+  enabledCheck = true;
+
+  @Input()
+  enabledPagination = true;
+
+  @Input()
+  autoAdjust = true;
+
   @Output()
   detectScrollToAnPosition = new EventEmitter();
 
@@ -177,13 +186,15 @@ export class SwtGridComponent extends BaseGridComponent implements OnChanges, On
   }
 
   adjustGrid() {
-    this.getOffset();
-    if (this.offset === 0)
-      return;
+    if (this.autoAdjust) {
+      this.getOffset();
+      if (this.offset === 0)
+        return;
 
-    const length = this.displayColumn.length;
-    if (length > 0) {
-      this.displayColumn[length - 1].width = this.offset;
+      const length = this.displayColumn.length;
+      if (length > 0) {
+        this.displayColumn[length - 1].width = this.offset;
+      }
     }
   }
 

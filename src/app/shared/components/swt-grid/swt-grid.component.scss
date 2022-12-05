@@ -106,7 +106,7 @@
                         border-left: 1px dotted rgb(196, 196, 196);
                         border-right: 1px dotted rgb(196, 196, 196);
                     }
-                    &:first-child {
+                    &.sticky {
                         position: sticky;
                         left: 0;
                         border-left: 1px solid rgb(174, 174, 174);

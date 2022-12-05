@@ -20,6 +20,7 @@ import { CookieKey } from 'src/app/shared/constants/cookie.key';
 import { User } from '../models/user-model';
 import { CreateAccountRequest } from '../../components/register-v2/base-step/base-register-step.component';
 import { MFA } from '../models/mfa-model';
+import { PaginationRequest } from 'src/app/shared/models/base/pagination-request';
 
 @Injectable({
   providedIn: 'root'
@@ -225,5 +226,13 @@ export class AuthenticationService {
   setMfa(mfa: MFA) {
     const url = `${this.auth_api_url}/authentication/set-mfa`;
     return this._httpService.post<ServiceResult>(url, mfa);
+  }
+
+  /**
+   * Lịch sử đăng nhập
+   */
+  getLoginHistory(pagination: PaginationRequest) {
+    const url = `${this.auth_api_url}/loginlog/paging`;
+    return this._httpService.post<ServiceResult>(url, pagination);
   }
 }

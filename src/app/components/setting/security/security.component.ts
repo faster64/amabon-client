@@ -1,12 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { LoginLog } from 'src/app/authentication/shared/models/login-log-model';
 import { MFA } from 'src/app/authentication/shared/models/mfa-model';
 import { AuthenticationService } from 'src/app/authentication/shared/services/authentication.service';
 import { BaseComponent } from 'src/app/shared/components/base-component';
-import { SnackBar } from 'src/app/shared/components/snackbar/snackbar.component';
-import { ErrorMessageConstant } from 'src/app/shared/constants/common.constant';
 import { MfaType } from 'src/app/shared/enumerations/common.enum';
-import { SnackBarParameter } from 'src/app/shared/models/snackbar/snackbar.param';
+import { ColumnGrid } from 'src/app/shared/models/base/column-grid.model';
 import { BaseService } from 'src/app/shared/services/base/base.service';
 
 @Component({
@@ -20,7 +18,13 @@ export class SecurityComponent extends BaseComponent {
 
   mfa = new MFA();
 
+  logs: LoginLog[] = [];
+
   isLoadingMfa = true;
+
+  isLoadingLoginLog = true;
+
+  displayColumn: ColumnGrid[] = [];
 
   @Output("loaded") loaded = new EventEmitter<boolean>();
 
@@ -34,7 +38,9 @@ export class SecurityComponent extends BaseComponent {
 
   initData(): void {
     this.getCurrentMFASetting();
+    this.getLoginHistory();
     this.initMfaOptions();
+    this.initDisplayColumn();
   }
 
   getCurrentMFASetting() {
@@ -48,8 +54,29 @@ export class SecurityComponent extends BaseComponent {
     })
   }
 
+  getLoginHistory() {
+    this.authenticationService.getLoginHistory(this.paginationRequest).subscribe(
+      response => {
+        this.isLoadingLoginLog = false;
+        if (response.success) {
+          this.logs = [];
+          this.logs = response.data.map((item: any) => JSON.parse(item.json));
+        }
+      },
+      () => this.isLoadingLoginLog = false
+    );
+  }
+
   initMfaOptions() {
     this.mfaOptions = [];
     this.mfaOptions.push({ value: MfaType.Email, text: 'Email' })
+  }
+
+  initDisplayColumn() {
+    this.displayColumn.push({displayText: "Thiết bị", column: "Device", width: 140, sortable: false});
+    this.displayColumn.push({displayText: "Trình duyệt", column: "Browser", width: 120, sortable: false});
+    this.displayColumn.push({displayText: "Hệ điều hành", column: "OS", width: 120, sortable: false});
+    this.displayColumn.push({displayText: "IP", column: "IP", width: 120, sortable: false});
+    this.displayColumn.push({displayText: "Thời gian", column: "Other", width: 160, sortable: false});
   }
 }

@@ -13,6 +13,7 @@ import { Message } from 'src/app/shared/models/message/message';
 import { SnackBarParameter } from 'src/app/shared/models/snackbar/snackbar.param';
 import { AmazonFileService } from 'src/app/shared/services/amazon-file/amazon-file.service';
 import { BaseService } from 'src/app/shared/services/base/base.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-secret-files',
@@ -44,7 +45,7 @@ export class SecretFilesComponent extends BaseComponent {
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.passSecurity = sessionStorage.getItem(SessionStorageKey.PASSED_SECURITY) != null;
+    this.passSecurity = sessionStorage.getItem(`${environment.team}_${SessionStorageKey.PASSED_SECURITY}`) != null;
     if (this.passSecurity) {
       this.getFolders();
     }
@@ -64,7 +65,7 @@ export class SecretFilesComponent extends BaseComponent {
       if (response.success) {
         this.passSecurity = true;
         this.getFolders();
-        sessionStorage.setItem(SessionStorageKey.PASSED_SECURITY, "passed");
+        sessionStorage.setItem(`${environment.team}_${SessionStorageKey.PASSED_SECURITY}`, "passed");
 
       } else {
         SnackBar.openSnackBarDanger(new SnackBarParameter(this, "Mã bí mật không đúng!"));

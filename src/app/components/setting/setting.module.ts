@@ -7,6 +7,7 @@ import { SecurityComponent } from './security/security.component';
 import { DxCheckBoxModule, DxSelectBoxModule } from 'devextreme-angular';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SwtButtonModule } from 'src/app/shared/components/swt-button/swt-button.module';
+import { SwtGridModule } from 'src/app/shared/components/swt-grid/swt-grid.module';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { SwtButtonModule } from 'src/app/shared/components/swt-button/swt-button
     DxSelectBoxModule,
     SharedModule,
     SwtButtonModule,
+    SwtGridModule,
   ],
   exports: [SettingComponent, SecurityComponent]
 })

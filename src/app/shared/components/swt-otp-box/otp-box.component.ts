@@ -85,7 +85,7 @@ export class OtpBoxComponent implements OnInit {
   onChange(e: string) {
     if (e.length === this._length) {
       this.disabledBtn = false;
-      setTimeout( () => {
+      setTimeout(() => {
         this.verificationBtn.clickExecute(e);
       }, 10);
     } else {
@@ -100,10 +100,10 @@ export class OtpBoxComponent implements OnInit {
    */
   fireOTP(e: any) {
     let otp = "";
-    otp = parseInt(e) + "";
-    if (Number.isNaN(otp) || otp === 'NaN') {
-      otp = this.otpInput.currentVal;
-    }
+    otp = e;
+    // if (Number.isNaN(otp) || otp === 'NaN') {
+    //   otp = this.otpInput.currentVal;
+    // }
 
     const message = new Message(this, otp);
     message.callback = (response: VerifyOtpResult) => {
