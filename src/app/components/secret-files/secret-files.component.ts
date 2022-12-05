@@ -7,6 +7,7 @@ import { MessageBox } from 'src/app/shared/components/message-box/message-box.co
 import { SnackBar } from 'src/app/shared/components/snackbar/snackbar.component';
 import { SwtButton } from 'src/app/shared/components/swt-button/swt-button.component';
 import { Routing } from 'src/app/shared/constants/common.constant';
+import { SessionStorageKey } from 'src/app/shared/constants/sessionstorage.key';
 import { Folder } from 'src/app/shared/models/amazon-file/folder/folder.model';
 import { Message } from 'src/app/shared/models/message/message';
 import { SnackBarParameter } from 'src/app/shared/models/snackbar/snackbar.param';
@@ -43,7 +44,7 @@ export class SecretFilesComponent extends BaseComponent {
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.passSecurity = sessionStorage.getItem("passSecurity") != null;
+    this.passSecurity = sessionStorage.getItem(SessionStorageKey.PASSED_SECURITY) != null;
     if (this.passSecurity) {
       this.getFolders();
     }
@@ -63,7 +64,7 @@ export class SecretFilesComponent extends BaseComponent {
       if (response.success) {
         this.passSecurity = true;
         this.getFolders();
-        sessionStorage.setItem("passSecurity", "passed");
+        sessionStorage.setItem(SessionStorageKey.PASSED_SECURITY, "passed");
 
       } else {
         SnackBar.openSnackBarDanger(new SnackBarParameter(this, "Mã bí mật không đúng!"));

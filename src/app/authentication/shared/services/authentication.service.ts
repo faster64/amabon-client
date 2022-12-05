@@ -48,6 +48,7 @@ export class AuthenticationService {
 
   private clearListSession = [
     SessionStorageKey.SIDEBAR_INDEX,
+    SessionStorageKey.PASSED_SECURITY,
   ]
 
   /**
