@@ -98,6 +98,7 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
 
         this.authenticationService.takingInfo = false;
         this.authenticationService.ipInformation = response;
+        this.authenticationService.saveIpInformation(JSON.stringify(response));
         this.takeInfomationSubject.next(response);
 
         return next.handle(this.injectToken(request));

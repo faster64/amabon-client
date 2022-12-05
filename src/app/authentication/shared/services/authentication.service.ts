@@ -71,7 +71,16 @@ export class AuthenticationService {
   constructor(
     public _httpService: HttpService,
     public _transfer: TransferDataService
-  ) { }
+  ) {
+
+    const info = CookieHelper.getCookie(`${environment.team}_${CookieKey.IP_INFORMATION}`);
+    if (info) {
+      this.ipInformation = JSON.parse(info);
+    } else {
+      this.ipInformation = null;
+    }
+
+  }
 
   public getUserId() {
     return CookieHelper.getCookie(`${environment.team}_${CookieKey.USER_ID}`) || "";
@@ -132,16 +141,20 @@ export class AuthenticationService {
     return this._httpService.post<AuthenticationResponse>(url, refresh);
   }
 
+  getIpInformation() {
+    return this._httpService.get('https://ipinfo.io?token=cd6d6696ae1c97');
+  }
+
+  saveIpInformation(ipinfoText: any) {
+    CookieHelper.setCookie(`${environment.team}_${CookieKey.IP_INFORMATION}`, ipinfoText, 1 / 480);
+  }
+
   /**
    * ping check live token
    */
   ping() {
     const url = `${this.auth_api_url}/authentication/ping?uid=${this.getUserId()}`;
     return this._httpService.get<string>(url);
-  }
-
-  getIpInformation() {
-    return this._httpService.get('https://ipinfo.io?token=cd6d6696ae1c97');
   }
 
   /**

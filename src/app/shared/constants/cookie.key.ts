@@ -1,5 +1,6 @@
 export class CookieKey {
   public static readonly SETTING = 'setting';
+  public static readonly IP_INFORMATION = 'ip_information'
   public static readonly LOGGED_IN = 'is_logged_in';
   public static readonly USER_ID = 'user_id';
   public static readonly ACCESS_TOKEN = 'access_token';
