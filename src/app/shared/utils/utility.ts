@@ -1,6 +1,7 @@
 import { environment } from "src/environments/environment";
 import { SnackBar } from "../components/snackbar/snackbar.component";
 import { CookieKey } from "../constants/cookie.key";
+import { DeviceType } from "../enumerations/device.enum";
 import { CookieHelper } from "../helpers/cookie.hepler";
 import { StringHelper } from "../helpers/string.helper";
 import { SnackBarParameter } from "../models/snackbar/snackbar.param";
@@ -24,5 +25,12 @@ export class Utility {
   public static formatCurrency(value: string | number) {
     const re = '\\d(?=(\\d{3})+$)';
     return parseInt(value + "").toFixed(Math.max(0, ~~0)).replace(new RegExp(re, 'g'), '$&,');
+  }
+
+  public static getDevice(): DeviceType {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      return DeviceType.Mobile;
+    }
+    return DeviceType.Desktop;
   }
 }

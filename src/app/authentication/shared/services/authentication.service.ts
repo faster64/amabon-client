@@ -136,6 +136,12 @@ export class AuthenticationService {
     return this._httpService.get<string>(url);
   }
 
+  getIpAddress() {
+    this._httpService.get('https://cors-anywhere.herokuapp.com/https://checkip.amazonaws.com').subscribe(response => {
+      console.log(response);
+    });
+  }
+
   /**
    * Đăng ký
    */

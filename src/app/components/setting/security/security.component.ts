@@ -74,8 +74,8 @@ export class SecurityComponent extends BaseComponent {
 
   initDisplayColumn() {
     this.displayColumn.push({displayText: "Thiết bị", column: "Device", width: 140, sortable: false});
-    this.displayColumn.push({displayText: "Trình duyệt", column: "Browser", width: 120, sortable: false});
-    this.displayColumn.push({displayText: "Hệ điều hành", column: "OS", width: 120, sortable: false});
+    this.displayColumn.push({displayText: "Trình duyệt", column: "Browser", width: 150, sortable: false});
+    this.displayColumn.push({displayText: "Hệ điều hành", column: "OS", width: 140, sortable: false});
     this.displayColumn.push({displayText: "IP", column: "IP", width: 120, sortable: false});
     this.displayColumn.push({displayText: "Thời gian", column: "Other", width: 160, sortable: false});
   }

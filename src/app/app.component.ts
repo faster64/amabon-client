@@ -6,8 +6,10 @@ import { HeaderComponent } from 'src/app/shared/components/header/header.compone
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from './authentication/shared/services/authentication.service';
 import { Routing } from './shared/constants/common.constant';
+import { DeviceType } from './shared/enumerations/device.enum';
 import { SettingService } from './shared/services/base/setting.service';
 import { TransferDataService } from './shared/services/transfer/transfer-data.service';
+import { Utility } from './shared/utils/utility';
 
 @Component({
   selector: 'app-root',
@@ -48,6 +50,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.detectDevice();
     this.initData();
     this.eventSubscribe();
   }
@@ -178,6 +181,13 @@ export class AppComponent implements OnInit, OnDestroy {
     } else {
       htmlElement.style.left = "180px";
     }
+  }
+
+  detectDevice() {
+    const deviceType = Utility.getDevice();
+    console.log(navigator.userAgent);
+    console.log("Phát hiện loại thiết bị đang sử dụng: " + (deviceType === DeviceType.Mobile ? '[MOBILE]' : '[DESKTOP]'));
+    this.authenticationService.getIpAddress();
   }
 
   /**
