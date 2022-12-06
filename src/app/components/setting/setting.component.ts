@@ -66,8 +66,6 @@ export class SettingComponent extends BaseComponent {
   }
 
   saveChanges() {
-    console.log(this.security.mfa);
-
     const mfa = this.security.mfa;
     if (mfa.enabled && mfa.type === MfaType.None) {
       mfa.type = MfaType.Email;

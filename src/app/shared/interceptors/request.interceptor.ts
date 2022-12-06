@@ -53,49 +53,59 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === HttpStatusCode.Unauthorized) {
-          return this.handleUnauthorized(request, next);
+        switch (error.status) {
+          case HttpStatusCode.Unauthorized:
+            return this.handleUnauthorized(request, next);
 
-        } else if (error.status === HttpStatusCode.Forbidden) {
-          SnackBar.openSnackBarDanger(new SnackBarParameter(null, PerrmisionConstant.NOT_PERMISSION, '', SnackBar.forever));
+          case HttpStatusCodeExtension.MissingClientInfo:
+            return this.handle901(request, next);
 
+          case HttpStatusCode.Forbidden:
+            SnackBar.openSnackBarDanger(new SnackBarParameter(null, PerrmisionConstant.NOT_PERMISSION, '', SnackBar.forever));
+            break;
+
+          case HttpStatusCode.TooManyRequests:
+            MessageBox.information(new Message(this, { content: "Spam detected!" }));
+            break;
+
+          default:
+            if (this.errorStatus.includes(error.status)) {
+              const enableShowError = environment.enableShowError;
+              if (!enableShowError && this.checkShowMessgae(error)) {
+                MessageBox.information(new Message(this, { content: ErrorMessageConstant.HAS_ERROR_MESSAGE }));
+              }
+              else if (this.checkShowMessgae(error)) {
+                MessageBox.information(new Message(this, { content: `${error.message}` }));
+              }
+            }
+            break;
         }
-        else if (error.status === HttpStatusCodeExtension.MissingClientInfo) {
-          return this.handle901(request, next);
-
-        } else if (error.status === HttpStatusCode.TooManyRequests) {
-          MessageBox.information(new Message(this, { content: "Chú request hơi nhiều rồi đọ" }));
-
-        } else if (this.errorStatus.includes(error.status)) {
-
-          const enableShowError = environment.enableShowError;
-          if (!enableShowError && this.checkShowMessgae(error)) {
-            MessageBox.information(new Message(this, { content: ErrorMessageConstant.HAS_ERROR_MESSAGE }));
-          }
-          else if (this.checkShowMessgae(error)) {
-            MessageBox.information(new Message(this, { content: `${error.message}` }));
-          }
-        }
-
         return throwError(error.error);
       })
     );
   }
 
-  handle901(request: HttpRequest<unknown>, next: HttpHandler) {
+  handle901(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     if (this.authenticationService.takingInfo) {
       return this.takeInfomationSubject.pipe(
-        filter(token => token != null),
+        filter(v => v != null),
         take(1),
         switchMap(() => {
-          return next.handle(this.injectToken(request));
+          return next.handle(this.injectToken(request)).pipe(
+            // xử lý case 901 xong thì 401
+            catchError((error: HttpErrorResponse) => {
+              if (error.status === HttpStatusCode.Unauthorized) {
+                return this.handleUnauthorized(request, next);
+              }
+              return throwError(error.error);
+            })
+          );
         })
       );
     }
     this.authenticationService.takingInfo = true;
     return this.authenticationService.getIpInformation().pipe(
       switchMap(response => {
-
         this.authenticationService.takingInfo = false;
         this.authenticationService.ipInformation = response;
         this.authenticationService.saveIpInformation(JSON.stringify(response));
@@ -103,8 +113,13 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
 
         return next.handle(this.injectToken(request));
       }),
-      catchError(error => {
+      catchError((error: HttpErrorResponse) => {
         this.authenticationService.takingInfo = false;
+
+        // xử lý case 901 xong thì 401
+        if (error.status === HttpStatusCode.Unauthorized) {
+          return this.handleUnauthorized(request, next);
+        }
         return throwError(error.error);
       })
     )
@@ -113,15 +128,14 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
   /**
    * Xử lý khi unauthorized
    */
-  handleUnauthorized(request: HttpRequest<unknown>, next: HttpHandler) {
-
+  handleUnauthorized(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     // 1 vài request ko refresh token
     if (request.url.includes("logout")) {
       return throwError("");
     }
 
     // Nếu đang refresh thì request khác đợi
-    if (this.authenticationService.isRefreshing) {
+    if (this.authenticationService.refreshing) {
       return this.refreshTokenSubject.pipe(
         filter(token => token != null),
         take(1),
@@ -130,31 +144,29 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
         })
       );
     }
-    else {
-      this.authenticationService.isRefreshing = true;
-      return this.refreshToken().pipe(
-        switchMap(response => {
 
-          this.authenticationService.isRefreshing = false;
-          // success thì tiếp tục request
-          if (response.code == HttpStatusCode.Ok) {
-            CookieHelper.setCookie(`${environment.team}_${CookieKey.LOGGED_IN}`, '1', this.authenticationService.cookieExprie);
-            this.authenticationService.saveAuthConfig(response);
-            this.refreshTokenSubject.next(response.accessToken);
+    this.authenticationService.refreshing = true;
+    return this.refreshToken().pipe(
+      switchMap(response => {
+        this.authenticationService.refreshing = false;
+        // success thì tiếp tục request
+        if (response.code == HttpStatusCode.Ok) {
+          CookieHelper.setCookie(`${environment.team}_${CookieKey.LOGGED_IN}`, '1', this.authenticationService.cookieExprie);
+          this.authenticationService.saveAuthConfig(response);
+          this.refreshTokenSubject.next(response.accessToken);
 
-          } else {
-            this.logout();
-            return throwError("");
-          }
+        } else {
+          this.logout();
+          return throwError("");
+        }
 
-          return next.handle(this.injectToken(request));
-        }),
-        catchError(error => {
-          this.authenticationService.isRefreshing = false;
-          return throwError(error.error);
-        })
-      )
-    }
+        return next.handle(this.injectToken(request));
+      }),
+      catchError((e: HttpErrorResponse) => {
+        this.authenticationService.refreshing = false;
+        return throwError(e.error);
+      })
+    )
   }
 
   /**

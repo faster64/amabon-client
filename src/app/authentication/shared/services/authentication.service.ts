@@ -64,7 +64,7 @@ export class AuthenticationService {
   /**
    * True nếu đang refresh token, otherwise false
    */
-  public isRefreshing = false;
+  public refreshing = false;
 
   public takingInfo = false;
 
@@ -79,7 +79,6 @@ export class AuthenticationService {
     } else {
       this.ipInformation = null;
     }
-
   }
 
   public getUserId() {

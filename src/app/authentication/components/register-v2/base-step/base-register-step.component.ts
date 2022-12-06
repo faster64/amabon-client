@@ -44,7 +44,6 @@ export class BaseRegisterStepComponent extends BaseComponent {
   }
 
   checkRefId() {
-    console.log(this.activatedRoute.snapshot.queryParams)
     this.refId = this.activatedRoute.snapshot.queryParams["refId"];
     if (StringHelper.isNullOrEmpty(this.refId) || this.refId.length !== 36) {
       this.router.navigate([`/${Routing.REGISTER.path}/step1`]);

@@ -13,7 +13,7 @@ export class LoginLog extends BaseModel {
 
   public MAC = "";
 
-  public IPInformation: any;
+  public IpInformation: any;
 
-  public Other = "";
+  public More = "";
 }
