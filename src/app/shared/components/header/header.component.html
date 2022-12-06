@@ -33,14 +33,9 @@
     <div class="second-row">
         <div class="modules">
             <ng-container *ngFor="let module of modules; index as i">
-                <div #modules *ngIf="i < breakPointIndex" class="module" [ngClass]="currentIndex == i ? 'checked' : ''" (click)="redirect(module.path, i)" [matTooltip]="module.moduleName">
+                <div #modules *ngIf="i < breakPointIndex" class="module" [ngClass]="currentIndex == i ? 'checked' : ''" (click)="redirect(module.path, i)" [matTooltip]="module.hint != '' ? module.hint: module.moduleName">
                     <div class="inner-module" [ngClass]="module.path">
-                        <div class="icon" [ngStyle]="{
-                backgroundPosition:
-                  currentIndex != i
-                    ? module.iconPosition
-                    : module.iconCheckedPosition
-              }"></div>
+                        <div class="icon" [ngStyle]="{backgroundPosition: currentIndex != i ? module.iconPosition : module.iconCheckedPosition}"></div>
                         <a class="text" [routerLink]="'/' + module.path" [innerHTML]="module.moduleName"></a>
                     </div>
                 </div>
@@ -96,14 +91,9 @@
 <mat-menu #otherModule>
     <div class="other-module">
         <ng-container *ngFor="let module of modules; index as i">
-            <div #modulesR *ngIf="i >= breakPointIndex" class="module" [ngClass]="currentIndex == i ? 'checked' : ''" (click)="redirect(module.path, i)" [matTooltip]="module.moduleName">
+            <div #modulesR *ngIf="i >= breakPointIndex" class="module" [ngClass]="currentIndex == i ? 'checked' : ''" (click)="redirect(module.path, i)" [matTooltip]="module.hint != '' ? module.hint: module.moduleName">
                 <div class="inner-module" [ngClass]="module.path">
-                    <div class="icon" [ngStyle]="{
-              backgroundPosition:
-                currentIndex != i
-                  ? module.iconPosition
-                  : module.iconCheckedPosition
-            }"></div>
+                    <div class="icon" [ngStyle]="{ backgroundPosition: currentIndex != i ? module.iconPosition : module.iconCheckedPosition }"></div>
                     <a class="text" [routerLink]="'/' + module.path" [innerHTML]="module.moduleName"></a>
                 </div>
             </div>

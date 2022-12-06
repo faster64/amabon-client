@@ -30,6 +30,7 @@ interface ModuleHeader {
   path: string;
   iconPosition: string;
   iconCheckedPosition: string;
+  hint: string;
 }
 
 @Component({
@@ -176,36 +177,42 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
       moduleName: Routing.DASHBOARD.name,
       iconPosition: '0 -272px',
       iconCheckedPosition: '0px -288px',
+      hint: '',
     });
     // this.modules.push({
     //   path: Routing.TAX_CONVERTER,
     //   moduleName: 'Thuế converter',
     //   iconPosition: '0px -304px',
     //   iconCheckedPosition: '-16px -304px',
+    //   hint: '',
     // });
     this.modules.push({
       path: Routing.SECRET_FILES.path,
       moduleName: Routing.SECRET_FILES.name,
       iconPosition: '-128px -272px',
       iconCheckedPosition: '-128px -287px',
+      hint: '',
     });
     this.modules.push({
       path: Routing.AMAZON_STORAGE.path,
       moduleName: Routing.AMAZON_STORAGE.name,
       iconPosition: '-16px -48px',
       iconCheckedPosition: '-144px -240px',
+      hint: 'Kho lưu trữ',
     });
     this.modules.push({
       path: Routing.CALENDAR_CONVERTER.path,
       moduleName: Routing.CALENDAR_CONVERTER.name,
       iconPosition: '-63px -272px',
       iconCheckedPosition: '-63px -288px',
+      hint: '',
     });
     this.modules.push({
       path: Routing.CONTACT.path,
       moduleName: Routing.CONTACT.name,
       iconPosition: '0px -64px',
       iconCheckedPosition: '-384px -272px',
+      hint: '',
     });
   }
 
