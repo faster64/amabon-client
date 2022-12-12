@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -15,6 +15,7 @@ import { RequestHandlingInterceptor } from './shared/interceptors/request.interc
 import { SharedModule } from './shared/shared.module';
 // import { OnlineStatusModule } from 'ngx-online-status';
 import { UpdateAvatarPopupComponent } from './components/user/popups/update-avatar-popup/update-avatar-popup.component';
+import { GlobalErrorHandler } from './shared/core/global-error-handler';
 
 // import {
 //   SocialLoginModule,
@@ -52,6 +53,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     // SocialLoginModule
   ],
   providers: [
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler,
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RequestHandlingInterceptor,
