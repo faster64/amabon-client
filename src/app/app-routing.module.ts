@@ -101,7 +101,6 @@ const routes: Routes = [
   {
     path: Routing.CALENDAR_CONVERTER.path,
     loadChildren: () => import('./components/calendar-converter/calendar-converter.module').then(m => m.CalendarConverterModule),
-    canActivate: [BaseGuard],
     resolve: {
       resolver: BaseResolver,
     },
