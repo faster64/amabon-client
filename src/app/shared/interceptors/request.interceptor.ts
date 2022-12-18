@@ -182,7 +182,7 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
         // 'Accept': 'application/json',
         'Accept': '*/*',
         'Authorization': `Bearer ${this.authenticationService.getAccessToken()}`,
-        'X-Amabon-Client': this.authenticationService.ipInformation ? JSON.stringify(this.authenticationService.ipInformation) : ""
+        'X-Amazon3-Client': this.authenticationService.ipInformation ? JSON.stringify(this.authenticationService.ipInformation) : ""
       },
     });
   }
