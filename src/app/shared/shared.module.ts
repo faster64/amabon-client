@@ -11,6 +11,8 @@ import { HeaderModule } from "./components/header/header.module";
 import { SwtFilterModule } from "./components/swt-filter/swt-filter.module";
 import { DxFileUploaderModule, DxProgressBarModule } from "devextreme-angular";
 import { FirstCheckComponent } from './components/first-check.component';
+import { SwtUploaderComponent } from './components/swt-uploader/swt-uploader.component';
+import { SwtUploaderModule } from "./components/swt-uploader/swt-uploader.module";
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { FirstCheckComponent } from './components/first-check.component';
     SwtFilterModule,
     DxFileUploaderModule,
     DxProgressBarModule,
+    SwtUploaderModule,
   ],
   exports: [
     SwtLoadingModule,
@@ -42,6 +45,7 @@ import { FirstCheckComponent } from './components/first-check.component';
     SwtFilterModule,
     DxFileUploaderModule,
     DxProgressBarModule,
+    SwtUploaderModule,
   ]
 })
 export class SharedModule { }

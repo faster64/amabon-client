@@ -11,9 +11,9 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     handleError(error: any) {
         // Check if it's an error from an HTTP response
-        if (!(error instanceof HttpErrorResponse)) {
-            error = error.rejection; // get the error object
-        }
+        // if (!(error instanceof HttpErrorResponse)) {
+        //     error = error.rejection; // get the error object
+        // }
         this.zone.run(() => {
             MessageBox.information(new Message(null, { content: `Exception: ${error?.message}` }))
         });

@@ -7,6 +7,33 @@ import { StringHelper } from "../helpers/string.helper";
 import { SnackBarParameter } from "../models/snackbar/snackbar.param";
 
 export class Utility {
+  public static videoExtensions = [
+    "m2v",
+    "mpg",
+    "mp2",
+    "mpeg",
+    "mpe",
+    "mpv",
+    "mp4",
+    "m4p",
+    "m4v",
+    "mov",
+  ];
+
+  public static imageExtensions = [
+    "apng",
+    "avif",
+    "gif",
+    "jpg",
+    "jpeg",
+    "jfif",
+    "pjpeg ",
+    "pjp",
+    "png",
+    "svg",
+    "webp",
+  ];
+
   public static changeTitle(title: string) {
     if (title.isNullOrEmpty())
       return;
@@ -32,5 +59,13 @@ export class Utility {
       return DeviceType.Mobile;
     }
     return DeviceType.Desktop;
+  }
+
+  public static isVideo(url: string) {
+    return this.videoExtensions.find(ext => url.toLowerCase().includes(`.${ext}`)) != null;
+  }
+
+  public static isImage(url: string) {
+    return this.imageExtensions.find(ext => url.toLowerCase().includes(`.${ext}`)) != null;
   }
 }

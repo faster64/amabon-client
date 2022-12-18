@@ -8,9 +8,11 @@ import { SwtButtonModule } from 'src/app/shared/components/swt-button/swt-button
 import { SwtLoadingModule } from 'src/app/shared/components/loading/swt-loading.module';
 import { FilesInFolderComponent } from './files-in-folder/files-in-folder.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { SwtUploaderModule } from 'src/app/shared/components/swt-uploader/swt-uploader.module';
+import { StorageUploadPopupComponent } from './storage-upload-popup/storage-upload-popup.component';
 
 @NgModule({
-  declarations: [SecretFilesComponent, FilesInFolderComponent],
+  declarations: [SecretFilesComponent, FilesInFolderComponent, StorageUploadPopupComponent],
   imports: [
     CommonModule,
     SecretFilesRoutingModule,
@@ -18,6 +20,7 @@ import { MatMenuModule } from '@angular/material/menu';
     SwtButtonModule,
     SwtLoadingModule,
     MatMenuModule,
+    SwtUploaderModule,
   ],
   exports: [SecretFilesComponent, FilesInFolderComponent],
 })

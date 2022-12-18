@@ -3,9 +3,11 @@
         <div class="total-and-upload">
             <p class="total">{{imageCount}} image(s) - {{videoCount}} video(s)</p>
             <div class="btns">
-                <swt-button [actionPermissions]="[ActionPermission.Add]" [matMenuTriggerFor]="uploadMenu" text="Upload file" [finishImmediately]="true" [width]="80" [height]="28" [color]="ButtonColor.BASIC"></swt-button>
+                <swt-button [actionPermissions]="[ActionPermission.Add]" [matMenuTriggerFor]="uploadMenu" text="Upload type 1" [finishImmediately]="true" [width]="100" [height]="28" [color]="ButtonColor.BASIC"></swt-button>
 
-                <swt-button [actionPermissions]="[ActionPermission.Delete]" #clearCacheBtn text="Clear cache" [width]="80" [height]="28" [color]="ButtonColor.WARN" (onClick)="clearCache()"></swt-button>
+                <swt-button [actionPermissions]="[ActionPermission.Add]" text="Upload type 2" [finishImmediately]="true" [width]="100" [height]="28" [color]="ButtonColor.BASIC" (onClick)="openUploader()"></swt-button>
+
+                <swt-button #clearCacheBtn text="Clear cache" [width]="80" [height]="28" [color]="ButtonColor.WARN" (onClick)="clearCache()"></swt-button>
             </div>
         </div>
         <div class="file" *ngFor="let url of urls">

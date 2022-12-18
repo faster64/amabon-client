@@ -1,5 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Component, HostListener, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from 'src/app/shared/components/base-component';
 import { MessageBox } from 'src/app/shared/components/message-box/message-box.component';
@@ -9,7 +10,10 @@ import { ServiceResult } from 'src/app/shared/models/base/service-result';
 import { Message } from 'src/app/shared/models/message/message';
 import { FileStorage } from 'src/app/shared/models/storage/file/file.model';
 import { BaseService } from 'src/app/shared/services/base/base.service';
+import { PopupService } from 'src/app/shared/services/base/popup.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
+import { Utility } from 'src/app/shared/utils/utility';
+import { StorageUploadPopupComponent } from '../storage-upload-popup/storage-upload-popup.component';
 
 @Component({
   selector: 'app-files-in-folder',
@@ -36,14 +40,16 @@ export class FilesInFolderComponent extends BaseComponent {
 
   @HostListener('scroll', ['$event'])
   onScroll(event: any) {
-    const currentScrollValue = event.target.offsetHeight + event.target.scrollTop;
-    console.log(event.target.scrollHeight, currentScrollValue)
+    // const currentScrollValue = event.target.offsetHeight + event.target.scrollTop;
+    // console.log(event.target.scrollHeight, currentScrollValue)
   }
 
   constructor(
     baseService: BaseService,
     public storageService: StorageService,
-    public activatedRoute: ActivatedRoute
+    public activatedRoute: ActivatedRoute,
+    public diaglog: MatDialog,
+    public popupService: PopupService,
   ) {
     super(baseService);
   }
@@ -69,7 +75,7 @@ export class FilesInFolderComponent extends BaseComponent {
           this.urls = response.data.map((f: FileStorage) => {
             return {
               url: f.presignedUrl,
-              isVideo: this.isVideo(f.presignedUrl),
+              isVideo: Utility.isVideo(f.presignedUrl),
             }
           });
 
@@ -92,41 +98,9 @@ export class FilesInFolderComponent extends BaseComponent {
     })
   }
 
-  isVideo(url: string) {
-    const videoExtensions = [
-      "m2v",
-      "mpg",
-      "mp2",
-      "mpeg",
-      "mpe",
-      "mpv",
-      "mp4",
-      "m4p",
-      "m4v",
-      "mov",
-    ];
-
-    return videoExtensions.find(ext => url.toLowerCase().includes(`.${ext}`)) != null;
-  }
-
-  isImage(url: string) {
-    const imageExtensions = [
-      "apng",
-      "avif",
-      "gif",
-      "jpg",
-      "jpeg",
-      "jfif",
-      "pjpeg ",
-      "pjp",
-      "png",
-      "svg",
-      "webp",
-    ];
-
-    return imageExtensions.find(ext => url.toLowerCase().includes(`.${ext}`)) != null;
-  }
-
+  /**
+   * Obsolete
+   */
   selectedFile(files: any) {
     this.formData = new FormData();
     for (let i = 0; i < files.length; i++) {
@@ -134,11 +108,17 @@ export class FilesInFolderComponent extends BaseComponent {
     }
   }
 
+  /**
+   * Obsolete
+   */
   resetFiles() {
     this.fileInput.nativeElement.value = null;
     this.formData = new FormData();
   }
 
+  /**
+   * Obsolete
+   */
   saveFiles() {
     const header = new HttpHeaders();
     header.append('Content-Type', 'undefined');
@@ -167,6 +147,26 @@ export class FilesInFolderComponent extends BaseComponent {
         MessageBox.information(new Message(null, { content: response.message }));
       }
     })
+  }
+
+  openUploader() {
+    const config = this.popupService.getBaseConfig();
+    config.data = {
+      folderName: this.folderName,
+    }
+    this.diaglog.open(StorageUploadPopupComponent, config).afterClosed().subscribe(
+      (response: ServiceResult) => {
+        if(response) {
+          if (response.success) {
+            this.loadFileInFolder(this.folderName);
+            MessageBox.information(new Message(null, { content: "Uploaded successfully!" }));
+          } else {
+            MessageBox.information(new Message(null, { content: response.message }));
+          }
+        }
+      },
+      error => MessageBox.information(new Message(null, { content: JSON.stringify(error) }))
+    );
   }
 }
 

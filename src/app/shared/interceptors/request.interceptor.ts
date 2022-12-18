@@ -167,6 +167,7 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
         return throwError(e.error);
       })
     )
+
   }
 
   /**
@@ -182,7 +183,7 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
         // 'Accept': 'application/json',
         'Accept': '*/*',
         'Authorization': `Bearer ${this.authenticationService.getAccessToken()}`,
-        'X-Amazon3-Client': this.authenticationService.ipInformation ? JSON.stringify(this.authenticationService.ipInformation) : ""
+        'X-Amabon-Client': this.authenticationService.ipInformation ? JSON.stringify(this.authenticationService.ipInformation) : "",
       },
     });
   }
