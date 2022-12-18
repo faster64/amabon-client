@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DxTextBoxComponent } from 'devextreme-angular';
 import { BaseComponent } from 'src/app/shared/components/base-component';
@@ -8,17 +8,17 @@ import { SwtEditorComponent } from 'src/app/shared/components/swt-editor/swt-edi
 import { Routing } from 'src/app/shared/constants/common.constant';
 import { FormMode } from 'src/app/shared/enumerations/common.enum';
 import { StringHelper } from 'src/app/shared/helpers/string.helper';
-import { Article } from 'src/app/shared/models/amazon-storage/article.model';
 import { Message } from 'src/app/shared/models/message/message';
-import { AmazonStorageService } from 'src/app/shared/services/amazon-storage/amazon-storage.service';
+import { Article } from 'src/app/shared/models/note-taking/article.model';
 import { BaseService } from 'src/app/shared/services/base/base.service';
+import { NoteTakingService } from 'src/app/shared/services/note-taking/note-taking.service';
 
 @Component({
-  selector: 'amazon-store-form',
-  templateUrl: './amazon-store-form.component.html',
-  styleUrls: ['./amazon-store-form.component.scss']
+  selector: 'note-taking-form',
+  templateUrl: './note-taking-form.component.html',
+  styleUrls: ['./note-taking-form.component.scss']
 })
-export class AmazonStoreCreateComponent extends BaseComponent implements AfterViewInit {
+export class NoteTakingCreateComponent extends BaseComponent implements AfterViewInit {
 
   FormMode = FormMode;
 
@@ -42,7 +42,7 @@ export class AmazonStoreCreateComponent extends BaseComponent implements AfterVi
 
   constructor(
     baseService: BaseService,
-    public amazonStorageService: AmazonStorageService,
+    public noteTakingService: NoteTakingService,
     public router: Router,
     public activatedRoute: ActivatedRoute,
   ) {
@@ -73,7 +73,7 @@ export class AmazonStoreCreateComponent extends BaseComponent implements AfterVi
 
   getMasterData() {
     this.isLoading = true;
-    this.amazonStorageService.getById("", this.maserId).subscribe(response => {
+    this.noteTakingService.getById("", this.maserId).subscribe(response => {
       this.isLoading = false;
       if (response.success) {
         this.article = response.data;
@@ -88,7 +88,7 @@ export class AmazonStoreCreateComponent extends BaseComponent implements AfterVi
       return;
     }
 
-    const api = this.formMode === FormMode.Edit ? this.amazonStorageService.update("", this.article) : this.amazonStorageService.save("", [this.article]);
+    const api = this.formMode === FormMode.Edit ? this.noteTakingService.update("", this.article) : this.noteTakingService.save("", [this.article]);
     api.subscribe(
       response => {
         this.saveBtn.isFinished = true;
@@ -96,10 +96,10 @@ export class AmazonStoreCreateComponent extends BaseComponent implements AfterVi
           MessageBox.information(new Message(this, { content: "Success" }));
 
           if (this.formMode === FormMode.Add) {
-            this.router.navigateByUrl(`/${Routing.AMAZON_STORAGE.path}`);
+            this.router.navigateByUrl(`/${Routing.NOTE_TAKING.path}`);
           }
           else {
-            this.router.navigateByUrl(`/${Routing.AMAZON_STORAGE.path}/view/${this.maserId}`);
+            this.router.navigateByUrl(`/${Routing.NOTE_TAKING.path}/view/${this.maserId}`);
           }
 
         } else {
@@ -114,7 +114,7 @@ export class AmazonStoreCreateComponent extends BaseComponent implements AfterVi
   }
 
   cancel() {
-    this.router.navigateByUrl(`/${Routing.AMAZON_STORAGE.path}`);
+    this.router.navigateByUrl(`/${Routing.NOTE_TAKING.path}`);
   }
 
   validateBeforeSave(): boolean {
@@ -132,6 +132,6 @@ export class AmazonStoreCreateComponent extends BaseComponent implements AfterVi
   }
 
   redirectToEditForm() {
-    this.router.navigateByUrl(`/${Routing.AMAZON_STORAGE.path}/edit/${this.maserId}`);
+    this.router.navigateByUrl(`/${Routing.NOTE_TAKING.path}/edit/${this.maserId}`);
   }
 }

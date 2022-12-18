@@ -187,18 +187,18 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
     //   hint: '',
     // });
     this.modules.push({
-      path: Routing.SECRET_FILES.path,
-      moduleName: Routing.SECRET_FILES.name,
-      iconPosition: '-128px -272px',
-      iconCheckedPosition: '-128px -287px',
+      path: Routing.STORAGE.path,
+      moduleName: Routing.STORAGE.name,
+      iconPosition: '-16px -48px',
+      iconCheckedPosition: '-144px -240px',
       hint: '',
     });
     this.modules.push({
-      path: Routing.AMAZON_STORAGE.path,
-      moduleName: Routing.AMAZON_STORAGE.name,
-      iconPosition: '-16px -48px',
-      iconCheckedPosition: '-144px -240px',
-      hint: 'Kho lưu trữ',
+      path: Routing.NOTE_TAKING.path,
+      moduleName: Routing.NOTE_TAKING.name,
+      iconPosition: '-128px -272px',
+      iconCheckedPosition: '-128px -287px',
+      hint: '',
     });
     this.modules.push({
       path: Routing.CALENDAR_CONVERTER.path,

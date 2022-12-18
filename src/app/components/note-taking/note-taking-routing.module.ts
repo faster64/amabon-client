@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormMode } from 'src/app/shared/enumerations/common.enum';
-import { AmazonStoreCreateComponent } from './amazon-store-form/amazon-store-form.component';
-import { AmazonStoreListComponent } from './amazon-store-list/amazon-store-list.component';
+import { NoteTakingCreateComponent } from './note-taking-form/note-taking-form.component';
+import { NoteTakingListComponent } from './note-taking-list/note-taking-list.component';
 
 const routes: Routes = [
   {
@@ -12,22 +12,22 @@ const routes: Routes = [
   },
   {
     path: 'list',
-    component: AmazonStoreListComponent
+    component: NoteTakingListComponent
   },
   {
     path: 'create',
     data: { formMode: FormMode.Add },
-    component: AmazonStoreCreateComponent
+    component: NoteTakingCreateComponent
   },
   {
     path: 'view/:id',
     data: { formMode: FormMode.View },
-    component: AmazonStoreCreateComponent
+    component: NoteTakingCreateComponent
   },
   {
     path: 'edit/:id',
     data: { formMode: FormMode.Edit },
-    component: AmazonStoreCreateComponent
+    component: NoteTakingCreateComponent
   }
 ];
 
@@ -35,4 +35,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AmazonStoreRoutingModule { }
+export class NoteTakingRoutingModule { }

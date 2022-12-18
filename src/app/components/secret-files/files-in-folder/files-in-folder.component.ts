@@ -1,15 +1,15 @@
-import { HttpErrorResponse, HttpEventType, HttpHeaders } from '@angular/common/http';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
+import { Component, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from 'src/app/shared/components/base-component';
 import { MessageBox } from 'src/app/shared/components/message-box/message-box.component';
 import { SwtButton } from 'src/app/shared/components/swt-button/swt-button.component';
 import { FileType } from 'src/app/shared/enumerations/file-type.enum';
-import { File } from 'src/app/shared/models/amazon-file/file/file.model';
 import { ServiceResult } from 'src/app/shared/models/base/service-result';
 import { Message } from 'src/app/shared/models/message/message';
-import { AmazonFileService } from 'src/app/shared/services/amazon-file/amazon-file.service';
+import { FileStorage } from 'src/app/shared/models/storage/file/file.model';
 import { BaseService } from 'src/app/shared/services/base/base.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Component({
   selector: 'app-files-in-folder',
@@ -34,9 +34,15 @@ export class FilesInFolderComponent extends BaseComponent {
 
   @ViewChild("clearCacheBtn") clearCacheBtn!: SwtButton;
 
+  @HostListener('scroll', ['$event'])
+  onScroll(event: any) {
+    const currentScrollValue = event.target.offsetHeight + event.target.scrollTop;
+    console.log(event.target.scrollHeight, currentScrollValue)
+  }
+
   constructor(
     baseService: BaseService,
-    public amazonFileService: AmazonFileService,
+    public storageService: StorageService,
     public activatedRoute: ActivatedRoute
   ) {
     super(baseService);
@@ -56,11 +62,11 @@ export class FilesInFolderComponent extends BaseComponent {
 
   loadFileInFolder(folderName: string) {
     this.isLoading = true;
-    this.amazonFileService.loadFilesInFolder(folderName).subscribe({
+    this.storageService.loadFilesInFolder(folderName).subscribe({
       next: response => {
         this.isLoading = false;
         if (response.success) {
-          this.urls = response.data.map((f: File) => {
+          this.urls = response.data.map((f: FileStorage) => {
             return {
               url: f.presignedUrl,
               isVideo: this.isVideo(f.presignedUrl),
@@ -137,7 +143,7 @@ export class FilesInFolderComponent extends BaseComponent {
     const header = new HttpHeaders();
     header.append('Content-Type', 'undefined');
 
-    this.baseService.takeOriginHttpClient().post<ServiceResult>(`${this.baseService.getApiUrl()}/ams/amazon-file/upload?folder=${this.folderName}`, this.formData).subscribe(
+    this.baseService.takeOriginHttpClient().post<ServiceResult>(`${this.baseService.getApiUrl()}/${this.storageService.serviceName}/storage/upload?folder=${this.folderName}`, this.formData).subscribe(
       response => {
         this.saveFileBtn.isFinished = true;
         this.fileInput.nativeElement.value = null;
@@ -153,7 +159,7 @@ export class FilesInFolderComponent extends BaseComponent {
   }
 
   clearCache() {
-    this.amazonFileService.clearCache(this.folderName).subscribe(response => {
+    this.storageService.clearCache(this.folderName).subscribe(response => {
       this.clearCacheBtn.isFinished = true;
       if (response.success) {
         MessageBox.information(new Message(null, { content: "Clear successfully!" }));

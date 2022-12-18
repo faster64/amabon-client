@@ -29,8 +29,8 @@ export class Routing {
   public static readonly VERIFY_LOGIN = new RoutingConfig('authentication/login-verification', 'Xác thực bảo mật');
   public static readonly SETTING = new RoutingConfig('setting', 'Thiết lập');
   public static readonly DASHBOARD = new RoutingConfig('dashboard', 'Tổng quan');
-  public static readonly SECRET_FILES = new RoutingConfig('secret-files', 'Amazon3 Files Console');
-  public static readonly AMAZON_STORAGE = new RoutingConfig('amazon-storage', 'Amazon3 Store');
+  public static readonly STORAGE = new RoutingConfig('storage', 'Kho lưu trữ');
+  public static readonly NOTE_TAKING = new RoutingConfig('note-taking', 'Note Taking');
   public static readonly CONTACT = new RoutingConfig('contact', 'Liên hệ');
   public static readonly TAX_CONVERTER = new RoutingConfig('tax-converter', 'Bộ chuyển đổi thuế');
   public static readonly CALENDAR_CONVERTER = new RoutingConfig('calendar-converter', 'Bộ chuyển đổi lịch');

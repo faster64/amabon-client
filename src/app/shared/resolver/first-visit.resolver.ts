@@ -20,6 +20,6 @@ export class FirstVisitResolver<T> implements Resolve<T> {
   ) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<T> | Promise<T> | T | any {
-    return of('amazon3').pipe(delay(300));
+    return of('aws').pipe(delay(300));
   }
 }

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { File } from '../../models/amazon-file/file/file.model';
 import { PaginationRequest } from '../../models/base/pagination-request';
 import { ServiceResult } from '../../models/base/service-result';
 import { BaseService } from '../base/base.service';
@@ -8,26 +7,26 @@ import { HttpService } from '../base/http.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AmazonFileService extends BaseService {
+export class StorageService extends BaseService {
 
   constructor(http: HttpService) {
     super(http);
-    this.serviceName = "ams";
+    this.serviceName = "ass";
     this.controller = "folder";
   }
 
   loadFilesInFolder(folderName: string) {
-    const url = `${this.getApiUrl()}/${this.serviceName}/amazon-file/files-in-folder?folderName=${folderName}`;
+    const url = `${this.getApiUrl()}/${this.serviceName}/storage/files-in-folder?folderName=${folderName}`;
     return this.takeOriginHttpClient().get<ServiceResult>(url);
   }
 
   loadFilesPaging(folderName: string, paginationRequest: PaginationRequest) {
-    const url = `${this.getApiUrl()}/${this.serviceName}/amazon-file/files-paging?folderName=${folderName}`;
+    const url = `${this.getApiUrl()}/${this.serviceName}/storage/files-paging?folderName=${folderName}`;
     return this.takeOriginHttpClient().post<ServiceResult>(url, paginationRequest);
   }
 
   clearCache(folderName: string) {
-    const url = `${this.getApiUrl()}/${this.serviceName}/amazon-file/clear-cache?folderName=${folderName}`;
+    const url = `${this.getApiUrl()}/${this.serviceName}/storage/clear-cache?folderName=${folderName}`;
     return this.takeOriginHttpClient().get<ServiceResult>(url);
   }
 }

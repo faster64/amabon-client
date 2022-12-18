@@ -5,11 +5,11 @@ import { HttpService } from '../base/http.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AmazonStorageService extends BaseService {
+export class NoteTakingService extends BaseService {
 
   constructor(http: HttpService) {
     super(http);
-    this.serviceName = "ams2";
-    this.controller = "amazon-storage";
+    this.serviceName = "nts";
+    this.controller = "note-taking";
   }
 }

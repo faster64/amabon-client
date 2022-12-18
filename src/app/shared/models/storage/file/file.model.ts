@@ -1,6 +1,6 @@
 import { BaseModel } from "../../base/base-model";
 
-export class File extends BaseModel {
+export class FileStorage extends BaseModel {
   public presignedUrl = "";
   public licensedUrlTime = 0;
 }

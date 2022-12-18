@@ -77,25 +77,25 @@ const routes: Routes = [
     }
   },
   {
-    path: Routing.SECRET_FILES.path,
+    path: Routing.STORAGE.path,
     loadChildren: () => import('./components/secret-files/secret-files.module').then(m => m.SecretFilesModule),
     canActivate: [BaseGuard],
     resolve: {
       resolver: BaseResolver,
     },
     data: {
-      title: Routing.SECRET_FILES.name,
+      title: Routing.STORAGE.name,
     }
   },
   {
-    path: Routing.AMAZON_STORAGE.path,
-    loadChildren: () => import('./components/amazon-store/amazon-store.module').then(m => m.AmazonStoreModule),
+    path: Routing.NOTE_TAKING.path,
+    loadChildren: () => import('./components/note-taking/note-taking.module').then(m => m.NoteTakingModule),
     canActivate: [BaseGuard],
     resolve: {
       resolver: BaseResolver,
     },
     data: {
-      title: Routing.AMAZON_STORAGE.name,
+      title: Routing.NOTE_TAKING.name,
     }
   },
   {

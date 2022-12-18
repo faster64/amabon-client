@@ -8,12 +8,12 @@ import { SnackBar } from 'src/app/shared/components/snackbar/snackbar.component'
 import { SwtButton } from 'src/app/shared/components/swt-button/swt-button.component';
 import { Routing } from 'src/app/shared/constants/common.constant';
 import { SessionStorageKey } from 'src/app/shared/constants/sessionstorage.key';
-import { Folder } from 'src/app/shared/models/amazon-file/folder/folder.model';
 import { Message } from 'src/app/shared/models/message/message';
 import { SnackBarParameter } from 'src/app/shared/models/snackbar/snackbar.param';
-import { AmazonFileService } from 'src/app/shared/services/amazon-file/amazon-file.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { BaseService } from 'src/app/shared/services/base/base.service';
 import { environment } from 'src/environments/environment';
+import { Folder } from 'src/app/shared/models/storage/folder/folder.model';
 
 @Component({
   selector: 'app-secret-files',
@@ -37,7 +37,7 @@ export class SecretFilesComponent extends BaseComponent {
   constructor(
     baseService: BaseService,
     public authenticationService: AuthenticationService,
-    public amazonFileService: AmazonFileService,
+    public storageService: StorageService,
     public router: Router
   ) {
     super(baseService);
@@ -79,7 +79,7 @@ export class SecretFilesComponent extends BaseComponent {
 
   getFolders() {
     this.isLoading = true;
-    this.amazonFileService.getAll().subscribe(response => {
+    this.storageService.getAll().subscribe(response => {
       this.isLoading = false;
       if (response.success) {
         this.folders = response.data;
@@ -88,12 +88,12 @@ export class SecretFilesComponent extends BaseComponent {
   }
 
   redirectToFolder(folderName: string) {
-    this.router.navigateByUrl(`/${Routing.SECRET_FILES.path}/view-files/${folderName}`);
+    this.router.navigateByUrl(`/${Routing.STORAGE.path}/view-files/${folderName}`);
   }
 
   createFolder() {
     if (this.newFolder.trim() !== '') {
-      this.amazonFileService.save("", [{ folderName: this.newFolder }]).subscribe(response => {
+      this.storageService.save("", [{ folderName: this.newFolder }]).subscribe(response => {
         this.createFolderBtn.isFinished = true;
         if (response.success) {
           this.newFolder = "";
