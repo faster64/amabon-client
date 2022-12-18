@@ -109,6 +109,10 @@ const routes: Routes = [
     }
   },
   {
+    path: 'trigger-services',
+    loadChildren: () => import('./shared/components/swt-trigger-services/swt-trigger-services.module').then(m => m.SwtTriggerServicesModule),
+  },
+  {
     path: Routing.NOT_FOUND.path,
     loadChildren: () => import('./shared/components/not-found/swe-team-not-found.module').then(m => m.SWETeamNotFoundModule),
     resolve: {
