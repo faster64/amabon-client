@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SwtNotFound } from './swe-team-not-found.component';
+import { SwtNotFound } from './swt-not-found.component';
 
 const routes: Routes = [
   {

@@ -34,6 +34,7 @@ export class Routing {
   public static readonly CONTACT = new RoutingConfig('contact', 'Liên hệ');
   public static readonly TAX_CONVERTER = new RoutingConfig('tax-converter', 'Bộ chuyển đổi thuế');
   public static readonly CALENDAR_CONVERTER = new RoutingConfig('calendar-converter', 'Bộ chuyển đổi lịch');
+  public static readonly SALARY_CONVERTER = new RoutingConfig('salary-converter', 'Bộ chuyển đổi lương');
 }
 
 

@@ -45,7 +45,7 @@ export class SecretFilesComponent extends BaseComponent {
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.passSecurity = true || sessionStorage.getItem(`${environment.team}_${SessionStorageKey.PASSED_SECURITY}`) != null;
+    this.passSecurity = sessionStorage.getItem(`${environment.team}_${SessionStorageKey.PASSED_SECURITY}`) != null;
     if (this.passSecurity) {
       this.getFolders();
     }

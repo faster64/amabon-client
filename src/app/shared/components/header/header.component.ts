@@ -205,7 +205,14 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
       moduleName: Routing.CALENDAR_CONVERTER.name,
       iconPosition: '-63px -272px',
       iconCheckedPosition: '-63px -288px',
-      hint: '',
+      hint: 'Chuyển đổi lịch âm - dương',
+    });
+    this.modules.push({
+      path: Routing.SALARY_CONVERTER.path,
+      moduleName: Routing.SALARY_CONVERTER.name,
+      iconPosition: '-367px -456px',
+      iconCheckedPosition: '-351px -456px',
+      hint: 'Chuyển đổi lương và tính thuế',
     });
     this.modules.push({
       path: Routing.CONTACT.path,
