@@ -28,24 +28,24 @@
 
             <div class="converter-btn">
                 <div class="btn">
-                    <swt-button #btn1 text="GROSS sang NET" (onClick)="convert(1)"></swt-button>
+                    <swt-button #btn1 text="GROSS sang NET" (onClick)="convert(1)" [width]="160"></swt-button>
                 </div>
 
-                <!-- <div class="btn">
-                    <swt-button #btn2 text="NET sang GROSS" (onClick)="convert(2)"></swt-button>
-                </div> -->
+                <div class="btn">
+                  <swt-button #btn2 text="NET sang GROSS" (onClick)="convert(2)" [width]="160"></swt-button>
+              </div>
             </div>
         </div>
 
-        <div class="explain" *ngIf="isConverted">
+        <div class="result-and-explain" *ngIf="isConverted">
             <div class="result">
                 <div class="result-label">Kết quả</div>
                 <div class="converted-salary">
-                    <p>Lương GROSS</p>
+                    <p>Lương {{convertType == 1 ? 'GROSS' : 'NET'}}</p>
                     <p>{{salary | NumberFormatPipe}}</p>
                 </div>
                 <div class="converted-salary">
-                    <p>Lương NET</p>
+                    <p>Lương {{convertType == 1 ? 'NET' : 'GROSS'}}</p>
                     <p>{{realSalary | NumberFormatPipe}}</p>
                 </div>
                 <div class="converted-salary">
@@ -58,54 +58,68 @@
                 </div>
             </div>
 
-            <p class="explain-label">Diễn giải chi tiết</p>
+            <div class="explain">
+              <p class="explain-label">Diễn giải chi tiết</p>
 
-            <div class="current-value">
-                <p>Lương GROSS</p>
-                <p>{{salary | NumberFormatPipe}}</p>
+              <div class="current-value">
+                  <p>Lương GROSS</p>
+                  <p>{{gross | NumberFormatPipe}}</p>
+              </div>
+
+              <div class="explain-item social-insurance">
+                  <p class="detail-label">Bảo hiểm xã hội (8%)</p>
+                  <p>{{-socialInsuranceValue | NumberFormatPipe}}</p>
+              </div>
+              <div class="explain-item health-insurance">
+                  <p class="detail-label">Bảo hiểm y tế (1.5%)</p>
+                  <p>{{-healthInsuranceValue | NumberFormatPipe}}</p>
+              </div>
+              <div class="explain-item unemployment -insurance">
+                  <p class="detail-label">Bảo hiểm thất nghiệp (1%)</p>
+                  <p>{{-unemploymentInsuranceValue | NumberFormatPipe}}</p>
+              </div>
+
+              <div class="current-value">
+                  <p>Thu nhập trước thuế</p>
+                  <p>{{gross - insuranceValue | NumberFormatPipe}}</p>
+              </div>
+
+              <div class="explain-item">
+                  <p class="detail-label">Giảm trừ gia cảnh bản thân</p>
+                  <p>{{-11000000 | NumberFormatPipe}}</p>
+              </div>
+
+              <div class="explain-item">
+                  <p class="detail-label">Giảm trừ gia cảnh người phụ thuộc </p>
+                  <p>{{-(dependents * 4400000) | NumberFormatPipe}}</p>
+              </div>
+
+              <div class="current-value">
+                  <p>Thu nhập chịu thuế</p>
+                  <p>{{remainder | NumberFormatPipe}}</p>
+              </div>
+
+              <div class="explain-item">
+                  <p class="detail-label">Thuế thu nhập cá nhân</p>
+                  <p>{{-tax | NumberFormatPipe}}</p>
+              </div>
+
+              <div class="current-value">
+                  <p>Lương {{convertType == 1 ? 'NET' : 'GROSS'}}</p>
+                  <p>{{realSalary | NumberFormatPipe}}</p>
+              </div>
             </div>
 
-            <div class="explain-item social-insurance">
-                <p class="detail-label">Bảo hiểm xã hội (8%)</p>
-                <p>{{-socialInsuranceValue | NumberFormatPipe}}</p>
-            </div>
-            <div class="explain-item health-insurance">
-                <p class="detail-label">Bảo hiểm y tế (1.5%)</p>
-                <p>{{-healthInsuranceValue | NumberFormatPipe}}</p>
-            </div>
-            <div class="explain-item unemployment -insurance">
-                <p class="detail-label">Bảo hiểm thất nghiệp (1%)</p>
-                <p>{{-unemploymentInsuranceValue | NumberFormatPipe}}</p>
-            </div>
-
-            <div class="current-value">
-                <p>Thu nhập trước thuế</p>
-                <p>{{salary - insuranceValue | NumberFormatPipe}}</p>
-            </div>
-
-            <div class="explain-item">
-                <p class="detail-label">Giảm trừ gia cảnh bản thân</p>
-                <p>{{-11000000 | NumberFormatPipe}}</p>
-            </div>
-
-            <div class="explain-item">
-                <p class="detail-label">Giảm trừ gia cảnh người phụ thuộc </p>
-                <p>{{-(dependents * 4400000) | NumberFormatPipe}}</p>
-            </div>
-
-            <div class="current-value">
-                <p>Thu nhập chịu thuế</p>
-                <p>{{remainder | NumberFormatPipe}}</p>
-            </div>
-
-            <div class="explain-item">
-                <p class="detail-label">Thuế thu nhập cá nhân</p>
-                <p>{{-tax | NumberFormatPipe}}</p>
-            </div>
-
-            <div class="current-value">
-                <p>Lương NET</p>
-                <p>{{realSalary | NumberFormatPipe}}</p>
+            <div class="tax-detail">
+              <div class="tax-label">Chi tiết thuế</div>
+              <div class="item tax-detail-label">
+                <p>Mức chịu thuế</p>
+                <p>Tiền nộp</p>
+              </div>
+              <div class="item" *ngFor="let item of taxDetails">
+                <p>{{item.text}}</p>
+                <p>{{item.value | NumberFormatPipe}}</p>
+              </div>
             </div>
         </div>
     </div>

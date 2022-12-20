@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { BaseComponent } from 'src/app/shared/components/base-component';
 import { SnackBar } from 'src/app/shared/components/snackbar/snackbar.component';
 import { SwtButton } from 'src/app/shared/components/swt-button/swt-button.component';
+import { InsuranceByRegion } from 'src/app/shared/constants/insurance-by-region.constant';
 import { SnackBarParameter } from 'src/app/shared/models/snackbar/snackbar.param';
 import { BaseService } from 'src/app/shared/services/base/base.service';
 
@@ -13,9 +14,11 @@ import { BaseService } from 'src/app/shared/services/base/base.service';
 })
 export class SalaryConverterComponent extends BaseComponent {
 
-  salary = 21000000;
+  salary = 72860000;
 
-  baseSalary = 4432000;
+  gross = 0;
+
+  baseSalary = InsuranceByRegion.I;
 
   dependents = 0;
 
@@ -38,6 +41,16 @@ export class SalaryConverterComponent extends BaseComponent {
 
   breakOn = 0;
 
+  taxDetails: any[] = [
+    { text: 'Từ 0 -> 5 triệu VNĐ (5%)', value: 0 },
+    { text: 'Trên 5 triệu VNĐ đến 10 triệu VNĐ (10%)', value: 0 },
+    { text: 'Trên 10 triệu VNĐ đến 18 triệu VNĐ	(15%)', value: 0 },
+    { text: 'Trên 18 triệu VNĐ đến 32 triệu VNĐ	(20%)', value: 0 },
+    { text: 'Trên 32 triệu VNĐ đến 52 triệu VNĐ	(25%)', value: 0 },
+    { text: 'Trên 52 triệu VNĐ đến 80 triệu VNĐ	(30%)', value: 0 },
+    { text: 'Trên 80 triệu VNĐ (35%)', value: 0 }
+  ];
+
   remainder = 0;
 
   tax = 0;
@@ -45,6 +58,8 @@ export class SalaryConverterComponent extends BaseComponent {
   insuranceValue = 0;
 
   isConverted = false;
+
+  convertType = 1;
 
   @ViewChild("btn1")
   btn1!: SwtButton;
@@ -58,10 +73,70 @@ export class SalaryConverterComponent extends BaseComponent {
     super(baseService);
   }
 
+  grossToNet(value: number) {
+    // Tính thuê nhập trước thuế
+    const beforeTaxValue = value - this.insuranceValue;
+
+    // Kiểm tra xem TNTT đã >= 11 triệu chưa
+    if (beforeTaxValue < 11000000) {
+      this.getTaxDetail(1, beforeTaxValue);
+      return beforeTaxValue;
+    }
+    //  Thu nhập trước thuế	- 11tr - người phụ thuộc => thu nhập chịu thuế
+    this.remainder = beforeTaxValue - 11000000 - this.dependents * 4400000;
+
+    const result = this.getTaxValue(this.remainder);
+    this.tax = result['result'];
+    this.getTaxDetail(result['breakOn'], result['result']);
+    return beforeTaxValue - this.tax;
+  }
+
+  netToGross(value: number) {
+    const net = value;
+    let count = 1;
+
+    // Mức 1
+    let result = Math.ceil((net + 0.95 * this.insuranceValue - 220000 * this.dependents - 550000) / 0.95);
+
+    while (count++ <= 7 && Math.abs(value - this.grossToNet(result)) >= 1) {
+      // Mức 2
+      if (count === 2) {
+        result = Math.ceil((net + 0.9 * this.insuranceValue - 440000 * this.dependents - 1350000) / 0.9);
+      }
+
+      // Mức 3
+      if (count === 3) {
+        result = Math.ceil((net + 0.85 * this.insuranceValue - 660000 * this.dependents - 2400000) / 0.85);
+      }
+
+      // Mức 4
+      if (count === 4) {
+        result = Math.ceil((net + 0.8 * this.insuranceValue - 880000 * this.dependents - 3850000) / 0.8);
+      }
+
+      // Mức 5
+      if (count === 5) {
+        result = Math.ceil((net + 0.75 * this.insuranceValue - 1100000 * this.dependents - 6000000) / 0.75);
+      }
+
+      // Mức 6
+      if (count === 6) {
+        result = Math.ceil((net + 0.7 * this.insuranceValue - 1320000 * this.dependents - 9150000) / 0.7);
+      }
+
+      // Mức 7
+      if (count === 7) {
+        result = Math.ceil((net + 0.65 * this.insuranceValue - 1540000 * this.dependents - 13700000) / 0.65);
+      }
+    }
+    return result;
+  }
+
   convert(convertType: number) {
     if (!this.validateBeforeConvert())
       return;
 
+    this.convertType = convertType;
     this.socialInsuranceValue = this.baseSalary * 0.08;
     this.healthInsuranceValue = this.baseSalary * 0.015;
     this.unemploymentInsuranceValue = this.baseSalary * 0.01;
@@ -71,41 +146,17 @@ export class SalaryConverterComponent extends BaseComponent {
     /**
      * GROSS sang NET
      */
-
     if (convertType === 1) {
-      // Tính thuê nhập trước thuế
-      const beforeTaxValue = this.salary - this.insuranceValue;
-
-      // Kiểm tra xem TNTT đã >= 11 triệu chưa
-      if (beforeTaxValue < 11000000) {
-        this.realSalary = beforeTaxValue;
-
-      } else {
-        //  Thu nhập trước thuế	- 11tr - người phụ thuộc => thu nhập chịu thuế
-        this.remainder = beforeTaxValue - 11000000 - this.dependents * 4400000;
-        this.tax = this.getTaxValue(this.remainder)['result'];
-        this.realSalary = beforeTaxValue - this.tax;
-      }
+      this.gross = this.salary;
+      this.realSalary = this.grossToNet(this.salary);
     } else {
-      const net = this.salary;
-      let gross = this.salary;
-      let beforeTaxValue = gross - this.insuranceValue;
-      let re = beforeTaxValue - 11000000 - this.dependents * 4400000;
-      let tax = Math.ceil(this.getTaxValue(re)['result']);
-
-      while (net + this.insuranceValue + tax != gross) {
-        gross++;
-        console.log(gross);
-        beforeTaxValue = gross - this.insuranceValue;
-        re = beforeTaxValue - 11000000 - this.dependents * 4400000;
-        tax = Math.ceil(this.getTaxValue(re)['result']);
-      }
-      console.log(net + this.insuranceValue + tax);
+      this.realSalary = this.netToGross(this.salary);
+      this.gross = this.realSalary;
     }
 
     this.isConverted = true;
     this.btn1.isFinished = true;
-    // this.btn2.isFinished = true;
+    this.btn2.isFinished = true;
   }
 
   validateBeforeConvert() {
@@ -168,6 +219,24 @@ export class SalaryConverterComponent extends BaseComponent {
     // Mức 7
     result += value * 0.35;
     return { breakOn: 7, result: result };
+  }
+
+  getTaxDetail(breakOn: number, taxValue: number) {
+    this.maxDefault();
+    this.taxDetails[breakOn - 1].value = taxValue - this.taxDetails.filter( (item, index) => index < breakOn - 1).reduce((total: number, i: any) => total + i.value, 0);
+    for (let i = breakOn; i <= 6; i++) {
+      this.taxDetails[i].value = 0;
+    }
+  }
+
+  maxDefault() {
+    this.taxDetails[0].value = 250000;
+    this.taxDetails[1].value = 500000;
+    this.taxDetails[2].value = 1200000;
+    this.taxDetails[3].value = 2800000;
+    this.taxDetails[4].value = 5000000;
+    this.taxDetails[5].value = 8400000;
+    this.taxDetails[6].value = 0;
   }
 }
 

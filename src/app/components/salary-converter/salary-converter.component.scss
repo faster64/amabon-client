@@ -1,57 +1,77 @@
 .salary-converter {
-    height: 100%;
-    overflow: auto;
-    * {
-        font-size: 15px;
-    }
-    .converter {
-        max-width: 680px;
-        padding: 16px;
-        margin: 8px auto;
-        border: 1px solid rgb(132, 132, 132);
-        border-radius: 4px;
-        .input {
-            .input-item {
-                display: flex;
-                align-items: center;
-                margin-bottom: 24px;
-                label {
-                    width: 160px;
-                    font-weight: 600;
-                }
-            }
-            .converter-btn {
-                display: flex;
-                align-items: center;
-                justify-content: space-around;
-            }
+  height: 100%;
+  padding: 8px;
+  overflow: auto;
+  * {
+    font-size: 14px;
+  }
+  .converter {
+    max-width: 680px;
+    padding: 16px;
+    margin: 8px auto;
+    border: 1px solid rgb(132, 132, 132);
+    border-radius: 4px;
+    .input {
+      .input-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 24px;
+        label {
+          width: 180px;
+          font-weight: 600;
         }
-        .explain {
-            margin-top: 24px;
-            .explain-label,
-            .result-label {
-                margin: 16px 0;
-                font-weight: 600;
-                font-size: 17px;
-                color: rgb(13, 220, 13);
-            }
-            .explain-item,
-            .converted-salary,
-            .current-value {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 6px;
-                border-bottom: 1px solid #ddd;
-                p {
-                    font-weight: 600;
-                    margin: 0;
-                }
-            }
-            .current-value {
-                margin-bottom: 12px;
-                background-color: #ddd;
-            }
-        }
+      }
+      .converter-btn {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+      }
     }
+    .result-and-explain {
+      margin-top: 24px;
+      .explain-label,
+      .result-label,
+      .tax-label {
+        margin: 16px 0;
+        font-weight: 600;
+        font-size: 17px;
+        color: rgb(13, 220, 13);
+      }
+      .explain-item,
+      .converted-salary,
+      .current-value {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 6px;
+        border-bottom: 1px solid #ddd;
+        p {
+          font-weight: 600;
+          margin: 0;
+        }
+      }
+      .current-value {
+        margin-bottom: 12px;
+        background-color: #ddd;
+      }
+
+      .tax-detail {
+        .item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 6px;
+          p {
+            font-weight: 600;
+            margin: 0;
+          }
+        }
+
+        .tax-detail-label {
+          margin-bottom: 12px;
+          background-color: #ddd;
+        }
+      }
+    }
+  }
 }
