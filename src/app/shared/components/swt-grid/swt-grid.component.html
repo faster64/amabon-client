@@ -4,7 +4,7 @@
         <div #gridContentBody class="grid-content-body">
 
             <!-- table  -->
-            <div class="table" (scroll)="onScroll($event)">
+            <div #table class="table" (scroll)="onScroll($event)">
                 <!-- header  -->
                 <div class="table-header" [ngClass]="isLoading ? 'invisible' : ''">
 

@@ -69,6 +69,9 @@ export class SwtGridComponent extends BaseGridComponent implements OnChanges, On
   @ViewChild('gridContentBody')
   gridContentBody!: ElementRef;
 
+  @ViewChild('table')
+  table!: ElementRef;
+
   @ViewChild("checkAll")
   checkAllInstance!: DxCheckBoxComponent;
 

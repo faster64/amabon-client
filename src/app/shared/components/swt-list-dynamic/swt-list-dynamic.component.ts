@@ -138,6 +138,7 @@ export class ListDynamicComponent extends BaseComponent {
     this.total = 0;
     this.isFirstLoad = true;
     this.grid.changeAllCheckBox(false);
+    this.grid.table.nativeElement.scrollTop = 0; // reset scroll position
     this.getDataGrid();
   }
 
