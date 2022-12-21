@@ -22,7 +22,7 @@ export class FirstCheckComponent implements OnInit {
       if (environment.app_allows_guests || status === LoginStatus.LoggedIn) {
         this.router.navigate([`/${Routing.DASHBOARD.path}`]);
       } else {
-        this.router.navigate([`/${Routing.LOGIN.path}`]);
+        this.router.navigate([`/${Routing.SALARY_CONVERTER.path}`]);
       }
     }, 10);
   }
