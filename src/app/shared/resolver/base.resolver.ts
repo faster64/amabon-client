@@ -18,7 +18,7 @@ export class BaseResolver<T> implements Resolve<T> {
   ) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<T> | Promise<T> | T | any {
-    Utility.changeTitle(route.data["title"] || "Amabon Web Service");
+    Utility.changeTitle(route.data["title"] || "F8");
     return of('aws').pipe(delay(300));
   }
 }
