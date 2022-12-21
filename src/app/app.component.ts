@@ -1,6 +1,5 @@
 import { Component, ComponentFactoryResolver, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { ConnectionService } from 'ng-connection-service';
 import { fromEvent, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
