@@ -16,10 +16,9 @@ export class GlobalErrorHandler implements ErrorHandler {
     // }
     if (error) {
       this.zone.run(() => {
-        MessageBox.information(new Message(null, { content: `Exception: ${error?.message}` }))
+        // MessageBox.information(new Message(null, { content: `Exception: ${error?.message}` }))
       });
 
-      MessageBox.information(new Message(null, { content: `Exception: ${error?.message}` }));
       console.error('Error from global error handler', error);
     }
   }
