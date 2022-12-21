@@ -1,10 +1,11 @@
 import { Component, ComponentFactoryResolver, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { ConnectionService } from 'ng-connection-service';
+import { fromEvent, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
-import { environment } from 'src/environments/environment';
 import { AuthenticationService } from './authentication/shared/services/authentication.service';
+import { SnackBar } from './shared/components/snackbar/snackbar.component';
 import { Routing } from './shared/constants/common.constant';
 import { DeviceType } from './shared/enumerations/device.enum';
 import { SettingService } from './shared/services/base/setting.service';
@@ -39,18 +40,22 @@ export class AppComponent implements OnInit, OnDestroy {
 
   _onDestroySub: Subject<void> = new Subject<void>();
 
+  lostConnection = false;
+
   constructor(
     private transfer: TransferDataService,
     private authenticationService: AuthenticationService,
     private router: Router,
     private cfr: ComponentFactoryResolver,
     private settingService: SettingService,
+    private connectionService: ConnectionService,
   ) {
 
   }
 
   ngOnInit() {
     this.detectDevice();
+    this.detectInternet();
     this.initData();
     this.eventSubscribe();
   }
@@ -186,6 +191,29 @@ export class AppComponent implements OnInit, OnDestroy {
   detectDevice() {
     const deviceType = Utility.getDevice();
     console.log("Phát hiện loại thiết bị đang sử dụng: " + (deviceType === DeviceType.Mobile ? '[MOBILE]' : '[DESKTOP]'));
+  }
+
+  detectInternet() {
+    fromEvent(window, "offline").subscribe(() => {
+      this.lostConnection = true;
+      SnackBar.snackBar.open('Kết nối mạng bị ngắt', 'Okay', {
+        duration: SnackBar.forever,
+        panelClass: ['internet-snackbar'],
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom',
+      });
+    });
+    fromEvent(window, "online").subscribe(() => {
+      if (this.lostConnection) {
+        this.lostConnection = false;
+        SnackBar.snackBar.open('Đã phục hồi kết nối', 'Okay', {
+          duration: 2000,
+          panelClass: ['internet-snackbar', 'success'],
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+        });
+      }
+    });
   }
 
   /**
