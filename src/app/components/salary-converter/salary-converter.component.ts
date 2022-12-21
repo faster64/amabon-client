@@ -14,7 +14,7 @@ import { BaseService } from 'src/app/shared/services/base/base.service';
 })
 export class SalaryConverterComponent extends BaseComponent {
 
-  salary = 72860000;
+  salary = 0;
 
   gross = 0;
 
@@ -79,15 +79,11 @@ export class SalaryConverterComponent extends BaseComponent {
 
     // Kiểm tra xem TNTT đã >= 11 triệu chưa
     if (beforeTaxValue < 11000000) {
-      this.getTaxDetail(1, beforeTaxValue);
       return beforeTaxValue;
     }
     //  Thu nhập trước thuế	- 11tr - người phụ thuộc => thu nhập chịu thuế
     this.remainder = beforeTaxValue - 11000000 - this.dependents * 4400000;
-
-    const result = this.getTaxValue(this.remainder);
-    this.tax = result['result'];
-    this.getTaxDetail(result['breakOn'], result['result']);
+    this.tax = this.getTaxValue(this.remainder)['result'];
     return beforeTaxValue - this.tax;
   }
 
@@ -143,9 +139,7 @@ export class SalaryConverterComponent extends BaseComponent {
 
     this.insuranceValue = this.socialInsuranceValue + this.healthInsuranceValue + this.unemploymentInsuranceValue;
 
-    /**
-     * GROSS sang NET
-     */
+    this.resetTaxs();
     if (convertType === 1) {
       this.gross = this.salary;
       this.realSalary = this.grossToNet(this.salary);
@@ -155,8 +149,6 @@ export class SalaryConverterComponent extends BaseComponent {
     }
 
     this.isConverted = true;
-    this.btn1.isFinished = true;
-    this.btn2.isFinished = true;
   }
 
   validateBeforeConvert() {
@@ -178,65 +170,72 @@ export class SalaryConverterComponent extends BaseComponent {
       return 0;
 
     let result = 0;
-    let breakOn = 0;
+    let tax = 0;
 
     // Mức 1
-    result += value > 5000000 ? 5000000 * 0.05 : value * 0.05; value -= 5000000;
+    tax = value > 5000000 ? 5000000 * 0.05 : value * 0.05; value -= 5000000;
+    result += tax;
+    this.taxDetails[0].value = tax;
     if (value <= 0) {
       return { breakOn: 1, result: result };
     }
 
     // Mức 2
-    result += value > 5000000 ? 5000000 * 0.1 : value * 0.1; value -= 5000000;
+    tax = value > 5000000 ? 5000000 * 0.1 : value * 0.1; value -= 5000000;
+    result += tax;
+    this.taxDetails[1].value = tax;
     if (value <= 0) {
       return { breakOn: 2, result: result };
     }
 
     // Mức 3
-    result += value > 8000000 ? 8000000 * 0.15 : value * 0.15; value -= 8000000;
+    tax = value > 8000000 ? 8000000 * 0.15 : value * 0.15; value -= 8000000;
+    result += tax;
+    this.taxDetails[2].value = tax;
     if (value <= 0) {
       return { breakOn: 3, result: result };
     }
 
     // Mức 4
-    result += value > 14000000 ? 14000000 * 0.2 : value * 0.2; value -= 14000000;
+    tax = value > 14000000 ? 14000000 * 0.2 : value * 0.2; value -= 14000000;
+    result += tax;
+    this.taxDetails[3].value = tax;
     if (value <= 0) {
       return { breakOn: 4, result: result };
     }
 
     // Mức 5
-    result += value > 20000000 ? 20000000 * 0.25 : value * 0.25; value -= 20000000;
+    tax = value > 20000000 ? 20000000 * 0.25 : value * 0.25; value -= 20000000;
+    result += tax;
+    this.taxDetails[4].value = tax;
     if (value <= 0) {
       return { breakOn: 5, result: result };
     }
 
     // Mức 6
-    result += value > 28000000 ? 28000000 * 0.3 : value * 0.3; value -= 28000000;
+    tax = value > 28000000 ? 28000000 * 0.3 : value * 0.3; value -= 28000000;
+    result += tax;
+    this.taxDetails[5].value = tax;
     if (value <= 0) {
       return { breakOn: 6, result: result };
     }
 
     // Mức 7
-    result += value * 0.35;
+    tax = value * 0.35;
+    result += tax;
+    this.taxDetails[6].value = tax;
     return { breakOn: 7, result: result };
   }
 
-  getTaxDetail(breakOn: number, taxValue: number) {
-    this.maxDefault();
-    this.taxDetails[breakOn - 1].value = taxValue - this.taxDetails.filter( (item, index) => index < breakOn - 1).reduce((total: number, i: any) => total + i.value, 0);
-    for (let i = breakOn; i <= 6; i++) {
+  resetTaxs() {
+    this.tax = 0;
+    for (let i = 0; i <= 6; i++)
       this.taxDetails[i].value = 0;
-    }
   }
 
-  maxDefault() {
-    this.taxDetails[0].value = 250000;
-    this.taxDetails[1].value = 500000;
-    this.taxDetails[2].value = 1200000;
-    this.taxDetails[3].value = 2800000;
-    this.taxDetails[4].value = 5000000;
-    this.taxDetails[5].value = 8400000;
-    this.taxDetails[6].value = 0;
+  regionChanged(e: any) {
+    this.region = e.value;
+    this.baseSalary = (InsuranceByRegion as any)[this.region];
   }
 }
 
