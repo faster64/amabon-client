@@ -14,7 +14,7 @@ import { BaseService } from 'src/app/shared/services/base/base.service';
 })
 export class SalaryConverterComponent extends BaseComponent {
 
-  salary = 0;
+  salary = 15864100;
 
   gross = 0;
 
@@ -95,6 +95,10 @@ export class SalaryConverterComponent extends BaseComponent {
     let result = Math.ceil((net + 0.95 * this.insuranceValue - 220000 * this.dependents - 550000) / 0.95);
 
     while (count++ <= 7 && Math.abs(value - this.grossToNet(result)) >= 1) {
+      if (result < net) {
+        return net + this.insuranceValue;
+      }
+
       // Mức 2
       if (count === 2) {
         result = Math.ceil((net + 0.9 * this.insuranceValue - 440000 * this.dependents - 1350000) / 0.9);
@@ -167,7 +171,7 @@ export class SalaryConverterComponent extends BaseComponent {
 
   getTaxValue(value: number): any {
     if (value <= 0)
-      return 0;
+      return { breakOn: 0, result: 0 };
 
     let result = 0;
     let tax = 0;
