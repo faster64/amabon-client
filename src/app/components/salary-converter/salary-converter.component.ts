@@ -14,7 +14,7 @@ import { BaseService } from 'src/app/shared/services/base/base.service';
 })
 export class SalaryConverterComponent extends BaseComponent {
 
-  salary = 15864100;
+  salary = 0;
 
   gross = 0;
 

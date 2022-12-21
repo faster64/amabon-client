@@ -196,8 +196,8 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
     this.modules.push({
       path: Routing.NOTE_TAKING.path,
       moduleName: Routing.NOTE_TAKING.name,
-      iconPosition: '-128px -272px',
-      iconCheckedPosition: '-128px -287px',
+      iconPosition: '-112px -272px',
+      iconCheckedPosition: '-112px -288px',
       hint: '',
     });
     this.modules.push({
