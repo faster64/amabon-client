@@ -47,7 +47,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private router: Router,
     private cfr: ComponentFactoryResolver,
     private settingService: SettingService,
-    private connectionService: ConnectionService,
   ) {
 
   }
