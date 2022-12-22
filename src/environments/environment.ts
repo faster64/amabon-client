@@ -4,6 +4,6 @@ export const environment = {
   app_allows_guests: false,
   // api_url: "http://localhost:6001/api/gateway",
   // api_url: "https://103.179.191.139:6001/api/gateway",
-  api_url: "https://amabongateway.azurewebsites.net/api/gateway",
+  api_url: "https://6001.azurewebsites.net/api/gateway",
   enableShowError: false,
 };
