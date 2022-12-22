@@ -30,7 +30,7 @@ export class AuthenticationService {
   /**
    * auth api url
    */
-  private auth_api_url = `${environment.api_url}/aus`;
+  private auth_api_url = `https://6002.azurewebsites.net/api`;
 
   public cookieExprie = 7;
 
