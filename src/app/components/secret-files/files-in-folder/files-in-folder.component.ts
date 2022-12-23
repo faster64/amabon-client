@@ -1,11 +1,13 @@
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpStatusCode } from '@angular/common/http';
 import { Component, HostListener, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from 'src/app/shared/components/base-component';
 import { MessageBox } from 'src/app/shared/components/message-box/message-box.component';
 import { SwtButton } from 'src/app/shared/components/swt-button/swt-button.component';
+import { SessionStorageKey } from 'src/app/shared/constants/sessionstorage.key';
 import { FileType } from 'src/app/shared/enumerations/file-type.enum';
+import { HttpStatusCodeExtension } from 'src/app/shared/enumerations/http-status-code-extension.enum';
 import { ServiceResult } from 'src/app/shared/models/base/service-result';
 import { Message } from 'src/app/shared/models/message/message';
 import { FileStorage } from 'src/app/shared/models/storage/file/file.model';
@@ -13,6 +15,7 @@ import { BaseService } from 'src/app/shared/services/base/base.service';
 import { PopupService } from 'src/app/shared/services/base/popup.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { Utility } from 'src/app/shared/utils/utility';
+import { environment } from 'src/environments/environment';
 import { StorageUploadPopupComponent } from '../storage-upload-popup/storage-upload-popup.component';
 
 @Component({
@@ -50,6 +53,7 @@ export class FilesInFolderComponent extends BaseComponent {
     public activatedRoute: ActivatedRoute,
     public diaglog: MatDialog,
     public popupService: PopupService,
+    public router: Router
   ) {
     super(baseService);
   }
@@ -93,6 +97,13 @@ export class FilesInFolderComponent extends BaseComponent {
         }
         else {
           MessageBox.information(new Message(null, { content: response.message }));
+        }
+      },
+      error: error => {
+        this.isLoading = false
+        if(error?.code == HttpStatusCode.Forbidden) {
+          sessionStorage.removeItem(`${environment.team}_${SessionStorageKey.PASSED_SECURITY}`);
+          this.router.navigate([`/${this.Routing.STORAGE.path}`]);
         }
       }
     })
@@ -156,7 +167,7 @@ export class FilesInFolderComponent extends BaseComponent {
     }
     this.diaglog.open(StorageUploadPopupComponent, config).afterClosed().subscribe(
       (response: ServiceResult) => {
-        if(response) {
+        if (response) {
           if (response.success) {
             this.loadFileInFolder(this.folderName);
             MessageBox.information(new Message(null, { content: "Uploaded successfully!" }));

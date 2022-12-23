@@ -14,6 +14,8 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 import { BaseService } from 'src/app/shared/services/base/base.service';
 import { environment } from 'src/environments/environment';
 import { Folder } from 'src/app/shared/models/storage/folder/folder.model';
+import { CookieHelper } from 'src/app/shared/helpers/cookie.hepler';
+import { CookieKey } from 'src/app/shared/constants/cookie.key';
 
 @Component({
   selector: 'app-secret-files',
@@ -64,6 +66,8 @@ export class SecretFilesComponent extends BaseComponent {
 
       if (response.success) {
         this.passSecurity = true;
+        CookieHelper.setCookie(`${environment.team}_${SessionStorageKey.SECRET_KEY}`, response.data, 1/24);
+
         this.getFolders();
         sessionStorage.setItem(`${environment.team}_${SessionStorageKey.PASSED_SECURITY}`, "passed");
 
