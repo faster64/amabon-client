@@ -2,9 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { BaseComponent } from 'src/app/shared/components/base-component';
 import { MessageBox } from 'src/app/shared/components/message-box/message-box.component';
+import { SnackBar } from 'src/app/shared/components/snackbar/snackbar.component';
 import { SwtButton } from 'src/app/shared/components/swt-button/swt-button.component';
 import { ErrorMessageConstant } from 'src/app/shared/constants/common.constant';
 import { Message } from 'src/app/shared/models/message/message';
+import { SnackBarParameter } from 'src/app/shared/models/snackbar/snackbar.param';
 import { BaseService } from 'src/app/shared/services/base/base.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
@@ -45,6 +47,7 @@ export class CreateFolderPopupComponent extends BaseComponent {
     }
     else {
       this.createFolderBtn.isFinished = true;
+      SnackBar.openSnackBarWarning(new SnackBarParameter(this, "Tên thư mục không được để trống", '', 2000));
     }
   }
 
