@@ -1,0 +1,9 @@
+<div class="create-folder-popup">
+    <div class="text-box">
+        <dx-text-box [(value)]="newFolder" label="Tên thư mục" (onEnterKey)="createFolderOnEnter()"></dx-text-box>
+    </div>
+
+    <div class="save-btn dis-flex">
+        <swt-button *ngIf="!isLoading" #createFolderBtn text="Tạo" [width]="120" [height]="36" [color]="ButtonColor.BASIC" (onClick)="createFolder()"></swt-button>
+    </div>
+</div>

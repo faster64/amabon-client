@@ -10,9 +10,11 @@ import { FilesInFolderComponent } from './files-in-folder/files-in-folder.compon
 import { MatMenuModule } from '@angular/material/menu';
 import { SwtUploaderModule } from 'src/app/shared/components/swt-uploader/swt-uploader.module';
 import { StorageUploadPopupComponent } from './storage-upload-popup/storage-upload-popup.component';
+import { ListDynamicModule } from 'src/app/shared/components/swt-list-dynamic/swt-list-dynamic.module';
+import { CreateFolderPopupComponent } from './create-folder-popup/create-folder-popup.component';
 
 @NgModule({
-  declarations: [SecretFilesComponent, FilesInFolderComponent, StorageUploadPopupComponent],
+  declarations: [SecretFilesComponent, FilesInFolderComponent, StorageUploadPopupComponent, CreateFolderPopupComponent],
   imports: [
     CommonModule,
     SecretFilesRoutingModule,
@@ -21,6 +23,7 @@ import { StorageUploadPopupComponent } from './storage-upload-popup/storage-uplo
     SwtLoadingModule,
     MatMenuModule,
     SwtUploaderModule,
+    ListDynamicModule,
   ],
   exports: [SecretFilesComponent, FilesInFolderComponent],
 })

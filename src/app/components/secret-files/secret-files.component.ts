@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { TransitionCheckState } from '@angular/material/checkbox';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/authentication/shared/services/authentication.service';
@@ -16,6 +16,12 @@ import { environment } from 'src/environments/environment';
 import { Folder } from 'src/app/shared/models/storage/folder/folder.model';
 import { CookieHelper } from 'src/app/shared/helpers/cookie.hepler';
 import { CookieKey } from 'src/app/shared/constants/cookie.key';
+import { ColumnGrid } from 'src/app/shared/models/base/column-grid.model';
+import { ListDynamicComponent } from 'src/app/shared/components/swt-list-dynamic/swt-list-dynamic.component';
+import { GroupBoxFieldType } from 'src/app/shared/enumerations/common.enum';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateFolderPopupComponent } from './create-folder-popup/create-folder-popup.component';
+import { PopupService } from 'src/app/shared/services/base/popup.service';
 
 @Component({
   selector: 'app-secret-files',
@@ -30,17 +36,23 @@ export class SecretFilesComponent extends BaseComponent {
 
   folders: Folder[] = [];
 
-  newFolder = "";
+  displayColumn: ColumnGrid[] = [];
+
+  firstSet = true;
+
+  customizeViewUrl = '';
 
   @ViewChild("commitBtn") commitBtn!: SwtButton;
 
-  @ViewChild("createFolderBtn") createFolderBtn!: SwtButton;
+  @ViewChild("listDynamic") listDynamic!: ListDynamicComponent;
 
   constructor(
     baseService: BaseService,
     public authenticationService: AuthenticationService,
     public storageService: StorageService,
-    public router: Router
+    public router: Router,
+    public dialog: MatDialog,
+    public popupService: PopupService
   ) {
     super(baseService);
   }
@@ -48,12 +60,14 @@ export class SecretFilesComponent extends BaseComponent {
   ngOnInit(): void {
     super.ngOnInit();
     this.passSecurity = sessionStorage.getItem(`${environment.team}_${SessionStorageKey.PASSED_SECURITY}`) != null;
-    if (this.passSecurity) {
-      this.getFolders();
-    }
+    this.customizeAddFunc = this.customizeAddFunc.bind(this);
   }
 
-
+  initData() {
+    this.displayColumn = [];
+    this.displayColumn.push({ column: 'folderName', displayText: 'Thư mục', width: 300 });
+    this.displayColumn.push({ column: 'createdDate', displayText: 'Ngày tạo', width: 120, type: GroupBoxFieldType.Date });
+  }
 
   commit() {
     if (this.secretKey === '') {
@@ -61,53 +75,37 @@ export class SecretFilesComponent extends BaseComponent {
       return;
     }
 
-    this.authenticationService.verifySecretKey(this.secretKey).subscribe(response => {
-      this.commitBtn.isFinished = true;
+    this.authenticationService.verifySecretKey(this.secretKey).subscribe(
+      response => {
+        this.commitBtn.isFinished = true;
 
-      if (response.success) {
-        this.passSecurity = true;
-        CookieHelper.setCookie(`${environment.team}_${SessionStorageKey.SECRET_KEY}`, response.data, 1/24);
+        if (response.success) {
+          this.passSecurity = true;
+          CookieHelper.setCookie(`${environment.team}_${SessionStorageKey.SECRET_KEY}`, response.data, 1 / 24);
 
-        this.getFolders();
-        sessionStorage.setItem(`${environment.team}_${SessionStorageKey.PASSED_SECURITY}`, "passed");
+          // this.getFolders();
+          sessionStorage.setItem(`${environment.team}_${SessionStorageKey.PASSED_SECURITY}`, "passed");
 
-      } else {
-        SnackBar.openSnackBarDanger(new SnackBarParameter(this, "Mã bí mật không đúng!"));
-      }
-    })
+        } else {
+          SnackBar.openSnackBarDanger(new SnackBarParameter(this, "Mã bí mật không đúng!"));
+        }
+      },
+      () => this.commitBtn.isFinished = true
+    )
   }
 
   commitByEnter() {
     this.commitBtn.clickExecute(null);
   }
 
-  getFolders() {
-    this.isLoading = true;
-    this.storageService.getAll().subscribe(response => {
-      this.isLoading = false;
-      if (response.success) {
-        this.folders = response.data;
-      }
-    })
+  customizeViewFunc(e: any) {
+    this.router.navigateByUrl(`/${Routing.STORAGE.path}/view-files/${e.folderName}`);
   }
 
-  redirectToFolder(folderName: string) {
-    this.router.navigateByUrl(`/${Routing.STORAGE.path}/view-files/${folderName}`);
-  }
-
-  createFolder() {
-    if (this.newFolder.trim() !== '') {
-      this.storageService.save("", [{ folderName: this.newFolder }]).subscribe(response => {
-        this.createFolderBtn.isFinished = true;
-        if (response.success) {
-          this.newFolder = "";
-          this.getFolders();
-          MessageBox.information(new Message(this, { content: "Success" }));
-        }
-      })
-    }
-    else {
-      this.createFolderBtn.isFinished = true;
-    }
+  customizeAddFunc() {
+    this.listDynamic.addBtn.isFinished = true;
+    this.dialog.open(CreateFolderPopupComponent, this.popupService.getBaseConfig()).afterClosed().subscribe( () => {
+      this.listDynamic.reload();
+    });
   }
 }

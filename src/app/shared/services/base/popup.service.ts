@@ -41,7 +41,7 @@ export class PopupService {
       configWidth = '80%';
       configHeight = '100px';
     } else if (currentScreenWidth >= BreakPoint.SM && currentScreenWidth < BreakPoint.MD) {
-      configWidth = '400px';
+      configWidth = '480px';
     } else {
       configWidth = '440px';
     }

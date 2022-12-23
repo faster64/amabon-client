@@ -13,7 +13,7 @@
             <div class="reload" (click)="reload()" matTooltip="Tải lại dữ liệu"></div>
             <div class="export-excel" (click)="openPopupExport()" matTooltip="Xuất khẩu dữ liệu ra file excel"></div>
             <div class="btns" *ngIf="!gridOnly">
-                <swt-button [buttonType]="ButtonType.STROKED" [width]="88" [height]="32" text="Thêm" (onClick)="toAddForm()" [actionPermissions]="[ActionPermission.Add]" [iconButtonType]="IconButtonType.ADD"></swt-button>
+                <swt-button #addBtn [buttonType]="ButtonType.STROKED" [width]="88" [height]="32" text="Thêm" (onClick)="toAddForm()" [actionPermissions]="[ActionPermission.Add]" [iconButtonType]="IconButtonType.ADD"></swt-button>
             </div>
             <div class="more" [matMenuTriggerFor]="more"></div>
         </div>
@@ -24,8 +24,8 @@
     </div>
 
     <div class="grid">
-        <swt-grid #grid [data]="data" [isLoading]="isLoading && isFirstLoad" [displayColumn]="displayColumn" [current]="current" [total]="total" [scrollPosition]="200" [enableEmitScroll]="enableEmitScroll" (rowDblClick)="toViewForm($event)" (detectScrollToAnPosition)="onScrollToPosition($event)"
-            (checkedEvent)="decideToShowDelete($event)" (sort)="sortGrid($event)">
+        <swt-grid #grid [data]="data" [isLoading]="isLoading && isFirstLoad" [displayColumn]="displayColumn" [current]="current" [total]="total" [scrollPosition]="200" [enableEmitScroll]="enableEmitScroll" (rowClick)="onRowClick($event)" (rowDblClick)="toViewForm($event)"
+            (detectScrollToAnPosition)="onScrollToPosition($event)" (checkedEvent)="decideToShowDelete($event)" (sort)="sortGrid($event)">
         </swt-grid>
 
         <div class="loading-bottom" *ngIf="isLoading && !isFirstLoad">

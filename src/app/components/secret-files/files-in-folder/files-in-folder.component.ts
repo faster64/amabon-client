@@ -140,7 +140,7 @@ export class FilesInFolderComponent extends BaseComponent {
         this.fileInput.nativeElement.value = null;
         if (response.success) {
           this.loadFileInFolder(this.folderName);
-          MessageBox.information(new Message(null, { content: "Uploaded successfully!" }));
+          MessageBox.information(new Message(null, { content: "Tải lên thành công!" }));
         } else {
           MessageBox.information(new Message(null, { content: response.message }));
         }
@@ -170,7 +170,7 @@ export class FilesInFolderComponent extends BaseComponent {
         if (response) {
           if (response.success) {
             this.loadFileInFolder(this.folderName);
-            MessageBox.information(new Message(null, { content: "Uploaded successfully!" }));
+            MessageBox.information(new Message(null, { content: "Tải lên thành công!" }));
           } else {
             MessageBox.information(new Message(null, { content: response.message }));
           }

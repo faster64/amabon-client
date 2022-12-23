@@ -1,11 +1,12 @@
 import { ThisReceiver } from '@angular/compiler';
-import { ChangeDetectorRef, Component, Input, NgZone, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
 import { DialogPosition, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { BreakPoint } from '../../constants/break-point.constant';
 import { IconButtonType } from '../../constants/button.constant';
 import { ExportType, FormMode } from '../../enumerations/common.enum';
 import { ObjectHelper } from '../../helpers/object.helper';
+import { StringHelper } from '../../helpers/string.helper';
 import { BaseModel } from '../../models/base/base-model';
 import { ColumnGrid } from '../../models/base/column-grid.model';
 import { PaginationRequest } from '../../models/base/pagination-request';
@@ -54,11 +55,35 @@ export class ListDynamicComponent extends BaseComponent {
   @Input()
   enableRowDblclick = true;
 
+  @Input()
+  customizeAddUrl = '';
+
+  @Input()
+  customizeViewUrl = '';
+
+  @Input()
+  customizeEditUrl = '';
+
+  @Input()
+  customizeAddFunc!: Function;
+
+  @Input()
+  customizeViewFunc!: Function;
+
+  @Output()
+  rowClick = new EventEmitter();
+
+  @Output()
+  rowDblClick = new EventEmitter();
+
   @ViewChild("grid")
   grid!: SwtGridComponent;
 
   @ViewChild("deleteBtn")
   deleteBtn!: SwtButton;
+
+  @ViewChild("addBtn")
+  addBtn!: SwtButton;
 
   data: BaseModel[] = [];
 
@@ -202,13 +227,38 @@ export class ListDynamicComponent extends BaseComponent {
   }
 
   toAddForm() {
-    this.router.navigateByUrl(`/${this.controller.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)}/create`);
+    if (this.customizeAddFunc != null) {
+      this.customizeAddFunc();
+    } else {
+
+      if (StringHelper.isNullOrEmpty(this.customizeAddUrl)) {
+        this.router.navigateByUrl(`/${this.controller.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)}/create`);
+      } else {
+        this.router.navigateByUrl(this.customizeAddUrl);
+      }
+    }
   }
 
   toViewForm(e: any) {
+    this.rowDblClick.emit(e);
     if (!this.enableRowDblclick)
       return;
-    this.router.navigateByUrl(`/${this.controller.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)}/view/${e.id}`);
+
+    if (this.customizeViewFunc != null) {
+      this.customizeViewFunc(e);
+    } else {
+      setTimeout(() => {
+        if (StringHelper.isNullOrEmpty(this.customizeViewUrl)) {
+          this.router.navigateByUrl(`/${this.controller.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)}/view/${e.id}`);
+        } else {
+          this.router.navigateByUrl(this.customizeViewUrl);
+        }
+      }, 150);
+    }
+  }
+
+  onRowClick(e: any) {
+    this.rowClick.emit(e);
   }
 
   /**

@@ -61,7 +61,7 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
             return this.handle901(request, next);
 
           case HttpStatusCode.Forbidden:
-            SnackBar.openSnackBarDanger(new SnackBarParameter(null, PerrmisionConstant.NOT_PERMISSION, '', SnackBar.forever));
+            SnackBar.openSnackBarDanger(new SnackBarParameter(null, PerrmisionConstant.NOT_PERMISSION, ''));
             break;
 
           case HttpStatusCode.TooManyRequests:

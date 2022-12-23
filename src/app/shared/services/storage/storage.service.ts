@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { SessionStorageKey } from '../../constants/sessionstorage.key';
 import { CookieHelper } from '../../helpers/cookie.hepler';
@@ -16,6 +17,18 @@ export class StorageService extends BaseService {
     super(http);
     this.serviceName = "ass";
     this.controller = "folder";
+  }
+
+  /**
+   * override
+   */
+  getAll(customUrl = ""): Observable<ServiceResult> {
+    const url = customUrl ? customUrl : `${this.getApiUrl()}/${this.serviceName}/${this.controller}/get-all`;
+    return this.takeOriginHttpClient().get<ServiceResult>(url, {
+      headers: {
+        "X-Secret-Key": CookieHelper.getCookie(`${environment.team}_${SessionStorageKey.SECRET_KEY}`) || ""
+      }
+    });
   }
 
   loadFilesInFolder(folderName: string) {
