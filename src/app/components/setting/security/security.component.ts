@@ -55,6 +55,7 @@ export class SecurityComponent extends BaseComponent {
   }
 
   getLoginHistory() {
+    this.paginationRequest.pageSize = 100;
     this.authenticationService.getLoginHistory(this.paginationRequest).subscribe(
       response => {
         this.isLoadingLoginLog = false;
