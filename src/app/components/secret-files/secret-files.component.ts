@@ -22,6 +22,8 @@ import { GroupBoxFieldType } from 'src/app/shared/enumerations/common.enum';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateFolderPopupComponent } from './create-folder-popup/create-folder-popup.component';
 import { PopupService } from 'src/app/shared/services/base/popup.service';
+import { SharedService } from 'src/app/shared/services/base/shared.service';
+import { DeviceType } from 'src/app/shared/enumerations/device.enum';
 
 @Component({
   selector: 'app-secret-files',
@@ -52,7 +54,8 @@ export class SecretFilesComponent extends BaseComponent {
     public storageService: StorageService,
     public router: Router,
     public dialog: MatDialog,
-    public popupService: PopupService
+    public popupService: PopupService,
+    public sharedService: SharedService,
   ) {
     super(baseService);
   }
@@ -65,7 +68,7 @@ export class SecretFilesComponent extends BaseComponent {
 
   initData() {
     this.displayColumn = [];
-    this.displayColumn.push({ column: 'folderName', displayText: 'Thư mục', width: 300 });
+    this.displayColumn.push({ column: 'folderName', displayText: 'Thư mục', width: this.sharedService.deviceType === DeviceType.Desktop ? 300 : 240 });
     this.displayColumn.push({ column: 'createdDate', displayText: 'Ngày tạo', width: 120, type: GroupBoxFieldType.Date });
   }
 

@@ -8,6 +8,7 @@ import { SnackBar } from './shared/components/snackbar/snackbar.component';
 import { Routing } from './shared/constants/common.constant';
 import { DeviceType } from './shared/enumerations/device.enum';
 import { SettingService } from './shared/services/base/setting.service';
+import { SharedService } from './shared/services/base/shared.service';
 import { TransferDataService } from './shared/services/transfer/transfer-data.service';
 import { Utility } from './shared/utils/utility';
 
@@ -46,7 +47,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private authenticationService: AuthenticationService,
     private router: Router,
     private cfr: ComponentFactoryResolver,
-    private settingService: SettingService,
+    private sharedService: SharedService,
   ) {
 
   }
@@ -187,14 +188,14 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   detectDevice() {
-    const deviceType = Utility.getDevice();
-    console.log("Phát hiện loại thiết bị đang sử dụng: " + (deviceType === DeviceType.Mobile ? '[MOBILE]' : '[DESKTOP]'));
+    this.sharedService.deviceType = Utility.getDevice();
+    console.log("Phát hiện loại thiết bị đang sử dụng: " + (this.sharedService.deviceType === DeviceType.Mobile ? '[MOBILE]' : '[DESKTOP]'));
   }
 
   detectInternet() {
     fromEvent(window, "offline").subscribe(() => {
       this.lostConnection = true;
-      SnackBar.snackBar.open('Kết nối mạng bị ngắt', 'Okay', {
+      SnackBar.snackBar.open('Bạn đang offline', 'Đồng ý', {
         duration: SnackBar.forever,
         panelClass: ['internet-snackbar'],
         horizontalPosition: 'center',
@@ -204,7 +205,7 @@ export class AppComponent implements OnInit, OnDestroy {
     fromEvent(window, "online").subscribe(() => {
       if (this.lostConnection) {
         this.lostConnection = false;
-        SnackBar.snackBar.open('Đã phục hồi kết nối', 'Okay', {
+        SnackBar.snackBar.open('Đã khôi phục kết nối internet', 'Đồng ý', {
           duration: 2000,
           panelClass: ['internet-snackbar', 'success'],
           horizontalPosition: 'center',
