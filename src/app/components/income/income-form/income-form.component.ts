@@ -35,8 +35,13 @@ export class IncomeFormComponent extends BaseFormComponent {
   }
 
   initGroupboxes() {
-    const groupBoxField: GroupBoxField = { fieldName: 'value', title: 'Số tiền', value: 0, required: true, type: GroupBoxFieldType.Number };
-    this.groupBoxes.push({ name: "Thông tin chung", groupBoxFields: [groupBoxField] })
+    const groupBoxFields: GroupBoxField[] = [
+      { fieldName: 'value', title: 'Số tiền', value: 0, scale: 6, required: true, type: GroupBoxFieldType.Number },
+      { fieldName: 'date', title: 'Ngày thu', value: Date.now(), scale: 6, required: true, type: GroupBoxFieldType.Date },
+      // { fieldName: 'incomeCategory', title: 'Loại thu nhập', value: 0, scale: 6, required: true, type: GroupBoxFieldType.ComboBox },
+      { fieldName: 'reason', title: 'Nội dung', value: null, scale: 12, required: true, type: GroupBoxFieldType.TextArea },
+    ];
+    this.groupBoxes.push({ name: "Thông tin chung", groupBoxFields: groupBoxFields })
   }
 
 }

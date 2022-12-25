@@ -79,7 +79,7 @@
                             </dx-number-box>
 
                             <!-- date  -->
-                            <dx-date-box *ngSwitchCase="FormFieldType.Date" type="date" class="input" [(ngModel)]="field.value" [readOnly]="formMode == FormMode.View" [label]="field.title || ''"></dx-date-box>
+                            <dx-date-box *ngSwitchCase="FormFieldType.Date" type="date" class="input" [(ngModel)]="field.value" [readOnly]="formMode == FormMode.View" [label]="field.title || ''" [showClearButton]="true" [useMaskBehavior]="true"></dx-date-box>
 
                             <!-- select box  -->
                             <dx-select-box *ngSwitchCase="FormFieldType.ComboBox" class="select-box" displayExpr="value" valueExpr="id" placeholder="" noDataText="Không có dữ liệu" (onOpened)="getComboboxData(field)" [searchEnabled]="true" [dataSource]="field.pickList || []" [(value)]="field.value"
