@@ -27,4 +27,4 @@ import { DxTextBoxModule } from 'devextreme-angular';
   ],
   exports: [ListDynamicComponent, PopupChooseExportComponent]
 })
-export class ListDynamicModule { }
+export class SwtListDynamicModule { }

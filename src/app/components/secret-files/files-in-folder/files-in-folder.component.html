@@ -1,20 +1,24 @@
 <div class="files-in-folder" (scroll)="onScroll($event)">
-    <div class="files">
-        <div class="total-and-upload">
-            <p class="total">{{imageCount}} image(s) - {{videoCount}} video(s)</p>
-            <div class="btns">
-                <swt-button [actionPermissions]="[ActionPermission.Add]" [matMenuTriggerFor]="uploadMenu" text="Upload type 1" [finishImmediately]="true" [width]="100" [height]="28" [color]="ButtonColor.BASIC"></swt-button>
+  <div class="files">
+    <div class="total-and-upload">
+      <p class="total">{{imageCount}} image(s) - {{videoCount}} video(s)</p>
+      <div class="btns">
+        <swt-button [actionPermissions]="[ActionPermission.Add]" [matMenuTriggerFor]="uploadMenu" text="Upload type 1"
+          [finishImmediately]="true" [width]="100" [height]="28" [color]="ButtonColor.BASIC"></swt-button>
 
-                <swt-button [actionPermissions]="[ActionPermission.Add]" text="Upload type 2" [finishImmediately]="true" [width]="100" [height]="28" [color]="ButtonColor.BASIC" (onClick)="openUploader()"></swt-button>
+        <swt-button [actionPermissions]="[ActionPermission.Add]" text="Upload type 2" [finishImmediately]="true"
+          [width]="100" [height]="28" [color]="ButtonColor.BASIC" (onClick)="openUploader()"></swt-button>
 
-                <swt-button #clearCacheBtn text="Clear cache" [width]="80" [height]="28" [color]="ButtonColor.WARN" (onClick)="clearCache()"></swt-button>
-            </div>
-        </div>
-        <div class="file" *ngFor="let url of urls">
-            <img *ngIf="!url.isVideo" [src]="url.url" alt="">
+        <swt-button #clearCacheBtn text="Clear cache" [width]="80" [height]="28" [color]="ButtonColor.WARN"
+          (onClick)="clearCache()"></swt-button>
+      </div>
+    </div>
+    <div class="file" *ngFor="let url of urls">
+      <img *ngIf="!url.isVideo" [src]="url.url" alt="">
 
-            <div *ngIf="url.isVideo" class="player">
-                <video id="plyrID" controls playsinline poster="https://assets.aboutamazon.com/66/f3/cb7e8e804a1f991c96593cf465e1/aws-logo-white-on-si.jpg">
+      <div *ngIf="url.isVideo" class="player">
+        <video id="plyrID" controls playsinline
+          poster="https://assets.aboutamazon.com/66/f3/cb7e8e804a1f991c96593cf465e1/aws-logo-white-on-si.jpg">
           <source [src]="url.url" type="video/mp4">
 
           <!-- Caption files -->
@@ -23,16 +27,20 @@
           <!-- Fallback for browsers that don't support the <video> element -->
           <a [href]="url.url" download>Download</a>
         </video>
-            </div>
-        </div>
-    </div>
+      </div>
 
-    <spinner-loading *ngIf="isLoading"></spinner-loading>
+      <dx-check-box class="check-box"></dx-check-box>
+    </div>
+  </div>
+
+  <spinner-loading *ngIf="isLoading"></spinner-loading>
 </div>
 
 <mat-menu #uploadMenu (closed)="resetFiles()">
-    <div class="upload-form">
-        <input #input type="file" #file class="uploadInp" (change)="selectedFile(file.files)" accept="*" [multiple]="true" (click)="$event.stopPropagation()">
-        <swt-button #saveFileBtn [actionPermissions]="[ActionPermission.Add]" text="Tải lên" [width]="100" [height]="32" [color]="ButtonColor.BASIC" (onClick)="saveFiles()"></swt-button>
-    </div>
+  <div class="upload-form">
+    <input #input type="file" #file class="uploadInp" (change)="selectedFile(file.files)" accept="*" [multiple]="true"
+      (click)="$event.stopPropagation()">
+    <swt-button #saveFileBtn [actionPermissions]="[ActionPermission.Add]" text="Tải lên" [width]="100" [height]="32"
+      [color]="ButtonColor.BASIC" (onClick)="saveFiles()"></swt-button>
+  </div>
 </mat-menu>

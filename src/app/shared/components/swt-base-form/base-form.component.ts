@@ -15,6 +15,8 @@ export class BaseFormComponent extends BaseComponent implements IBaseForm {
 
   groupBoxes: GroupBox[] = [];
 
+  serviceName = "";
+
   controller = "";
 
   constructor(

@@ -215,6 +215,20 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
       hint: 'Chuyển đổi lương và tính thuế',
     });
     this.modules.push({
+      path: Routing.INCOME.path,
+      moduleName: Routing.INCOME.name,
+      iconPosition: '-192px -504px',
+      iconCheckedPosition: '-160px -504px',
+      hint: 'Thống kê thu nhập của bạn',
+    });
+    this.modules.push({
+      path: Routing.PAYMENT.path,
+      moduleName: Routing.PAYMENT.name,
+      iconPosition: '-176px -504px',
+      iconCheckedPosition: '-144px -504px',
+      hint: 'Thống kê chi tiêu của bạn',
+    });
+    this.modules.push({
       path: Routing.CONTACT.path,
       moduleName: Routing.CONTACT.name,
       iconPosition: '0px -64px',

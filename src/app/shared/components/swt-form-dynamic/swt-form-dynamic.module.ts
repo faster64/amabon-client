@@ -28,4 +28,4 @@ import { MatMenuModule } from '@angular/material/menu';
   ],
   exports: [FormDynamicComponent]
 })
-export class FormDynamicModule { }
+export class SwtFormDynamicModule { }

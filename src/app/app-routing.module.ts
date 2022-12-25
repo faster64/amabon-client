@@ -119,6 +119,16 @@ const routes: Routes = [
     }
   },
   {
+    path: Routing.INCOME.path,
+    loadChildren: () => import('./components/income/income.module').then(m => m.IncomeModule),
+    resolve: {
+      resolver: BaseResolver,
+    },
+    data: {
+      title: Routing.INCOME.name,
+    }
+  },
+  {
     path: 'trigger-services',
     loadChildren: () => import('./shared/components/swt-trigger-services/swt-trigger-services.module').then(m => m.SwtTriggerServicesModule),
   },

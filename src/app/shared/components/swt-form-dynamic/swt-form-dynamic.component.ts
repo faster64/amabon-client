@@ -36,6 +36,10 @@ export class FormDynamicComponent extends BaseComponent {
   @Input()
   formMode = FormMode.None;
 
+
+  @Input()
+  serviceName = "";
+
   @Input()
   controller = "";
 
@@ -148,7 +152,7 @@ export class FormDynamicComponent extends BaseComponent {
     }
 
     // Save
-    const url = `${this.baseService.getApiUrl()}/${this.controller}/${this.formMode === FormMode.Add ? 'save' : 'update'}`;
+    const url = `${this.baseService.getApiUrl()}/${this.serviceName}/${this.controller}/${this.formMode === FormMode.Add ? 'save' : 'update'}`;
     const data = this.getDynamicData();
 
     // Nếu là sửa thì đính kèm thêm id
