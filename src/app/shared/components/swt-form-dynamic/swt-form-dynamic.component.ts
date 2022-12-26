@@ -77,6 +77,8 @@ export class FormDynamicComponent extends BaseComponent {
 
   isSaving = false;
 
+  isFetching = false;
+
   constructor(
     baseService: BaseService,
     public router: Router,
@@ -112,6 +114,7 @@ export class FormDynamicComponent extends BaseComponent {
    * Lấy dữ liệu form
    */
   getFormData() {
+    this.baseService.serviceName = this.serviceName;
     this.baseService.controller = this.controller;
     this.baseService.getById("", this.masterId).subscribe(response => {
       this.mapData(response.data);
@@ -144,6 +147,7 @@ export class FormDynamicComponent extends BaseComponent {
       return;
     }
 
+    console.log(this.getDynamicData())
     const invalid = this.validateBeforeSave();
     if (invalid) {
       MessageBox.information(new Message(this, { content: invalid?.message }));
@@ -242,7 +246,11 @@ export class FormDynamicComponent extends BaseComponent {
     dataForm.forEach(formFields => {
       formFields.forEach(f => {
         const obj: any = {};
-        obj[f.fieldName] = f.value;
+        if (f.type === GroupBoxFieldType.Date) {
+          obj[f.fieldName] = new Date(f.value);
+        } else {
+          obj[f.fieldName] = f.value;
+        }
         Object.assign(data, obj);
       })
     });
@@ -290,18 +298,23 @@ export class FormDynamicComponent extends BaseComponent {
     const url = `${this.baseService.getApiUrl()}/${field.comboboxUrl}`;
     this.paginationRequest.pageSize = 500;
 
-    this.baseService.http.post<ServiceResult>(url, this.paginationRequest).subscribe(response => {
-      if (response.success) {
-        field.pickList = response.data.map((item: any) => {
-          if (!field.comboboxMap) {
-            return {};
-          }
-          return {
-            id: item[field.comboboxMap.id],
-            value: item[field.comboboxMap.value],
-          }
-        });
-      }
-    })
+    this.isFetching = true;
+    this.baseService.http.post<ServiceResult>(url, this.paginationRequest).subscribe(
+      response => {
+        this.isFetching = false;
+        if (response.success) {
+          field.pickList = response.data.map((item: any) => {
+            if (!field.comboboxMap) {
+              return {};
+            }
+            return {
+              id: item[field.comboboxMap.id],
+              value: item[field.comboboxMap.value],
+            }
+          });
+        }
+      },
+      () => this.isFetching = false
+    )
   }
 }

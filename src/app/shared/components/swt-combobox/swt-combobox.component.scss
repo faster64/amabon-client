@@ -1,0 +1,14 @@
+::ng-deep .swt-combobox {
+    position: relative;
+    .dx-dropdowneditor-input-wrapper {
+        position: relative;
+    }
+    .loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 24px;
+        height: 24px;
+        transform: translate(-12px, -18px);
+    }
+}

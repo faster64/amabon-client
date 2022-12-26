@@ -9,6 +9,7 @@ import { DxTextBoxModule } from 'devextreme-angular/ui/text-box';
 import { DxNumberBoxModule } from 'devextreme-angular/ui/number-box';
 import { DxCheckBoxModule, DxDateBoxModule, DxFileUploaderModule, DxTextAreaModule } from 'devextreme-angular';
 import { MatMenuModule } from '@angular/material/menu';
+import { SwtComboboxModule } from '../swt-combobox/swt-combobox.module';
 
 @NgModule({
   declarations: [FormDynamicComponent],
@@ -17,6 +18,7 @@ import { MatMenuModule } from '@angular/material/menu';
     FormsModule,
     SharedModule,
     SwtButtonModule,
+    SwtComboboxModule,
     DxSelectBoxModule,
     DxTextBoxModule,
     DxNumberBoxModule,

@@ -8,6 +8,7 @@ import { SwtListDynamicModule } from 'src/app/shared/components/swt-list-dynamic
 import { SwtButtonModule } from 'src/app/shared/components/swt-button/swt-button.module';
 import { IncomeFormComponent } from './income-form/income-form.component';
 import { SwtFormDynamicModule } from 'src/app/shared/components/swt-form-dynamic/swt-form-dynamic.module';
+import { SwtComboboxModule } from 'src/app/shared/components/swt-combobox/swt-combobox.module';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { SwtFormDynamicModule } from 'src/app/shared/components/swt-form-dynamic
     SwtListDynamicModule,
     SwtButtonModule,
     SwtFormDynamicModule,
+    SwtComboboxModule,
   ]
 })
 export class IncomeModule { }

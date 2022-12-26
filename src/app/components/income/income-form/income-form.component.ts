@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BaseFormComponent } from 'src/app/shared/components/swt-base-form/base-form.component';
 import { GroupBoxFieldType } from 'src/app/shared/enumerations/common.enum';
 import { BaseService } from 'src/app/shared/services/base/base.service';
+import { IncomeCategoryService } from 'src/app/shared/services/income/income-category.service';
 import { IncomeService } from 'src/app/shared/services/income/income.service';
 import { GroupBoxField } from '../../../shared/models/form-dynamic/group-box-field.model';
 
@@ -23,7 +24,8 @@ export class IncomeFormComponent extends BaseFormComponent {
   constructor(
     baseService: BaseService,
     activatedRoute: ActivatedRoute,
-    public incomeService: IncomeService
+    public incomeService: IncomeService,
+    public incomeCategoryService: IncomeCategoryService,
   ) {
     super(baseService, activatedRoute);
   }
@@ -36,9 +38,21 @@ export class IncomeFormComponent extends BaseFormComponent {
 
   initGroupboxes() {
     const groupBoxFields: GroupBoxField[] = [
-      { fieldName: 'value', title: 'Số tiền', value: 0, scale: 6, required: true, type: GroupBoxFieldType.Number },
-      { fieldName: 'date', title: 'Ngày thu', value: Date.now(), scale: 6, required: true, type: GroupBoxFieldType.Date },
-      // { fieldName: 'incomeCategory', title: 'Loại thu nhập', value: 0, scale: 6, required: true, type: GroupBoxFieldType.ComboBox },
+      { fieldName: 'value', title: 'Số tiền', value: 0, scale: 4, required: true, type: GroupBoxFieldType.Number },
+      { fieldName: 'date', title: 'Ngày thu', value: Date.now(), scale: 4, required: true, type: GroupBoxFieldType.Date },
+      {
+        fieldName: 'incomeCategory',
+        title: 'Loại thu nhập',
+        value: 0,
+        scale: 4,
+        required: true,
+        type: GroupBoxFieldType.ComboBox,
+        comboboxUrl: `${this.incomeCategoryService.serviceName}/${this.incomeCategoryService.controller}/paging`,
+        comboboxMap:  {
+          id: "id",
+          value: "name"
+        }
+      },
       { fieldName: 'reason', title: 'Nội dung', value: null, scale: 12, required: true, type: GroupBoxFieldType.TextArea },
     ];
     this.groupBoxes.push({ name: "Thông tin chung", groupBoxFields: groupBoxFields })
