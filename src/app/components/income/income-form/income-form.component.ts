@@ -41,7 +41,7 @@ export class IncomeFormComponent extends BaseFormComponent {
       { fieldName: 'value', title: 'Số tiền', value: 0, scale: 4, required: true, type: GroupBoxFieldType.Number },
       { fieldName: 'date', title: 'Ngày thu', value: Date.now(), scale: 4, required: true, type: GroupBoxFieldType.Date },
       {
-        fieldName: 'incomeCategory',
+        fieldName: 'incomeCategoryId',
         title: 'Loại thu nhập',
         value: 0,
         scale: 4,

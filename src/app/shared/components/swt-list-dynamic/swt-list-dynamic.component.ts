@@ -157,14 +157,16 @@ export class ListDynamicComponent extends BaseComponent {
   }
 
   reload() {
-    this.paginationRequest = new PaginationRequest();
-    this.data = [];
-    this.current = 0;
-    this.total = 0;
-    this.isFirstLoad = true;
-    this.grid.changeAllCheckBox(false);
-    this.grid.table.nativeElement.scrollTop = 0; // reset scroll position
-    this.getDataGrid();
+    if(!this.isLoading) {
+      this.paginationRequest = new PaginationRequest();
+      this.data = [];
+      this.current = 0;
+      this.total = 0;
+      this.isFirstLoad = true;
+      this.grid.changeAllCheckBox(false);
+      this.grid.table.nativeElement.scrollTop = 0; // reset scroll position
+      this.getDataGrid();
+    }
   }
 
   prepareConfig() {
