@@ -3,13 +3,18 @@ import { CommonModule } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { ChartMonthComponent } from './chart/chart-month/chart-month.component';
+import { DxChartModule } from 'devextreme-angular';
 
 
 @NgModule({
-  declarations: [DashboardComponent],
+  declarations: [DashboardComponent, ChartMonthComponent],
   imports: [
     CommonModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    SharedModule,
+    DxChartModule
   ],
   exports: [DashboardComponent],
 })

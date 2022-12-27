@@ -5,6 +5,7 @@ import { BaseComponent } from 'src/app/shared/components/base-component';
 import { MessageBox } from 'src/app/shared/components/message-box/message-box.component';
 import { CookieKey } from 'src/app/shared/constants/cookie.key';
 import { CookieHelper } from 'src/app/shared/helpers/cookie.hepler';
+import { ColumnGrid } from 'src/app/shared/models/base/column-grid.model';
 import { Message } from 'src/app/shared/models/message/message';
 import { BaseService } from 'src/app/shared/services/base/base.service';
 import { environment } from 'src/environments/environment';
@@ -14,7 +15,11 @@ import { environment } from 'src/environments/environment';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent extends BaseComponent {
+export class DashboardComponent  extends BaseComponent {
+
+  displayColumn: ColumnGrid[] = [];
+
+  isLoadingMonth = true;
 
   constructor(
     baseService: BaseService,
@@ -23,10 +28,19 @@ export class DashboardComponent extends BaseComponent {
   }
 
   ngOnInit(): void {
-    super.ngOnInit();
+    this.initColumn();
   }
 
-  initData(): void {
-    super.initData();
+  initColumn() {
+    for (let i = 0; i < 8; i++) {
+      const column = new ColumnGrid();
+      if(i < 2) {
+        column.width = Math.floor(Math.random() * (260 - 80 + 1) + 180);
+      } else {
+        column.width = Math.floor(Math.random() * (360 - 80 + 1) + 180);
+      }
+
+      this.displayColumn.push(column);
+    }
   }
 }
