@@ -17,6 +17,8 @@ export class IncomeListDynamicComponent extends ListDynamicComponent {
 
   totalValue = 0;
 
+  accountBalance = 0;
+
   constructor(
     baseService: BaseService,
     router: Router,
@@ -31,6 +33,7 @@ export class IncomeListDynamicComponent extends ListDynamicComponent {
   ngOnInit(): void {
     super.ngOnInit();
     this.getTotalIncome();
+    this.getAccountBalance();
   }
 
   toCategory() {
@@ -48,6 +51,7 @@ export class IncomeListDynamicComponent extends ListDynamicComponent {
       this.grid.table.nativeElement.scrollTop = 0; // reset scroll position
       this.getDataGrid();
       this.getTotalIncome();
+      this.getAccountBalance();
     }
   }
 
@@ -61,6 +65,16 @@ export class IncomeListDynamicComponent extends ListDynamicComponent {
         }
       },
       error => this.loadingTotal = false
+    )
+  }
+
+  getAccountBalance() {
+    this.incomeService.getAccountBalance().subscribe(
+      response => {
+        if (response.success) {
+          this.accountBalance = response.data;
+        }
+      }
     )
   }
 }

@@ -17,6 +17,8 @@ export class PaymentListDynamicComponent extends ListDynamicComponent {
 
   totalValue = 0;
 
+  accountBalance = 0;
+
   constructor(
     baseService: BaseService,
     router: Router,
@@ -31,6 +33,7 @@ export class PaymentListDynamicComponent extends ListDynamicComponent {
   ngOnInit(): void {
     super.ngOnInit();
     this.getTotalPayment();
+    this.getAccountBalance();
   }
 
   toCategory() {
@@ -38,7 +41,7 @@ export class PaymentListDynamicComponent extends ListDynamicComponent {
   }
 
   reload(): void {
-    if(!this.isLoading) {
+    if (!this.isLoading) {
       this.paginationRequest = new PaginationRequest();
       this.data = [];
       this.current = 0;
@@ -48,6 +51,7 @@ export class PaymentListDynamicComponent extends ListDynamicComponent {
       this.grid.table.nativeElement.scrollTop = 0; // reset scroll position
       this.getDataGrid();
       this.getTotalPayment();
+      this.getAccountBalance();
     }
   }
 
@@ -61,6 +65,16 @@ export class PaymentListDynamicComponent extends ListDynamicComponent {
         }
       },
       error => this.loadingTotal = false
+    )
+  }
+
+  getAccountBalance() {
+    this.paymentService.getAccountBalance().subscribe(
+      response => {
+        if (response.success) {
+          this.accountBalance = response.data;
+        }
+      }
     )
   }
 }

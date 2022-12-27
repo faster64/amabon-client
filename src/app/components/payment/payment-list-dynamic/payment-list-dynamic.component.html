@@ -26,6 +26,7 @@
 
     <div class="total-payment">
         <div>Tổng chi: {{ totalValue | NumberFormatPipe}}</div>
+        <div>Số dư hiện tại: {{ accountBalance | NumberFormatPipe}}</div>
         <skeleton-loading *ngIf="loadingTotal"></skeleton-loading>
     </div>
     <div class="grid">

@@ -33,7 +33,7 @@ export class PaymentCategoryListComponent extends BaseListComponent {
   initDisplayColumn() {
     this.displayColumn = [];
     this.displayColumn.push({ column: 'createdDate', displayText: "Ngày tạo", width: 120, type: GroupBoxFieldType.Date });
-    this.displayColumn.push({ column: 'name', displayText: 'Loại chi tiêu', width: 160 });
+    this.displayColumn.push({ column: 'name', displayText: 'Loại chi tiêu', width: 200 });
   }
 
   customizeViewFunc(e: any) {

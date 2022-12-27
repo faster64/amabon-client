@@ -62,12 +62,15 @@
         position: relative;
         display: flex;
         align-items: center;
+        justify-content: space-between;
         height: 40px;
         margin: 0 16px;
         padding: 0 8px;
+        background-color: #e8e8e8;
+        border-radius: 2px;
         div {
-            font-weight: 550;
             font-size: 16px;
+            margin-right: 16px;
         }
     }
     .grid {

@@ -33,7 +33,7 @@ export class IncomeCategoryListComponent extends BaseListComponent {
   initDisplayColumn() {
     this.displayColumn = [];
     this.displayColumn.push({ column: 'createdDate', displayText: "Ngày tạo", width: 120, type: GroupBoxFieldType.Date });
-    this.displayColumn.push({ column: 'name', displayText: 'Loại thu nhập', width: 160 });
+    this.displayColumn.push({ column: 'name', displayText: 'Loại thu nhập', width: 200 });
   }
 
   customizeViewFunc(e: any) {
