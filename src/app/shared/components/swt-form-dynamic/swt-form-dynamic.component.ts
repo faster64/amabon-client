@@ -147,7 +147,6 @@ export class FormDynamicComponent extends BaseComponent {
       return;
     }
 
-    console.log(this.getDynamicData())
     const invalid = this.validateBeforeSave();
     if (invalid) {
       MessageBox.information(new Message(this, { content: invalid?.message }));

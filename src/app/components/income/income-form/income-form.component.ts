@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { BaseFormComponent } from 'src/app/shared/components/swt-base-form/base-form.component';
 import { GroupBoxFieldType } from 'src/app/shared/enumerations/common.enum';
 import { BaseService } from 'src/app/shared/services/base/base.service';
-import { IncomeCategoryService } from 'src/app/shared/services/income/income-category.service';
-import { IncomeService } from 'src/app/shared/services/income/income.service';
+import { IncomeCategoryService } from 'src/app/shared/services/finance/income/income-category.service';
+import { IncomeService } from 'src/app/shared/services/finance/income/income.service';
 import { GroupBoxField } from '../../../shared/models/form-dynamic/group-box-field.model';
 
 

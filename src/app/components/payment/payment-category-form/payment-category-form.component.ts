@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BaseFormComponent } from 'src/app/shared/components/swt-base-form/base-form.component';
 import { GroupBoxField } from 'src/app/shared/models/form-dynamic/group-box-field.model';
 import { BaseService } from 'src/app/shared/services/base/base.service';
-import { PaymentCategoryService } from 'src/app/shared/services/payment/payment-category.service';
+import { PaymentCategoryService } from 'src/app/shared/services/finance/payment/payment-category.service';
 
 @Component({
   selector: 'app-payment-category-form',

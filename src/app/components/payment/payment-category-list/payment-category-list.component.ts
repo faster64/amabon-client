@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { BaseListComponent } from 'src/app/shared/components/swt-base-list/base-list.component';
 import { GroupBoxFieldType } from 'src/app/shared/enumerations/common.enum';
 import { BaseService } from 'src/app/shared/services/base/base.service';
-import { PaymentCategoryService } from 'src/app/shared/services/payment/payment-category.service';
+import { PaymentCategoryService } from 'src/app/shared/services/finance/payment/payment-category.service';
 
 @Component({
   selector: 'app-payment-category-list',

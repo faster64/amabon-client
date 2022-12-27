@@ -3,7 +3,7 @@ import { BaseComponent } from 'src/app/shared/components/base-component';
 import { BaseListComponent } from 'src/app/shared/components/swt-base-list/base-list.component';
 import { GroupBoxFieldType } from 'src/app/shared/enumerations/common.enum';
 import { BaseService } from 'src/app/shared/services/base/base.service';
-import { IncomeService } from 'src/app/shared/services/income/income.service';
+import { IncomeService } from 'src/app/shared/services/finance/income/income.service';
 
 @Component({
   selector: 'app-income-list',

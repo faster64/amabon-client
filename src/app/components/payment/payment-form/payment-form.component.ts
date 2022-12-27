@@ -4,8 +4,8 @@ import { BaseFormComponent } from 'src/app/shared/components/swt-base-form/base-
 import { GroupBoxFieldType } from 'src/app/shared/enumerations/common.enum';
 import { GroupBoxField } from 'src/app/shared/models/form-dynamic/group-box-field.model';
 import { BaseService } from 'src/app/shared/services/base/base.service';
-import { PaymentCategoryService } from 'src/app/shared/services/payment/payment-category.service';
-import { PaymentService } from 'src/app/shared/services/payment/payment.service';
+import { PaymentCategoryService } from 'src/app/shared/services/finance/payment/payment-category.service';
+import { PaymentService } from 'src/app/shared/services/finance/payment/payment.service';
 
 @Component({
   selector: 'app-payment-form',

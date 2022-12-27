@@ -93,7 +93,7 @@ export class NoteTakingCreateComponent extends BaseComponent implements AfterVie
       response => {
         this.saveBtn.isFinished = true;
         if (response.success) {
-          MessageBox.information(new Message(this, { content: "Success" }));
+          MessageBox.information(new Message(this, { content: "Lưu thành công" }));
 
           if (this.formMode === FormMode.Add) {
             this.router.navigateByUrl(`/${Routing.NOTE_TAKING.path}`);

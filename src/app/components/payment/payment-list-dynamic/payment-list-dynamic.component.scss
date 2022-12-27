@@ -1,5 +1,6 @@
 .payment-list-dynamic {
     height: 100%;
+    padding: 16px 0;
     .fn {
         display: flex;
         align-items: center;
@@ -55,6 +56,18 @@
             .payment-category {
                 margin-right: 16px;
             }
+        }
+    }
+    .total-payment {
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 40px;
+        margin: 0 16px;
+        padding: 0 8px;
+        div {
+            font-weight: 550;
+            font-size: 16px;
         }
     }
     .grid {

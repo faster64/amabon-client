@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { BaseListComponent } from 'src/app/shared/components/swt-base-list/base-list.component';
 import { GroupBoxFieldType } from 'src/app/shared/enumerations/common.enum';
 import { BaseService } from 'src/app/shared/services/base/base.service';
-import { IncomeCategoryService } from 'src/app/shared/services/income/income-category.service';
+import { IncomeCategoryService } from 'src/app/shared/services/finance/income/income-category.service';
 
 @Component({
   selector: 'app-income-category-list',

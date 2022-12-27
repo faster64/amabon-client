@@ -71,7 +71,6 @@ export class SwtComboboxComponent implements OnInit {
     this.onOpened.emit(e);
   }
   public onValueChangedFunc(e: any) {
-    console.log(e, this.value);
     this.onValueChanged.emit(e);
   }
   public onEnterKeyFunc(e: any) {

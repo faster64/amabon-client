@@ -18,7 +18,7 @@ export class BaseResolver<T> implements Resolve<T> {
   ) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<T> | Promise<T> | T | any {
-    Utility.changeTitle((route.data["title"] || "F8") + " | Học lập trình | Tự học lập trình | Học frontend | Học backend");
+    Utility.changeTitle((route.data["title"] || "F8") + " | Học lập trình | Học lập trình web | Tự học lập trình | Học frontend | Học backend | Học fullstack");
     // return of('aws').pipe(delay(300));
     return of('aws').pipe(delay(300));
   }

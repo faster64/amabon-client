@@ -24,6 +24,10 @@
         <ng-content selector=".customize-above-grid-content"></ng-content>
     </div>
 
+    <div class="total-payment">
+        <div>Tổng chi: {{ totalValue | NumberFormatPipe}}</div>
+        <skeleton-loading *ngIf="loadingTotal"></skeleton-loading>
+    </div>
     <div class="grid">
         <swt-grid #grid [data]="data" [isLoading]="isLoading && isFirstLoad" [displayColumn]="displayColumn" [current]="current" [total]="total" [scrollPosition]="200" [enableEmitScroll]="enableEmitScroll" (rowClick)="onRowClick($event)" (rowDblClick)="toViewForm($event)"
             (detectScrollToAnPosition)="onScrollToPosition($event)" (checkedEvent)="decideToShowDelete($event)" (sort)="sortGrid($event)">
