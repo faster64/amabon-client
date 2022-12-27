@@ -21,14 +21,14 @@
                 <!-- button tại add mode  -->
                 <ng-container *ngIf="formMode === FormMode.Add">
                     <div class="cancel">
-                        <swt-button text="Hủy bỏ" [color]="ButtonColor.BASIC" [height]="32" [width]="80" (onClick)="back()">
+                        <swt-button text="Hủy bỏ" [color]="ButtonColor.WARN" [height]="32" [width]="80" (onClick)="back()">
                         </swt-button>
                     </div>
                     <div class="save-and-add">
                         <swt-button #saveAndAddBtn [actionPermissions]="[ActionPermission.Add]" [iconButtonType]="IconButtonType.SAVE" text="Lưu và thêm" [color]="ButtonColor.BASIC" [height]="32" [width]="120" (onClick)="save(true)"></swt-button>
                     </div>
                     <div class="add">
-                        <swt-button #saveBtn [actionPermissions]="[ActionPermission.Add]" [iconButtonType]="IconButtonType.SAVE" text="Lưu" [height]="32" [width]="120" (onClick)="save()"></swt-button>
+                        <swt-button #saveBtn [actionPermissions]="[ActionPermission.Add]" [iconButtonType]="IconButtonType.SAVE" text="Lưu" [height]="32" [width]="100" (onClick)="save()"></swt-button>
                     </div>
                 </ng-container>
 
@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="edit">
-                        <swt-button [actionPermissions]="[ActionPermission.Edit]" #saveBtn [iconButtonType]="IconButtonType.SAVE" text="Lưu" [height]="32" [width]="120" (onClick)="save()"></swt-button>
+                        <swt-button [actionPermissions]="[ActionPermission.Edit]" #saveBtn [iconButtonType]="IconButtonType.SAVE" text="Lưu" [height]="32" [width]="100" (onClick)="save()"></swt-button>
                     </div>
                 </ng-container>
 

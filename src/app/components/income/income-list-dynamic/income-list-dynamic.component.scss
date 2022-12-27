@@ -1,4 +1,4 @@
-.list-dynamic {
+.income-list-dynamic {
     height: 100%;
     .fn {
         display: flex;
@@ -50,6 +50,9 @@
                 }
             }
             .delete {
+                margin-right: 16px;
+            }
+            .income-category {
                 margin-right: 16px;
             }
         }
@@ -120,6 +123,12 @@
                 background-position: -704px -200px;
             }
         }
+        .item.income-category {
+            display: none;
+            .icon {
+                background-position: -480px -253px;
+            }
+        }
     }
     .mat-menu-panel {
         min-height: 16px !important;
@@ -138,13 +147,15 @@
         }
         .fn-right {
             .export-excel,
-            .reload {
+            .reload,
+            .income-category {
                 display: none !important;
             }
         }
         .more-content {
             .item.export,
-            .item.reload {
+            .item.reload,
+            .item.income-category {
                 display: flex !important;
             }
         }

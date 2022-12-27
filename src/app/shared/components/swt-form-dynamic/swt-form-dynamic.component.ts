@@ -271,7 +271,7 @@ export class FormDynamicComponent extends BaseComponent {
 
   back() {
     if (this.backUrl) {
-      this.router.navigateByUrl(`/${this.backUrl}`);
+      this.router.navigateByUrl(this.backUrl);
     } else {
       this.router.navigateByUrl(`/${this.controller.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)}`);
     }
