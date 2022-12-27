@@ -120,12 +120,24 @@ const routes: Routes = [
   },
   {
     path: Routing.INCOME.path,
+    canActivate: [BaseGuard],
     loadChildren: () => import('./components/income/income.module').then(m => m.IncomeModule),
     resolve: {
       resolver: BaseResolver,
     },
     data: {
       title: Routing.INCOME.name,
+    }
+  },
+  {
+    path: Routing.PAYMENT.path,
+    canActivate: [BaseGuard],
+    loadChildren: () => import('./components/payment/payment.module').then(m => m.PaymentModule),
+    resolve: {
+      resolver: BaseResolver,
+    },
+    data: {
+      title: Routing.PAYMENT.name,
     }
   },
   {
