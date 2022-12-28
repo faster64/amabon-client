@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from 'src/app/shared/components/base-component';
+import { DateHelper } from 'src/app/shared/helpers/date.helper';
 import { BaseService } from 'src/app/shared/services/base/base.service';
+import { AnalysisService } from 'src/app/shared/services/finance/analysis.service';
 import { Utility } from 'src/app/shared/utils/utility';
 
 @Component({
@@ -46,8 +48,18 @@ export class ChartMonthComponent extends BaseComponent {
 
   constructor(
     baseService: BaseService,
+    public analysisService: AnalysisService,
   ) {
     super(baseService);
+  }
+
+  ngOnInit(): void {
+    super.ngOnInit();
+    this.analysisService.getAnalysisByTime(new Date('2022-12-01'), new Date('2022-12-31')).subscribe( response => {
+      if(response.success && response.data) {
+        console.log(response.data.map((i: any) => new Date(i.day).getDate()));
+      }
+    });
   }
 
 
