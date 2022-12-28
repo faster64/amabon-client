@@ -1,6 +1,6 @@
 <div class="chart-month">
-  <dx-chart [dataSource]="monthWeather">
-    <dxo-title text="Temperature in Seattle: October 2017"></dxo-title>
+  <dx-chart [dataSource]="months">
+    <dxo-title [text]="'Thống kê thu chi tháng ' + selectedMonth "></dxo-title>
 
     <!-- Icon biểu thị là loại nào  -->
     <dxo-legend verticalAlignment="bottom" horizontalAlignment="center"></dxo-legend>

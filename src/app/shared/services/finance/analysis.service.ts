@@ -14,8 +14,8 @@ export class AnalysisService extends BaseService {
     this.controller = "analysis";
   }
 
-  getAnalysisByTime(fromDate: Date, toDate: Date) {
-    const url = `${this.getApiUrl()}/${this.serviceName}/${this.controller}/analysis-by-time`;
+  getAnalysisByTime(fromDate: string, toDate: string) {
+    const url = `${this.getApiUrl()}/${this.serviceName}/${this.controller}/analysis-by-time?fromDate=${fromDate}&toDate=${toDate}`;
     return this.http.post<ServiceResult>(url, {
       fromDate: fromDate,
       toDate: toDate,

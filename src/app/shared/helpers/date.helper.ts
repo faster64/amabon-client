@@ -34,6 +34,20 @@ export class DateHelper {
     return new Date(date);
   }
 
+  public static formatDate(date: Date) {
+    if (date == null) {
+      return '';
+    }
+
+    date = new Date(date);
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let dayStr = day < 10 ? `0${day}` : day;
+    let monthStr = month < 10 ? `0${month}` : month;
+
+    return `${dayStr}-${monthStr}-${date.getFullYear()}`;
+  }
+
   public static getDaysInMonth(month: number, year: number) {
     if (month <= 0 || month > 12 || year <= 0)
       return 0;
