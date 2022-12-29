@@ -1,8 +1,14 @@
 <div class="dashboard">
   <div class="dashboard-content row">
     <div class="group-box col-12">
-      <chart-month (loaded)="isLoadingMonth = !$event"></chart-month>
-      <spinner-loading *ngIf="isLoadingMonth"></spinner-loading>
+      <div class="group-box-content chart-month">
+        <chart-month (loaded)="isLoadingMonth = !$event"></chart-month>
+        <spinner-loading *ngIf="isLoadingMonth"></spinner-loading>
+      </div>
+
+      <div class="options" (click)="Utility.featureIsDeveloping($event)">
+
+      </div>
     </div>
   </div>
 </div>

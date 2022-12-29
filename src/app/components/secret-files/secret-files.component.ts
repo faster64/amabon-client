@@ -102,7 +102,7 @@ export class SecretFilesComponent extends BaseComponent {
   }
 
   customizeViewFunc(e: any) {
-    this.router.navigateByUrl(`/${Routing.STORAGE.path}/view-files/${e.folderName}`);
+    this.router.navigateByUrl(`/${Routing.STORAGE.path}/view-files/${btoa(e.folderName)}`);
   }
 
   customizeAddFunc() {

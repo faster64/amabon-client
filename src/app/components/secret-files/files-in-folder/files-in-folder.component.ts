@@ -63,7 +63,7 @@ export class FilesInFolderComponent extends BaseComponent {
   }
 
   initData(): void {
-    this.folderName = this.activatedRoute.snapshot.params["folder"];
+    this.folderName = atob(this.activatedRoute.snapshot.params["folder"]);
 
     this.paginationRequest.pageIndex = 1;
     this.paginationRequest.pageSize = 5;

@@ -12,6 +12,30 @@
       position: relative;
       min-height: 320px;
       // max-height: 440px;
+      padding: 8px;
+      overflow: auto;
+      .group-box-content {
+        height: 100%;
+        &.chart-month {
+          min-width: 1020px;
+        }
+      }
+
+      .options {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        width: 24px;
+        height: 24px;
+        background-image: url(../../../assets/img/icons_v2.svg);
+        background-position: -96px -337px;
+        border-radius: 2px;
+        transition: all 0.3s;
+        cursor: pointer;
+        &:hover {
+          background-color: #ddd;
+        }
+      }
     }
   }
 }

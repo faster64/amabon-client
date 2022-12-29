@@ -8,6 +8,7 @@ import { CookieHelper } from 'src/app/shared/helpers/cookie.hepler';
 import { ColumnGrid } from 'src/app/shared/models/base/column-grid.model';
 import { Message } from 'src/app/shared/models/message/message';
 import { BaseService } from 'src/app/shared/services/base/base.service';
+import { Utility } from 'src/app/shared/utils/utility';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -16,6 +17,8 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent  extends BaseComponent {
+
+  Utility = Utility;
 
   displayColumn: ColumnGrid[] = [];
 
