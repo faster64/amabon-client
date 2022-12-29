@@ -1,14 +1,38 @@
 <div class="dashboard">
-  <div class="dashboard-content row">
-    <div class="group-box col-12">
-      <div class="group-box-content chart-month">
-        <chart-month (loaded)="isLoadingMonth = !$event"></chart-month>
-        <spinner-loading *ngIf="isLoadingMonth"></spinner-loading>
-      </div>
+    <div class="dashboard-content row">
 
-      <div class="options" (click)="Utility.featureIsDeveloping($event)">
+        <!-- chart month  -->
+        <div class="group-box col-12">
+            <div class="group-box-content chart-month">
+                <chart-month (loaded)="isLoadingMonth = !$event"></chart-month>
+                <spinner-loading *ngIf="isLoadingMonth"></spinner-loading>
+            </div>
 
-      </div>
+            <div class="options" (click)="Utility.featureIsDeveloping($event)">
+
+            </div>
+        </div>
+
+        <!-- top thu nhập  -->
+        <div class="group-box col-12 col-md-6">
+            <div class="group-box-content chart-top-income">
+                <chart-top-income (loaded)="isLoadingTopIncome = !$event"></chart-top-income>
+                <spinner-loading *ngIf="isLoadingTopIncome"></spinner-loading>
+            </div>
+
+            <div class="options" (click)="Utility.featureIsDeveloping($event)">
+            </div>
+        </div>
+
+        <!-- top chi tiêu  -->
+        <div class="group-box col-12 col-md-6">
+            <div class="group-box-content chart-top-payment">
+                <chart-top-payment (loaded)="isLoadingTopPayment = !$event"></chart-top-payment>
+                <spinner-loading *ngIf="isLoadingTopPayment"></spinner-loading>
+            </div>
+
+            <div class="options" (click)="Utility.featureIsDeveloping($event)">
+            </div>
+        </div>
     </div>
-  </div>
 </div>

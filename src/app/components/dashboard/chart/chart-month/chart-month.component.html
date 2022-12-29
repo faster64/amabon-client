@@ -1,37 +1,37 @@
 <div class="chart-month">
-  <dx-chart [dataSource]="months">
-    <dxo-title [text]="'Thống kê thu chi tháng ' + selectedMonth "></dxo-title>
+    <dx-chart [dataSource]="months">
+        <dxo-title [text]="'Thống kê thu chi tháng ' + selectedMonth "></dxo-title>
 
-    <!-- Icon biểu thị là loại nào  -->
-    <dxo-legend verticalAlignment="bottom" horizontalAlignment="center"></dxo-legend>
+        <!-- Icon biểu thị là loại nào  -->
+        <dxo-legend verticalAlignment="bottom" horizontalAlignment="center"></dxo-legend>
 
-    <dxi-series argumentField="day" valueField="incomeValue" type="bar" name="Thu">
-      <!-- Hiển thị value trên đỉnh -->
-      <dxo-label [visible]="false" backgroundColor="#97C95C" format="#,###"></dxo-label>
-    </dxi-series>
+        <dxi-series argumentField="day" valueField="incomeValue" name="Thu">
+            <!-- Hiển thị value trên đỉnh -->
+            <dxo-label [visible]="false" backgroundColor="#97C95C" format="#,###"></dxo-label>
+        </dxi-series>
 
-    <dxi-series argumentField="day" valueField="paymentValue" type="bar" name="Chi" >
-      <!-- Hiển thị value trên đỉnh -->
-      <dxo-label [visible]="false" backgroundColor="#c18e92" format="#,###"></dxo-label>
-    </dxi-series>
+        <dxi-series argumentField="day" valueField="paymentValue" name="Chi">
+            <!-- Hiển thị value trên đỉnh -->
+            <dxo-label [visible]="false" backgroundColor="#c18e92" format="#,###"></dxo-label>
+        </dxi-series>
 
-    <dxo-argument-axis [tickInterval]="1">
-      <dxo-label [customizeText]="customizeText"> </dxo-label>
-    </dxo-argument-axis>
+        <dxo-argument-axis [tickInterval]="1">
+            <dxo-label [customizeText]="customizeText"> </dxo-label>
+        </dxo-argument-axis>
 
-    <!-- size  -->
-    <!-- <dxo-size [width]="900"></dxo-size> -->
+        <!-- size  -->
+        <!-- <dxo-size [width]="900"></dxo-size> -->
 
-    <!-- export  -->
-    <dxo-export [enabled]="true"></dxo-export>
+        <!-- export  -->
+        <!-- <dxo-export [enabled]="true"></dxo-export> -->
 
-    <!-- tooltip  -->
-    <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeTooltip"></dxo-tooltip>
+        <!-- tooltip  -->
+        <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeTooltip"></dxo-tooltip>
 
-    <!-- <dxo-scroll-bar [visible]="true"></dxo-scroll-bar> -->
+        <!-- <dxo-scroll-bar [visible]="true"></dxo-scroll-bar> -->
 
-    <dxo-common-series-settings argumentField="state" type="bar" [ignoreEmptyPoints]="true"></dxo-common-series-settings>
+        <dxo-common-series-settings argumentField="state" type="stackedBar" [ignoreEmptyPoints]="true"></dxo-common-series-settings>
 
-    <dxo-loading-indicator [enabled]="true"></dxo-loading-indicator>
-  </dx-chart>
+        <dxo-loading-indicator [enabled]="true"></dxo-loading-indicator>
+    </dx-chart>
 </div>

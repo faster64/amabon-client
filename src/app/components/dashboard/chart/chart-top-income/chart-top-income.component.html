@@ -1,0 +1,17 @@
+<div class="chart-top-income">
+    <dx-pie-chart *ngIf="tops && tops.length" [title]="title" [dataSource]="tops">
+        <dxo-legend [visible]="false"></dxo-legend>
+        <dxi-series argumentField="categoryName" valueField="value">
+            <dxo-small-values-grouping mode="topN" [topCount]="topCount"></dxo-small-values-grouping>
+            <dxo-label [visible]="true" format="fixedPoint" [customizeText]="customizeLabel">
+                <dxo-connector [visible]="true" [width]="1"></dxo-connector>
+            </dxo-label>
+        </dxi-series>
+
+        <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeTooltip"></dxo-tooltip>
+    </dx-pie-chart>
+
+    <div class="no-data dis-flex" *ngIf="!tops || !tops.length">
+        Không có dữ liệu để hiển thị
+    </div>
+</div>

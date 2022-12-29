@@ -4,26 +4,24 @@ import { DateHelper } from 'src/app/shared/helpers/date.helper';
 import { BaseService } from 'src/app/shared/services/base/base.service';
 import { AnalysisService } from 'src/app/shared/services/finance/analysis.service';
 import { Utility } from 'src/app/shared/utils/utility';
+import { BaseChartComponent } from '../base-chart.component';
 
 @Component({
   selector: 'chart-month',
   templateUrl: './chart-month.component.html',
   styleUrls: ['./chart-month.component.scss']
 })
-export class ChartMonthComponent extends BaseComponent {
+export class ChartMonthComponent extends BaseChartComponent {
 
   months = [];
 
   selectedMonth = DateHelper.currentMonth;
 
-  @Output()
-  loaded = new EventEmitter<boolean>();
-
   constructor(
     baseService: BaseService,
-    public analysisService: AnalysisService,
+    analysisService: AnalysisService,
   ) {
-    super(baseService);
+    super(baseService, analysisService);
   }
 
   ngOnInit(): void {

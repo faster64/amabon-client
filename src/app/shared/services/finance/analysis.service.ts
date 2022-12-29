@@ -22,4 +22,19 @@ export class AnalysisService extends BaseService {
     });
   }
 
+  getTopPaymentByTime(fromDate: string, toDate: string, topCount: number) {
+    const url = `${this.getApiUrl()}/${this.serviceName}/${this.controller}/top-payment-by-time?fromDate=${fromDate}&toDate=${toDate}&topCount=${topCount}`;
+    return this.http.post<ServiceResult>(url, {
+      fromDate: fromDate,
+      toDate: toDate,
+    });
+  }
+
+  getTopIncomeByTime(fromDate: string, toDate: string, topCount: number) {
+    const url = `${this.getApiUrl()}/${this.serviceName}/${this.controller}/top-income-by-time?fromDate=${fromDate}&toDate=${toDate}&topCount=${topCount}`;
+    return this.http.post<ServiceResult>(url, {
+      fromDate: fromDate,
+      toDate: toDate,
+    });
+  }
 }

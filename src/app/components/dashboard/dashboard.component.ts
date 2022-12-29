@@ -24,6 +24,10 @@ export class DashboardComponent  extends BaseComponent {
 
   isLoadingMonth = true;
 
+  isLoadingTopIncome = true;
+
+  isLoadingTopPayment = true;
+
   constructor(
     baseService: BaseService,
   ) {
