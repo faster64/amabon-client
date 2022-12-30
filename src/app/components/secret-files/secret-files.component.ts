@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { TransitionCheckState } from '@angular/material/checkbox';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/authentication/shared/services/authentication.service';
 import { BaseComponent } from 'src/app/shared/components/base-component';
 import { MessageBox } from 'src/app/shared/components/message-box/message-box.component';
@@ -24,6 +24,7 @@ import { CreateFolderPopupComponent } from './create-folder-popup/create-folder-
 import { PopupService } from 'src/app/shared/services/base/popup.service';
 import { SharedService } from 'src/app/shared/services/base/shared.service';
 import { DeviceType } from 'src/app/shared/enumerations/device.enum';
+import { StringHelper } from 'src/app/shared/helpers/string.helper';
 
 @Component({
   selector: 'app-secret-files',
@@ -44,6 +45,8 @@ export class SecretFilesComponent extends BaseComponent {
 
   customizeViewUrl = '';
 
+  continue = "";
+
   @ViewChild("commitBtn") commitBtn!: SwtButton;
 
   @ViewChild("listDynamic") listDynamic!: ListDynamicComponent;
@@ -56,12 +59,14 @@ export class SecretFilesComponent extends BaseComponent {
     public dialog: MatDialog,
     public popupService: PopupService,
     public sharedService: SharedService,
+    public activatedRoute: ActivatedRoute,
   ) {
     super(baseService);
   }
 
   ngOnInit(): void {
     super.ngOnInit();
+    this.continue = this.activatedRoute.snapshot.queryParams['continue'];
     this.passSecurity = sessionStorage.getItem(`${environment.team}_${SessionStorageKey.PASSED_SECURITY}`) != null;
     this.customizeAddFunc = this.customizeAddFunc.bind(this);
   }
@@ -89,6 +94,10 @@ export class SecretFilesComponent extends BaseComponent {
           // this.getFolders();
           sessionStorage.setItem(`${environment.team}_${SessionStorageKey.PASSED_SECURITY}`, "passed");
 
+          if (!StringHelper.isNullOrEmpty(this.continue)) {
+            this.router.navigateByUrl(`/${Routing.STORAGE.path}/view-files/${this.continue}`);
+          }
+
         } else {
           SnackBar.openSnackBarDanger(new SnackBarParameter(this, "Mã bí mật không đúng!"));
         }
@@ -107,7 +116,7 @@ export class SecretFilesComponent extends BaseComponent {
 
   customizeAddFunc() {
     this.listDynamic.addBtn.isFinished = true;
-    this.dialog.open(CreateFolderPopupComponent, this.popupService.getBaseConfig()).afterClosed().subscribe( () => {
+    this.dialog.open(CreateFolderPopupComponent, this.popupService.getBaseConfig()).afterClosed().subscribe(() => {
       this.listDynamic.reload();
     });
   }

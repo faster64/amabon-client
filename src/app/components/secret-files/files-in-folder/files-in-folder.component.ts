@@ -79,6 +79,7 @@ export class FilesInFolderComponent extends BaseComponent {
           this.urls = response.data.map((f: FileStorage) => {
             return {
               url: f.presignedUrl,
+              fileName: f.fileName,
               isVideo: Utility.isVideo(f.presignedUrl),
             }
           });
@@ -101,9 +102,9 @@ export class FilesInFolderComponent extends BaseComponent {
       },
       error: error => {
         this.isLoading = false
-        if(error?.code == HttpStatusCode.Forbidden) {
+        if (error?.code == HttpStatusCode.Forbidden) {
           sessionStorage.removeItem(`${environment.team}_${SessionStorageKey.PASSED_SECURITY}`);
-          this.router.navigate([`/${this.Routing.STORAGE.path}`]);
+          this.router.navigate([`/${this.Routing.STORAGE.path}`], { queryParams: { continue: btoa(this.folderName) } });
         }
       }
     })
@@ -150,14 +151,23 @@ export class FilesInFolderComponent extends BaseComponent {
   }
 
   clearCache() {
-    this.storageService.clearCache(this.folderName).subscribe(response => {
-      this.clearCacheBtn.isFinished = true;
-      if (response.success) {
-        MessageBox.information(new Message(null, { content: "Clear successfully!" }));
-      } else {
-        MessageBox.information(new Message(null, { content: response.message }));
+    this.storageService.clearCache(this.folderName).subscribe(
+      response => {
+        this.clearCacheBtn.isFinished = true;
+        if (response.success) {
+          this.loadFileInFolder(this.folderName);
+          MessageBox.information(new Message(null, { content: "Clear successfully!" }));
+        } else {
+          MessageBox.information(new Message(null, { content: response.message }));
+        }
+      },
+      error => {
+        if (error?.code == HttpStatusCode.Forbidden) {
+          sessionStorage.removeItem(`${environment.team}_${SessionStorageKey.PASSED_SECURITY}`);
+          this.router.navigate([`/${this.Routing.STORAGE.path}`], { queryParams: { continue: btoa(this.folderName) } });
+        }
       }
-    })
+    )
   }
 
   openUploader() {
