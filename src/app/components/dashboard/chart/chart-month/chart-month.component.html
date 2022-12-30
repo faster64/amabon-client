@@ -1,4 +1,4 @@
-<div class="chart-month">
+<div class="chart-month" *ngIf="!isLoading">
     <dx-chart [dataSource]="months">
         <dxo-title [text]="'Thống kê thu chi tháng ' + selectedMonth "></dxo-title>
 

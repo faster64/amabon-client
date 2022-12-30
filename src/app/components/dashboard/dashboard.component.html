@@ -3,8 +3,8 @@
 
         <!-- chart month  -->
         <div class="group-box col-12">
-            <div class="group-box-content chart-month">
-                <chart-month (loaded)="isLoadingMonth = !$event"></chart-month>
+            <div class="group-box-content chart-month" [ngClass]="!isLoadingMonth ? 'loaded' : ''">
+                <chart-month (loaded)="isLoadingMonth = !$event" [isLoading]="isLoadingMonth"></chart-month>
                 <spinner-loading *ngIf="isLoadingMonth"></spinner-loading>
             </div>
 

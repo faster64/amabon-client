@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BaseComponent } from 'src/app/shared/components/base-component';
 import { DateHelper } from 'src/app/shared/helpers/date.helper';
 import { BaseService } from 'src/app/shared/services/base/base.service';
@@ -16,6 +16,9 @@ export class ChartMonthComponent extends BaseChartComponent {
   months = [];
 
   selectedMonth = DateHelper.currentMonth;
+
+  @Input()
+  isLoading = true;
 
   constructor(
     baseService: BaseService,

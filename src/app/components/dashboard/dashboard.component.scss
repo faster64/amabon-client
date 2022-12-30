@@ -20,7 +20,7 @@
                 padding: 8px;
                 border: 1px solid #c2c2c2;
                 border-radius: 2px;
-                &.chart-month {
+                &.chart-month.loaded {
                     min-width: 1020px;
                 }
             }
