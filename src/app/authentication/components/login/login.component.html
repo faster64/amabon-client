@@ -16,7 +16,7 @@
             <div class="row-item email">
                 <mat-form-field appearance="fill">
                     <mat-label>Tài khoản hoặc địa chỉ email <span style="color: red">*</span></mat-label>
-                    <input #email type="email" matInput placeholder="Tài khoản hoặc địa chỉ email của bạn" [(ngModel)]="userCred.userName" (keyup)="loginByEnter($event)" />
+                    <input #email type="email" matInput [(ngModel)]="userCred.userName" (keyup)="loginByEnter($event)" />
                 </mat-form-field>
             </div>
 
