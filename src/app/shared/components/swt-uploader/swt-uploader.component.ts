@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { CookieKey } from '../../constants/cookie.key';
+import { SessionStorageKey } from '../../constants/sessionstorage.key';
 import { CookieHelper } from '../../helpers/cookie.hepler';
 import { BaseService } from '../../services/base/base.service';
 import { Utility } from '../../utils/utility';
@@ -60,7 +61,11 @@ export class SwtUploaderComponent extends BaseComponent {
     this.onUploaded = this.onUploaded.bind(this);
     this.onProgress = this.onProgress.bind(this);
     this.onUploadStarted = this.onUploadStarted.bind(this);
-    this.headers = { 'Authorization': 'Bearer ' + CookieHelper.getCookie(`${environment.team}_${CookieKey.ACCESS_TOKEN}`) };
+
+    this.headers = {
+      'Authorization': 'Bearer ' + CookieHelper.getCookie(`${environment.team}_${CookieKey.ACCESS_TOKEN}`),
+      "X-Secret-Key": CookieHelper.getCookie(`${environment.team}_${SessionStorageKey.SECRET_KEY}`) || ""
+    };
   }
 
   onDropZoneEnter(e: any) {

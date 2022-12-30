@@ -105,7 +105,7 @@ export class LoginComponent extends BaseComponent implements AfterViewInit {
    * khởi tạo form
    */
   initForm() {
-    if (!environment.production) {
+    if (true || !environment.production) {
       this.userCred.userName = "admin12";
       this.userCred.password = "admin12@@";
     }
