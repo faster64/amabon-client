@@ -1,21 +1,24 @@
 import { HttpHeaders, HttpStatusCode } from '@angular/common/http';
 import { Component, HostListener, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from 'src/app/shared/components/base-component';
 import { MessageBox } from 'src/app/shared/components/message-box/message-box.component';
+import { SnackBar } from 'src/app/shared/components/snackbar/snackbar.component';
 import { SwtButton } from 'src/app/shared/components/swt-button/swt-button.component';
 import { SessionStorageKey } from 'src/app/shared/constants/sessionstorage.key';
 import { FileType } from 'src/app/shared/enumerations/file-type.enum';
 import { HttpStatusCodeExtension } from 'src/app/shared/enumerations/http-status-code-extension.enum';
 import { ServiceResult } from 'src/app/shared/models/base/service-result';
 import { Message } from 'src/app/shared/models/message/message';
+import { SnackBarParameter } from 'src/app/shared/models/snackbar/snackbar.param';
 import { FileStorage } from 'src/app/shared/models/storage/file/file.model';
 import { BaseService } from 'src/app/shared/services/base/base.service';
 import { PopupService } from 'src/app/shared/services/base/popup.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { Utility } from 'src/app/shared/utils/utility';
 import { environment } from 'src/environments/environment';
+import { MoveFilePopupComponent } from '../move-file-popup/move-file-popup.component';
 import { StorageUploadPopupComponent } from '../storage-upload-popup/storage-upload-popup.component';
 
 @Component({
@@ -35,11 +38,11 @@ export class FilesInFolderComponent extends BaseComponent {
 
   formData = new FormData();
 
+  isDeleting = false;
+
   @ViewChild("file") fileInput: any;
 
   @ViewChild("saveFileBtn") saveFileBtn!: SwtButton;
-
-  @ViewChild("clearCacheBtn") clearCacheBtn!: SwtButton;
 
   @HostListener('scroll', ['$event'])
   onScroll(event: any) {
@@ -53,7 +56,7 @@ export class FilesInFolderComponent extends BaseComponent {
     public activatedRoute: ActivatedRoute,
     public diaglog: MatDialog,
     public popupService: PopupService,
-    public router: Router
+    public router: Router,
   ) {
     super(baseService);
   }
@@ -81,6 +84,7 @@ export class FilesInFolderComponent extends BaseComponent {
               url: f.presignedUrl,
               fileName: f.fileName,
               isVideo: Utility.isVideo(f.presignedUrl),
+              checked: false,
             }
           });
 
@@ -107,56 +111,15 @@ export class FilesInFolderComponent extends BaseComponent {
           this.router.navigate([`/${this.Routing.STORAGE.path}`], { queryParams: { continue: btoa(this.folderName) } });
         }
       }
-    })
-  }
-
-  /**
-   * Obsolete
-   */
-  selectedFile(files: any) {
-    this.formData = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      this.formData.append('files', files[i], files[i].name);
-    }
-  }
-
-  /**
-   * Obsolete
-   */
-  resetFiles() {
-    this.fileInput.nativeElement.value = null;
-    this.formData = new FormData();
-  }
-
-  /**
-   * Obsolete
-   */
-  saveFiles() {
-    const header = new HttpHeaders();
-    header.append('Content-Type', 'undefined');
-
-    this.baseService.takeOriginHttpClient().post<ServiceResult>(`${this.baseService.getApiUrl()}/${this.storageService.serviceName}/storage/upload?folder=${this.folderName}`, this.formData).subscribe(
-      response => {
-        this.saveFileBtn.isFinished = true;
-        this.fileInput.nativeElement.value = null;
-        if (response.success) {
-          this.loadFileInFolder(this.folderName);
-          MessageBox.information(new Message(null, { content: "Tải lên thành công!" }));
-        } else {
-          MessageBox.information(new Message(null, { content: response.message }));
-        }
-      },
-      error => MessageBox.information(new Message(null, { content: JSON.stringify(error) }))
-    );
+    });
   }
 
   clearCache() {
     this.storageService.clearCache(this.folderName).subscribe(
       response => {
-        this.clearCacheBtn.isFinished = true;
         if (response.success) {
           this.loadFileInFolder(this.folderName);
-          MessageBox.information(new Message(null, { content: "Clear successfully!" }));
+          SnackBar.openSnackBarSuccess(new SnackBarParameter(this, "Làm mới dữ liệu thành công"));
         } else {
           MessageBox.information(new Message(null, { content: response.message }));
         }
@@ -179,8 +142,8 @@ export class FilesInFolderComponent extends BaseComponent {
       (response: ServiceResult) => {
         if (response) {
           if (response.success) {
+            SnackBar.openSnackBarSuccess(new SnackBarParameter(this, "Tải lên thành công"));
             this.loadFileInFolder(this.folderName);
-            MessageBox.information(new Message(null, { content: "Tải lên thành công!" }));
           } else {
             MessageBox.information(new Message(null, { content: response.message }));
           }
@@ -189,10 +152,56 @@ export class FilesInFolderComponent extends BaseComponent {
       error => MessageBox.information(new Message(null, { content: JSON.stringify(error) }))
     );
   }
+
+  confirmDelete() {
+    MessageBox.confirmDelete(new Message(this, { content: "Bạn có chắc chắn muốn xóa các tệp này không?" })).subscribe(agree => {
+      if (agree) {
+        this.delete();
+      }
+    });
+  }
+
+  anyChecked() {
+    return this.urls.findIndex(u => u.checked) !== - 1;
+  }
+
+  delete() {
+    this.isDeleting = true;
+    const checkedFileNames = this.urls.filter(u => u.checked).map(u => u.fileName);
+    this.storageService.deleteFiles(this.folderName, checkedFileNames).subscribe(
+      response => {
+        this.isDeleting = false;
+        if (response.success) {
+          SnackBar.openSnackBarSuccess(new SnackBarParameter(this, "Xóa thành công"));
+          this.loadFileInFolder(this.folderName);
+        } else {
+          MessageBox.information(new Message(this, { content: response.message }));
+        }
+      },
+      () => this.isDeleting = false
+    )
+  }
+
+  move() {
+    const config = new MatDialogConfig();
+    config.width = '80%';
+    config.height = '80%';
+    config.data = {
+      folder: this.folderName,
+      files: this.urls
+    };
+    this.diaglog.open(MoveFilePopupComponent, config).afterClosed().subscribe((response: any) => {
+      if (response === true) {
+        this.loadFileInFolder(this.folderName);
+      }
+    });
+  }
 }
 
 export class Url {
   public url = "";
+  public fileName = "";
   public isVideo = false;
   public fileType: FileType = FileType.None;
+  public checked: any;
 }

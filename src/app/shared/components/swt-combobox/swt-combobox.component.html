@@ -1,5 +1,5 @@
 <div class="swt-combobox">
-    <dx-select-box [dataSource]="dataSource" [displayExpr]="displayExpr" [valueExpr]="valueExpr" [placeholder]="placeholder" [value]="value" (valueChange)="value = $event" [searchEnabled]="true" [noDataText]="noDataText" [disabled]="disabled" [readOnly]="readOnly"
+    <dx-select-box [dataSource]="dataSource" [displayExpr]="displayExpr" [valueExpr]="valueExpr" [placeholder]="isFetching ? '' : placeholder" [value]="value" (valueChange)="value = $event" [searchEnabled]="true" [noDataText]="noDataText" [disabled]="disabled" [readOnly]="readOnly"
         [width]="width" [height]="height" [label]="label" [hint]="hint" [name]="name" (onOpened)="onOpenedFunc($event)" (onValueChanged)="onValueChangedFunc($event)" (onEnterKey)="onEnterKeyFunc($event)" (onBlur)="onBlurFunc($event)">
     </dx-select-box>
 

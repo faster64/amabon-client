@@ -3,23 +3,24 @@ import {
   HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpStatusCode
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, filter, switchMap, take } from 'rxjs/operators';
+import { catchError, filter, switchMap, take, takeUntil } from 'rxjs/operators';
 import { RefreshTokenModel } from 'src/app/authentication/shared/models/requests/refresh-token-model';
 import { AuthenticationResponse } from 'src/app/authentication/shared/models/responses/authentication-response';
 import { AuthenticationService } from 'src/app/authentication/shared/services/authentication.service';
 import { environment } from 'src/environments/environment';
-import { MessageBox } from '../components/message-box/message-box.component';
-import { SnackBar } from '../components/snackbar/snackbar.component';
-import { CommonConstant, ErrorMessageConstant, PerrmisionConstant, Routing } from '../constants/common.constant';
-import { CookieKey } from '../constants/cookie.key';
+import { MessageBox } from '../../components/message-box/message-box.component';
+import { SnackBar } from '../../components/snackbar/snackbar.component';
+import { CommonConstant, ErrorMessageConstant, PerrmisionConstant, Routing } from '../../constants/common.constant';
+import { CookieKey } from '../../constants/cookie.key';
 import { NotMessage } from './not-message';
-import { CookieHelper } from '../helpers/cookie.hepler';
-import { Message } from '../models/message/message';
-import { SnackBarParameter } from '../models/snackbar/snackbar.param';
+import { CookieHelper } from '../../helpers/cookie.hepler';
+import { Message } from '../../models/message/message';
+import { SnackBarParameter } from '../../models/snackbar/snackbar.param';
 import { LoginStatus } from 'src/app/authentication/shared/enums/login.enum';
-import { HttpStatusCodeExtension } from '../enumerations/http-status-code-extension.enum';
+import { HttpStatusCodeExtension } from '../../enumerations/http-status-code-extension.enum';
+import { HttpCancelService } from '../http-cancel.service';
 @Injectable()
 export class RequestHandlingInterceptor implements HttpInterceptor {
 
@@ -46,12 +47,22 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-  ) { }
+    private httpCancelService: HttpCancelService
+  ) {
+    this.router.events.subscribe(event => {
+      // An event triggered at the end of the activation part of the Resolve phase of routing.
+      if (event instanceof ActivationEnd) {
+        // Cancel pending calls
+        this.httpCancelService.cancelPendingRequests();
+      }
+    });
+  }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     request = this.injectToken(request);
 
     return next.handle(request).pipe(
+      takeUntil(this.httpCancelService.onCancelPendingRequests()),
       catchError((error: HttpErrorResponse) => {
         switch (error.status) {
           case HttpStatusCode.Unauthorized:

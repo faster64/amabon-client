@@ -11,7 +11,7 @@ import { MessageBoxModule } from './shared/components/message-box/message-box.mo
 import { SnackbarModule } from './shared/components/snackbar/snackbar.module';
 import './shared/extension-methods/array-extension';
 import './shared/extension-methods/string-extension';
-import { RequestHandlingInterceptor } from './shared/interceptors/request.interceptor';
+import { RequestHandlingInterceptor } from './shared/core/interceptors/request.interceptor';
 import { SharedModule } from './shared/shared.module';
 // import { OnlineStatusModule } from 'ngx-online-status';
 import { UpdateAvatarPopupComponent } from './components/user/popups/update-avatar-popup/update-avatar-popup.component';

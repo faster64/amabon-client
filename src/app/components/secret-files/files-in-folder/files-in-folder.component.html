@@ -1,18 +1,14 @@
 <div class="files-in-folder" (scroll)="onScroll($event)">
-  <div class="files">
-    <div class="total-and-upload">
+  <div class="manager">
+    <div class="m-left">
       <p class="total">{{imageCount}} image(s) - {{videoCount}} video(s)</p>
-      <div class="btns">
-        <swt-button [actionPermissions]="[ActionPermission.Add]" [matMenuTriggerFor]="uploadMenu" text="Upload type 1"
-          [finishImmediately]="true" [width]="100" [height]="28" [color]="ButtonColor.BASIC"></swt-button>
-
-        <swt-button [actionPermissions]="[ActionPermission.Add]" text="Upload type 2" [finishImmediately]="true"
-          [width]="100" [height]="28" [color]="ButtonColor.BASIC" (onClick)="openUploader()"></swt-button>
-
-        <swt-button #clearCacheBtn text="Clear cache" [width]="80" [height]="28" [color]="ButtonColor.WARN"
-          (onClick)="clearCache()"></swt-button>
-      </div>
     </div>
+    <div class="m-right">
+      <div class="icon-manager" [matMenuTriggerFor]="managerRight"></div>
+    </div>
+
+  </div>
+  <div class="files">
     <div class="file" *ngFor="let url of urls">
       <img *ngIf="!url.isVideo" [src]="url.url" alt="">
 
@@ -29,18 +25,49 @@
         </video>
       </div>
 
-      <dx-check-box class="check-box"></dx-check-box>
+      <dx-check-box class="check-box" [(value)]="url.checked">
+      </dx-check-box>
     </div>
   </div>
 
   <spinner-loading *ngIf="isLoading"></spinner-loading>
+  <swt-deleting *ngIf="isDeleting"></swt-deleting>
 </div>
 
-<mat-menu #uploadMenu (closed)="resetFiles()">
+<!-- <mat-menu #uploadMenu (closed)="resetFiles()">
   <div class="upload-form">
     <input #input type="file" #file class="uploadInp" (change)="selectedFile(file.files)" accept="*" [multiple]="true"
       (click)="$event.stopPropagation()">
     <swt-button #saveFileBtn [actionPermissions]="[ActionPermission.Add]" text="Tải lên" [width]="100" [height]="32"
       [color]="ButtonColor.BASIC" (onClick)="saveFiles()"></swt-button>
+  </div>
+</mat-menu> -->
+
+<mat-menu #managerRight>
+  <div class="manager-right">
+    <!-- <div class="btn">
+      <swt-button [actionPermissions]="[ActionPermission.Add]" [matMenuTriggerFor]="uploadMenu" text="Upload type 1"
+        [finishImmediately]="true" [height]="28" [color]="ButtonColor.BASIC"></swt-button>
+    </div> -->
+
+    <div class="btn delete" *ngIf="anyChecked()" (click)="confirmDelete()">
+      <div class="icon"></div>
+      <div class="text">Xóa</div>
+    </div>
+
+    <div class="btn move" *ngIf="anyChecked()" (click)="move()">
+      <div class="icon"></div>
+      <div class="text">Di chuyển</div>
+    </div>
+
+    <div class="btn upload" (click)="openUploader()">
+      <div class="icon"></div>
+      <div class="text">Tải lên tệp</div>
+    </div>
+
+    <div class="btn clear-cache" (click)="clearCache()">
+      <div class="icon"></div>
+      <div class="text">Làm mới dữ liệu</div>
+    </div>
   </div>
 </mat-menu>

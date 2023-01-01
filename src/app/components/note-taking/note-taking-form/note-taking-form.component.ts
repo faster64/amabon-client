@@ -40,6 +40,8 @@ export class NoteTakingCreateComponent extends BaseComponent implements AfterVie
 
   formMode: FormMode = FormMode.None;
 
+  isSaving = false;
+
   constructor(
     baseService: BaseService,
     public noteTakingService: NoteTakingService,
@@ -88,15 +90,17 @@ export class NoteTakingCreateComponent extends BaseComponent implements AfterVie
       return;
     }
 
+    this.isSaving = true;
     const api = this.formMode === FormMode.Edit ? this.noteTakingService.update("", this.article) : this.noteTakingService.save("", [this.article]);
     api.subscribe(
       response => {
+        this.isSaving = false;
         this.saveBtn.isFinished = true;
         if (response.success) {
           MessageBox.information(new Message(this, { content: "Lưu thành công" }));
 
           if (this.formMode === FormMode.Add) {
-            this.router.navigateByUrl(`/${Routing.NOTE_TAKING.path}`);
+            this.router.navigateByUrl(`/${Routing.NOTE_TAKING.path}/view/${response.data}`);
           }
           else {
             this.router.navigateByUrl(`/${Routing.NOTE_TAKING.path}/view/${this.maserId}`);
@@ -107,6 +111,7 @@ export class NoteTakingCreateComponent extends BaseComponent implements AfterVie
         }
       },
       error => {
+        this.isSaving = false;
         this.saveBtn.isFinished = true;
         MessageBox.information(new Message(this, { content: JSON.stringify(error) }));
       }

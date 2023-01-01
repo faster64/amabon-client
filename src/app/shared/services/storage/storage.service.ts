@@ -31,6 +31,11 @@ export class StorageService extends BaseService {
     });
   }
 
+  getFolderByName(folderName: string) {
+    const url = `${this.getApiUrl()}/${this.serviceName}/folder/get-folder-by-name?folderName=${folderName}`;
+    return this.takeOriginHttpClient().get<ServiceResult>(url);
+  }
+
   loadFilesInFolder(folderName: string) {
     const url = `${this.getApiUrl()}/${this.serviceName}/storage/files-in-folder?folderName=${folderName}`;
     return this.takeOriginHttpClient().get<ServiceResult>(url, {
@@ -46,6 +51,25 @@ export class StorageService extends BaseService {
       headers: {
         "X-Secret-Key": CookieHelper.getCookie(`${environment.team}_${SessionStorageKey.SECRET_KEY}`) || ""
       }
+    });
+  }
+
+  moveFiles(src: any, des: any, fileNames: string[]) {
+    const url = `${this.getApiUrl()}/${this.serviceName}/storage/move?src=${src}&des=${des}`;
+    return this.takeOriginHttpClient().post<ServiceResult>(url, fileNames, {
+      headers: {
+        "X-Secret-Key": CookieHelper.getCookie(`${environment.team}_${SessionStorageKey.SECRET_KEY}`) || ""
+      },
+    });
+  }
+
+  deleteFiles(folderName: string, fileNames: string[]) {
+    const url = `${this.getApiUrl()}/${this.serviceName}/storage/delete-files?folderName=${folderName}`;
+    return this.takeOriginHttpClient().request<ServiceResult>("delete", url, {
+      headers: {
+        "X-Secret-Key": CookieHelper.getCookie(`${environment.team}_${SessionStorageKey.SECRET_KEY}`) || ""
+      },
+      body: fileNames
     });
   }
 
