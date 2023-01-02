@@ -115,17 +115,19 @@ export class FilesInFolderComponent extends BaseComponent {
   }
 
   clearCache() {
+    this.isLoading = true;
     this.storageService.clearCache(this.folderName).subscribe(
       response => {
         if (response.success) {
           this.loadFileInFolder(this.folderName);
-          SnackBar.openSnackBarSuccess(new SnackBarParameter(this, "Làm mới dữ liệu thành công"));
         } else {
+          this.isLoading = false;
           MessageBox.information(new Message(null, { content: response.message }));
         }
       },
       error => {
         if (error?.code == HttpStatusCode.Forbidden) {
+          this.isLoading = false;
           sessionStorage.removeItem(`${environment.team}_${SessionStorageKey.PASSED_SECURITY}`);
           this.router.navigate([`/${this.Routing.STORAGE.path}`], { queryParams: { continue: btoa(this.folderName) } });
         }

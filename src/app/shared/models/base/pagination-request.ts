@@ -4,7 +4,7 @@ import { Field } from "./field.model";
 export class PaginationRequest {
   public pageIndex: number = 1;
 
-  public pageSize: number = 20;
+  public pageSize: number = 30;
 
   public fields: Field[] = [];
 
