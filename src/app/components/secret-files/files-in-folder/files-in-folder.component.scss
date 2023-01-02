@@ -2,6 +2,8 @@
   height: 100%;
   overflow-y: auto;
   .manager {
+    position: sticky;
+    top: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -9,7 +11,9 @@
     padding: 16px;
     font-size: 14px;
     font-weight: 500;
-    background-color: #fff7f7;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    z-index: 998;
     .m-left {
       .total {
         flex-basis: 100%;
@@ -49,6 +53,10 @@
         position: absolute;
         top: 10px;
         left: 10px;
+      }
+
+      &.selected {
+        background-color: #ddd;
       }
     }
   }
@@ -95,7 +103,7 @@
     }
     &.clear-cache {
       .icon {
-        background-position: -240px -16px;
+        background-position: -208px -192px;
       }
     }
     &.delete {
@@ -113,5 +121,4 @@
       background-color: #ddd;
     }
   }
-
 }

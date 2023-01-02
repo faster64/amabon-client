@@ -13,6 +13,8 @@ import { HttpService } from '../base/http.service';
 })
 export class StorageService extends BaseService {
 
+  uploadCount = 0;
+
   constructor(http: HttpService) {
     super(http);
     this.serviceName = "ass";

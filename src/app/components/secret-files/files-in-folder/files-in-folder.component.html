@@ -9,11 +9,11 @@
 
   </div>
   <div class="files">
-    <div class="file" *ngFor="let url of urls" (click)="url.checked = !url.checked">
+    <div class="file" *ngFor="let url of urls" (dblclick)="url.checked = !url.checked" [ngClass]="url.checked ? 'selected' : ''">
       <img *ngIf="!url.isVideo" [src]="url.url" alt="">
 
       <div *ngIf="url.isVideo" class="player">
-        <video id="plyrID" controls playsinline
+        <video id="plyrID" controls playsinline loop
           poster="https://assets.aboutamazon.com/66/f3/cb7e8e804a1f991c96593cf465e1/aws-logo-white-on-si.jpg">
           <source [src]="url.url" type="video/mp4">
 
@@ -25,8 +25,7 @@
         </video>
       </div>
 
-      <dx-check-box class="check-box" [(value)]="url.checked">
-      </dx-check-box>
+      <dx-check-box class="check-box" [(value)]="url.checked"> </dx-check-box>
     </div>
   </div>
 

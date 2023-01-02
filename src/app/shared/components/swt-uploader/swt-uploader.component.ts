@@ -4,6 +4,7 @@ import { CookieKey } from '../../constants/cookie.key';
 import { SessionStorageKey } from '../../constants/sessionstorage.key';
 import { CookieHelper } from '../../helpers/cookie.hepler';
 import { BaseService } from '../../services/base/base.service';
+import { StorageService } from '../../services/storage/storage.service';
 import { Utility } from '../../utils/utility';
 import { BaseComponent } from '../base-component';
 
@@ -51,6 +52,7 @@ export class SwtUploaderComponent extends BaseComponent {
 
   constructor(
     baseService: BaseService,
+    public storageService: StorageService,
   ) {
     super(baseService);
   }
@@ -96,6 +98,7 @@ export class SwtUploaderComponent extends BaseComponent {
   }
 
   onUploadStarted(e: any) {
+    this.storageService.uploadCount++;
     this.imageSource = '';
     this.progressVisible = true;
     this.textVisible = false;
