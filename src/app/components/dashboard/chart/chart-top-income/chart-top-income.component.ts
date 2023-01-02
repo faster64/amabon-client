@@ -20,7 +20,9 @@ export class ChartTopIncomeComponent extends BaseChartComponent {
 
   selectedMonth = DateHelper.currentMonth;
 
-  title = 'Top thu nhập tháng ' + this.selectedMonth;
+  // title = 'Top thu nhập tháng ' + this.selectedMonth;
+
+  title = 'Top thu nhập';
 
   constructor(
     baseService: BaseService,

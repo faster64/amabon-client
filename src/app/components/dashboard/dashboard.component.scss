@@ -4,7 +4,6 @@
     justify-content: center;
     height: 100%;
     padding: 16px;
-    background-color: #fff;
     overflow-y: auto;
     .dashboard-content {
         width: 100%;
@@ -18,8 +17,9 @@
                 position: relative;
                 height: 100%;
                 padding: 8px;
-                border: 1px solid #c2c2c2;
+                border: 1px dotted #c9c9c9;
                 border-radius: 2px;
+                background-color: #fff;
                 &.chart-month.loaded {
                     min-width: 1020px;
                 }

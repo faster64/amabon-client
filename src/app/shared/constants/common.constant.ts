@@ -30,8 +30,9 @@ export class Routing {
   public static readonly SETTING = new RoutingConfig('setting', 'Thiết lập');
   public static readonly DASHBOARD = new RoutingConfig('dashboard', 'Tổng quan');
   public static readonly STORAGE = new RoutingConfig('storage', 'Kho lưu trữ');
-  public static readonly NOTE_TAKING = new RoutingConfig('note-taking', 'Note Taking');
+  public static readonly NOTE_TAKING = new RoutingConfig('note-taking', 'Ghi chú');
   public static readonly CONTACT = new RoutingConfig('contact', 'Liên hệ');
+  public static readonly REPORT = new RoutingConfig('report', 'Báo cáo');
   public static readonly TAX_CONVERTER = new RoutingConfig('tax-converter', 'Bộ chuyển đổi thuế');
   public static readonly CALENDAR_CONVERTER = new RoutingConfig('calendar-converter', 'Bộ chuyển đổi lịch');
   public static readonly SALARY_CONVERTER = new RoutingConfig('salary-converter', 'Bộ chuyển đổi lương');

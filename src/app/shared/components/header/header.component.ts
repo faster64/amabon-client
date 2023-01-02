@@ -177,7 +177,7 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
       moduleName: Routing.DASHBOARD.name,
       iconPosition: '0 -272px',
       iconCheckedPosition: '0px -288px',
-      hint: '',
+      hint: 'Màn hình tổng quan và biểu đồ',
     });
     // this.modules.push({
     //   path: Routing.TAX_CONVERTER,
@@ -227,6 +227,13 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
       iconPosition: '-176px -504px',
       iconCheckedPosition: '-144px -504px',
       hint: 'Thống kê chi tiêu của bạn',
+    });
+    this.modules.push({
+      path: Routing.REPORT.path,
+      moduleName: Routing.REPORT.name,
+      iconPosition: '-144px -272px',
+      iconCheckedPosition: '-144px -288px',
+      hint: 'Báo cáo tài chính',
     });
     this.modules.push({
       path: Routing.CONTACT.path,
