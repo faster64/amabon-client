@@ -40,8 +40,6 @@ export class FilesInFolderComponent extends BaseComponent {
 
   isDeleting = false;
 
-  responseCount = 0;
-
   @ViewChild("file") fileInput: any;
 
   @ViewChild("saveFileBtn") saveFileBtn!: SwtButton;
@@ -144,10 +142,8 @@ export class FilesInFolderComponent extends BaseComponent {
     }
     this.diaglog.open(StorageUploadPopupComponent, config).afterClosed().subscribe(
       (response: ServiceResult) => {
-        this.responseCount++;
-        console.log(this.responseCount, this.storageService.uploadCount);
         if (response) {
-          if (response.success && this.responseCount == this.storageService.uploadCount) {
+          if (response.success) {
             SnackBar.openSnackBarSuccess(new SnackBarParameter(this, "Tải lên thành công"));
             this.loadFileInFolder(this.folderName);
           } else {
@@ -156,7 +152,6 @@ export class FilesInFolderComponent extends BaseComponent {
         }
       },
       error => {
-        this.responseCount++;
         MessageBox.information(new Message(null, { content: JSON.stringify(error) }))
       }
     );
