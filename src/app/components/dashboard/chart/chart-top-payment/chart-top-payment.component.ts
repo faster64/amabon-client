@@ -66,7 +66,7 @@ export class ChartTopPaymentComponent extends BaseChartComponent {
 
   customizeTooltip(point: any) {
     return {
-      text: `${Utility.formatCurrency(point.value)}`,
+      text: `${point.argumentText}: ${Utility.formatCurrency(point.value)}`,
     };
   }
 

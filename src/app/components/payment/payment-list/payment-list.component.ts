@@ -29,7 +29,7 @@ export class PaymentListComponent extends BaseListComponent {
   initDisplayColumn() {
     this.displayColumn = [];
     this.displayColumn.push({ column: 'date', displayText: "Thời gian", width: 120, type: GroupBoxFieldType.Date });
-    this.displayColumn.push({ column: 'paymentCategoryName', displayText: 'Loại chi tiêu', width: 160 });
+    this.displayColumn.push({ column: 'paymentCategoryName', displayText: 'Loại chi tiêu', width: 160, sortable: false });
     this.displayColumn.push({ column: 'value', displayText: 'Số tiền', width: 160, type: GroupBoxFieldType.Number });
     this.displayColumn.push({ column: 'reason', displayText: 'Nội dung', width: 320 });
   }
