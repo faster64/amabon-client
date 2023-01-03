@@ -17,6 +17,7 @@ const routes: Routes = [
     resolve: {
       resolver: BaseResolver,
     },
+    runGuardsAndResolvers: 'always',
     data: {
       title: Routing.ACCESS_DENIED.name,
     }
@@ -28,6 +29,7 @@ const routes: Routes = [
     resolve: {
       resolver: BaseResolver,
     },
+    runGuardsAndResolvers: 'always',
     data: {
       title: Routing.REGISTER.name,
     }
@@ -39,6 +41,7 @@ const routes: Routes = [
     resolve: {
       resolver: BaseResolver,
     },
+    runGuardsAndResolvers: 'always',
     data: {
       title: Routing.LOGIN.name,
     }
@@ -50,6 +53,7 @@ const routes: Routes = [
     resolve: {
       resolver: BaseResolver,
     },
+    runGuardsAndResolvers: 'always',
     data: {
       title: Routing.VERIFY_LOGIN.name,
     }
@@ -61,6 +65,7 @@ const routes: Routes = [
     resolve: {
       resolver: BaseResolver,
     },
+    runGuardsAndResolvers: 'always',
     data: {
       title: Routing.SETTING.name,
     }
@@ -72,6 +77,7 @@ const routes: Routes = [
     resolve: {
       resolver: BaseResolver,
     },
+    runGuardsAndResolvers: 'always',
     data: {
       title: Routing.DASHBOARD.name,
     }
@@ -83,6 +89,7 @@ const routes: Routes = [
     resolve: {
       resolver: BaseResolver,
     },
+    runGuardsAndResolvers: 'always',
     data: {
       title: Routing.STORAGE.name,
     }
@@ -94,6 +101,7 @@ const routes: Routes = [
     resolve: {
       resolver: BaseResolver,
     },
+    runGuardsAndResolvers: 'always',
     data: {
       title: Routing.NOTE_TAKING.name,
     }
@@ -104,6 +112,7 @@ const routes: Routes = [
     resolve: {
       resolver: BaseResolver,
     },
+    runGuardsAndResolvers: 'always',
     data: {
       title: Routing.CALENDAR_CONVERTER.name,
     }
@@ -114,6 +123,7 @@ const routes: Routes = [
     resolve: {
       resolver: BaseResolver,
     },
+    runGuardsAndResolvers: 'always',
     data: {
       title: Routing.SALARY_CONVERTER.name,
     }
@@ -125,6 +135,7 @@ const routes: Routes = [
     resolve: {
       resolver: BaseResolver,
     },
+    runGuardsAndResolvers: 'always',
     data: {
       title: Routing.INCOME.name,
     }
@@ -136,9 +147,11 @@ const routes: Routes = [
     resolve: {
       resolver: BaseResolver,
     },
+    runGuardsAndResolvers: 'always',
     data: {
       title: Routing.PAYMENT.name,
-    }
+    },
+
   },
   {
     path: 'trigger-services',
@@ -150,6 +163,7 @@ const routes: Routes = [
     resolve: {
       resolver: BaseResolver,
     },
+    runGuardsAndResolvers: 'always',
     data: {
       title: Routing.NOT_FOUND.name,
     }
