@@ -11,15 +11,19 @@ import { MatMenuModule } from '@angular/material/menu';
 import { SwtUploaderModule } from 'src/app/shared/components/swt-uploader/swt-uploader.module';
 import { StorageUploadPopupComponent } from './storage-upload-popup/storage-upload-popup.component';
 import { SwtListDynamicModule } from 'src/app/shared/components/swt-list-dynamic/swt-list-dynamic.module';
-import { CreateFolderPopupComponent } from './create-folder-popup/create-folder-popup.component';
+import { CreateFolderPopupComponent } from './folder-popup/folder-popup.component';
 import { MoveFilePopupComponent } from './move-file-popup/move-file-popup.component';
 import { SwtComboboxModule } from 'src/app/shared/components/swt-combobox/swt-combobox.module';
+import { StorageListComponent } from './storage-list/storage-list.component';
+import { SwtGridModule } from 'src/app/shared/components/swt-grid/swt-grid.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
-  declarations: [SecretFilesComponent, FilesInFolderComponent, StorageUploadPopupComponent, CreateFolderPopupComponent, MoveFilePopupComponent],
+  declarations: [SecretFilesComponent, FilesInFolderComponent, StorageUploadPopupComponent, CreateFolderPopupComponent, MoveFilePopupComponent, StorageListComponent],
   imports: [
     CommonModule,
     SecretFilesRoutingModule,
+    SharedModule,
     DxTextBoxModule,
     DxCheckBoxModule,
     DxSelectBoxModule,
@@ -27,6 +31,7 @@ import { SwtComboboxModule } from 'src/app/shared/components/swt-combobox/swt-co
     SwtLoadingModule,
     SwtUploaderModule,
     SwtListDynamicModule,
+    SwtGridModule,
     SwtComboboxModule,
     MatMenuModule,
   ],

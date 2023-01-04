@@ -1,0 +1,18 @@
+<div class="create-folder-popup">
+    <h2 *ngIf="mode === FormMode.Add" mat-dialog-title cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle style="margin-bottom: 16px !important; text-align: center; font-size: 20px;">
+        Tạo thư mục mới
+    </h2>
+
+    <h2 *ngIf="mode === FormMode.Edit" mat-dialog-title cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle style="margin-bottom: 16px !important; text-align: center; font-size: 20px;">
+        Đổi tên thư mục
+    </h2>
+
+    <div class="text-box">
+        <dx-text-box [(value)]="folderName" label="Tên thư mục" (onEnterKey)="createFolderOnEnter()"></dx-text-box>
+    </div>
+
+    <div class="save-btn dis-flex">
+        <swt-button *ngIf="mode === FormMode.Add" #createFolderBtn text="Tạo" class="full-width" [height]="36" [color]="ButtonColor.PRIMARY" (onClick)="createFolder()"></swt-button>
+        <swt-button *ngIf="mode === FormMode.Edit" #updateFolderBtn text="Cập nhật" class="full-width" [height]="36" [color]="ButtonColor.PRIMARY" (onClick)="updateFolder()"></swt-button>
+    </div>
+</div>

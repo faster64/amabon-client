@@ -18,9 +18,9 @@ import { CookieHelper } from 'src/app/shared/helpers/cookie.hepler';
 import { CookieKey } from 'src/app/shared/constants/cookie.key';
 import { ColumnGrid } from 'src/app/shared/models/base/column-grid.model';
 import { ListDynamicComponent } from 'src/app/shared/components/swt-list-dynamic/swt-list-dynamic.component';
-import { GroupBoxFieldType } from 'src/app/shared/enumerations/common.enum';
+import { FormMode, GroupBoxFieldType } from 'src/app/shared/enumerations/common.enum';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateFolderPopupComponent } from './create-folder-popup/create-folder-popup.component';
+import { CreateFolderPopupComponent } from './folder-popup/folder-popup.component';
 import { PopupService } from 'src/app/shared/services/base/popup.service';
 import { SharedService } from 'src/app/shared/services/base/shared.service';
 import { DeviceType } from 'src/app/shared/enumerations/device.enum';
@@ -116,8 +116,15 @@ export class SecretFilesComponent extends BaseComponent {
 
   customizeAddFunc() {
     this.listDynamic.addBtn.isFinished = true;
-    this.dialog.open(CreateFolderPopupComponent, this.popupService.getBaseConfig()).afterClosed().subscribe(() => {
-      this.listDynamic.reload();
+
+    const config = this.popupService.getBaseConfig();
+    config.data = {
+      mode: FormMode.Add
+    };
+    this.dialog.open(CreateFolderPopupComponent, config).afterClosed().subscribe(response => {
+      if (response) {
+        this.listDynamic.reload();
+      }
     });
   }
 }

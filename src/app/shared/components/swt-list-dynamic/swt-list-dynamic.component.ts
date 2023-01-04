@@ -195,7 +195,7 @@ export class ListDynamicComponent extends BaseComponent {
     this.getDataGrid();
   }
 
-  decideToShowDelete(e: any) {
+  decideToShowButtons(e: any) {
     if (this.grid.hasCheckedItem()) {
       this.isShowDeleteBtn = true;
       this.enableSearch = false;
@@ -203,6 +203,7 @@ export class ListDynamicComponent extends BaseComponent {
     } else {
       this.isShowDeleteBtn = false;
       this.enableSearch = true;
+      this.selectedItemCount = 0;
     }
   }
 

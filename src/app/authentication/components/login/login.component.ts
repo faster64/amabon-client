@@ -86,7 +86,6 @@ export class LoginComponent extends BaseComponent implements AfterViewInit {
     // gapi.load('auth2', function() {
     //   gapi.auth2.init({'client_id': '483405168173-ng58air6q83sgnmeo80sc6g0gsm2nmpf.apps.googleusercontent.com'});
     // });
-    // console.log("credential", response.credential);
 
     // // This next is for decoding the idToken to an object if you want to see the details.
     // let base64Url = response.credential.split('.')[1];
@@ -94,7 +93,6 @@ export class LoginComponent extends BaseComponent implements AfterViewInit {
     // let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
     //   return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     // }).join(''));
-    // console.log(JSON.parse(jsonPayload));
   }
 
   logout() {

@@ -91,12 +91,6 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
             }
             break;
         }
-        // if (error.status === 0) {
-        //   console.log(error)
-        //   MessageBox.information(new Message(this, {title: "ERR_CERT_AUTHORITY_INVALID (Api chưa có https)", content: "Chọn \"Đồng ý\" => Nâng cao => Tiếp tục truy cập 103.179.191.139" })).subscribe(response => {
-        //     window.open('https://103.179.191.139:6002/health')?.focus();
-        //   });
-        // }
         return throwError(error.error);
       })
     );

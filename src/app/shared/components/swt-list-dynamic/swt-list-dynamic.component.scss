@@ -10,6 +10,11 @@
         .fn-left {
             display: flex;
             align-items: center;
+            .unselect {
+                cursor: pointer;
+                color: #5252e3;
+                font-weight: 500;
+            }
         }
         .fn-right {
             display: flex;

@@ -6,6 +6,10 @@ import { SecretFilesComponent } from './secret-files.component';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'folders'
+  },
+  {
+    path: 'folders',
     component: SecretFilesComponent
   },
   {

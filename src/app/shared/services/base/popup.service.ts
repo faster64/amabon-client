@@ -14,7 +14,7 @@ import { HttpService } from '../base/http.service';
 })
 export class PopupService {
 
-  _config!: MatDialogConfig;
+  config!: MatDialogConfig;
 
   constructor(
     public dialog: MatDialog
@@ -23,11 +23,7 @@ export class PopupService {
   }
 
   getBaseConfig() {
-    if (this._config) {
-      return this._config;
-    }
-
-    this._config = new MatDialogConfig();
+    this.config = new MatDialogConfig();
     const position: DialogPosition = {};
     position.top = '50px';
 
@@ -47,12 +43,12 @@ export class PopupService {
     }
 
     // this._config.minWidth = '440px';
-    this._config.minWidth = configWidth;
-    this._config.maxWidth = maxWidth;
-    this._config.minHeight = configHeight;
-    this._config.maxHeight = maxHeight;
-    this._config.position = position;
+    this.config.minWidth = configWidth;
+    this.config.maxWidth = maxWidth;
+    this.config.minHeight = configHeight;
+    this.config.maxHeight = maxHeight;
+    this.config.position = position;
 
-    return this._config;
+    return this.config;
   }
 }

@@ -1,124 +1,121 @@
 .files-in-folder {
-  height: 100%;
-  overflow-y: auto;
-  .manager {
-    position: sticky;
-    top: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
-    padding: 16px;
-    font-size: 14px;
-    font-weight: 500;
-    background-color: #fff;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    z-index: 998;
-    .m-left {
-      .total {
-        flex-basis: 100%;
-        margin-top: 8px;
-        margin-right: 12px;
+    height: 100%;
+    overflow-y: auto;
+    .manager {
+        position: sticky;
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         margin-bottom: 12px;
-      }
+        padding: 6px 16px;
+        font-size: 14px;
+        font-weight: 500;
+        background-color: #fff;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        z-index: 998;
+        .m-left {
+            .total {
+                flex-basis: 100%;
+                margin-top: 8px;
+                margin-right: 12px;
+                margin-bottom: 12px;
+            }
+        }
+        .m-right {
+            .icon-manager {
+                width: 20px;
+                height: 20px;
+                background-image: url(../../../../assets/img/icons_v2.svg);
+                background-position: -339px -339px;
+                cursor: pointer;
+            }
+        }
     }
-    .m-right {
-      .icon-manager {
-        width: 20px;
-        height: 20px;
-        background-image: url(../../../../assets/img/icons_v2.svg);
-        background-position: -339px -339px;
-        cursor: pointer;
-      }
+    .files {
+        padding: 4px 16px;
+        .file {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            margin-bottom: 28px;
+            border: 1px solid #ddd;
+            img,
+            video,
+            .player {
+                width: 100%;
+                max-width: 500px;
+            }
+            .check-box {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+            }
+            &.selected {
+                background-color: #ddd;
+            }
+        }
     }
-  }
-  .files {
-    padding: 4px 16px;
-    .file {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 16px;
-      margin-bottom: 28px;
-      border: 1px solid #ddd;
-      img,
-      video,
-      .player {
-        width: 100%;
-        max-width: 500px;
-      }
-
-      .check-box {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-      }
-
-      &.selected {
-        background-color: #ddd;
-      }
-    }
-  }
 }
 
 .upload-form {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: 16px;
-  min-height: 100px;
-  .uploadInp {
-    flex-basis: 100%;
-    margin-bottom: 12px;
-  }
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 16px;
+    min-height: 100px;
+    .uploadInp {
+        flex-basis: 100%;
+        margin-bottom: 12px;
+    }
 }
 
 .manager-right {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  width: 160px;
-  .btn {
-    flex-basis: 100%;
     display: flex;
-    align-items: center;
-    padding: 8px 12px;
-    margin: 0 4px;
-    transition: all 0.3s;
-    cursor: pointer;
-    .icon {
-      width: 16px;
-      height: 16px;
-      margin-right: 8px;
-      background-image: url(../../../../assets/img/icons_v2.svg);
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 160px;
+    .btn {
+        flex-basis: 100%;
+        display: flex;
+        align-items: center;
+        padding: 8px 12px;
+        margin: 0 4px;
+        transition: all 0.3s;
+        cursor: pointer;
+        .icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            background-image: url(../../../../assets/img/icons_v2.svg);
+        }
+        .text {
+            font-weight: 450;
+        }
+        &.upload {
+            .icon {
+                background-position: 0 -16px;
+            }
+        }
+        &.clear-cache {
+            .icon {
+                background-position: -208px -192px;
+            }
+        }
+        &.delete {
+            .icon {
+                background-position: -193px 0px;
+            }
+        }
+        &.move {
+            .icon {
+                background-position: -207px -96px;
+            }
+        }
+        &:hover {
+            background-color: #ddd;
+        }
     }
-    .text {
-      font-weight: 450;
-    }
-    &.upload {
-      .icon {
-        background-position: 0 -16px;
-      }
-    }
-    &.clear-cache {
-      .icon {
-        background-position: -208px -192px;
-      }
-    }
-    &.delete {
-      .icon {
-        background-position: -193px 0px;
-      }
-    }
-    &.move {
-      .icon {
-        background-position: -207px -96px;
-      }
-    }
-
-    &:hover {
-      background-color: #ddd;
-    }
-  }
 }

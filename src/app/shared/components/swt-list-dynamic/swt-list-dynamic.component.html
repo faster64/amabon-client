@@ -25,7 +25,7 @@
 
     <div class="grid">
         <swt-grid #grid [data]="data" [isLoading]="isLoading && isFirstLoad" [displayColumn]="displayColumn" [current]="current" [total]="total" [scrollPosition]="200" [enableEmitScroll]="enableEmitScroll" (rowClick)="onRowClick($event)" (rowDblClick)="toViewForm($event)"
-            (detectScrollToAnPosition)="onScrollToPosition($event)" (checkedEvent)="decideToShowDelete($event)" (sort)="sortGrid($event)">
+            (detectScrollToAnPosition)="onScrollToPosition($event)" (checkedEvent)="decideToShowButtons($event)" (sort)="sortGrid($event)">
         </swt-grid>
 
         <div class="loading-bottom" *ngIf="isLoading && !isFirstLoad">

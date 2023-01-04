@@ -30,7 +30,6 @@ export class CalendarConverterComponent extends BaseComponent {
     this.solarDate = new Date().toLocaleDateString();
     this.lunarDate = moment(new Date()).lunar().format("DD/MM/YYYY");
     this.initHolidays();
-    // console.log(DateHelper.getDiffDays(new Date(), new Date("2023-01-22")));
   }
 
   initHolidays() {

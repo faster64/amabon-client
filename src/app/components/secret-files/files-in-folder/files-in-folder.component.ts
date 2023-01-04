@@ -47,7 +47,6 @@ export class FilesInFolderComponent extends BaseComponent {
   @HostListener('scroll', ['$event'])
   onScroll(event: any) {
     // const currentScrollValue = event.target.offsetHeight + event.target.scrollTop;
-    // console.log(event.target.scrollHeight, currentScrollValue)
   }
 
   constructor(
