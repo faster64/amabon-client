@@ -37,6 +37,8 @@ export class PopupChooseExportComponent extends BaseComponent {
 
   key = "";
 
+  serviceName = "";
+
   @ViewChild("exportBtn")
   exportBtn!: SwtButton;
 
@@ -46,6 +48,11 @@ export class PopupChooseExportComponent extends BaseComponent {
     @Inject(MAT_DIALOG_DATA) public data: Message,
   ) {
     super(baseService);
+  }
+
+  ngOnInit(): void {
+      super.ngOnInit();
+      this.serviceName = this.data.data['service'];
   }
 
   /**
@@ -63,6 +70,7 @@ export class PopupChooseExportComponent extends BaseComponent {
     }
 
     const module = (this.data.sender as ListDynamicComponent).controller;
+    this.excelService.serviceName = this.serviceName;
     this.excelService.getExportKey(module, this.paginationRequest).subscribe(
       response => {
         if (response.success) {
@@ -83,7 +91,7 @@ export class PopupChooseExportComponent extends BaseComponent {
 
   download() {
     const module = (this.data.sender as ListDynamicComponent).controller;
-    window.location.href = `${this.excelService.getApiUrl()}/excel/${module}/export?key=${this.key}`;
+    window.location.href = `${this.excelService.getApiUrl()}/${this.serviceName}/excel/${module}/export?key=${this.key}`;
     this.downloadSuccess = true;
 
     setTimeout(() => {

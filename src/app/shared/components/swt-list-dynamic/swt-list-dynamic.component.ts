@@ -183,7 +183,7 @@ export class ListDynamicComponent extends BaseComponent {
 
   openPopupExport() {
     const config = this.prepareConfig();
-    config.data = new Message(this, null, () => this.popupExportRef.close());
+    config.data = new Message(this, { service: this.serviceName}, () => this.popupExportRef.close());
     this.popupExportRef = this.dialog.open(PopupChooseExportComponent, config);
   }
 

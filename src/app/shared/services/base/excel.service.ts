@@ -9,12 +9,16 @@ import { HttpService } from './http.service';
 })
 export class ExcelService extends BaseService {
 
-  apiExcelUrl = "";
+  serviceName = "";
+
+  // _apiExcelUrl = "";
+  get apiExcelUrl() {
+    return `${this.getApiUrl()}/${this.serviceName}/excel`;
+  }
   constructor(
     http: HttpService
   ) {
     super(http);
-    this.apiExcelUrl = `${this.getApiUrl()}/excel`;
   }
 
   /**
