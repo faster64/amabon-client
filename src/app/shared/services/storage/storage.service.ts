@@ -83,4 +83,13 @@ export class StorageService extends BaseService {
       }
     });
   }
+
+  save(customUrl: string | undefined, entities: any[]): Observable<ServiceResult> {
+    const url = `${this.getApiUrl()}/${this.serviceName}/${this.controller}/save`;
+    return this.takeOriginHttpClient().post<ServiceResult>(url, entities, {
+      headers: {
+        "X-Secret-Key": CookieHelper.getCookie(`${environment.team}_${SessionStorageKey.SECRET_KEY}`) || ""
+      }
+    });
+  };
 }

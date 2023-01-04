@@ -45,7 +45,7 @@ export class CreateFolderPopupComponent extends BaseComponent {
     super.ngOnInit();
     if (this.data != null) {
       this.mode = this.data.mode;
-      this.folderName = this.data.folder.folderName;
+      this.folderName = this.data.folder?.folderName;
     }
   }
 
