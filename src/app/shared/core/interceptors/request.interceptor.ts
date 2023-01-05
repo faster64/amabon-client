@@ -52,9 +52,7 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
   ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        console.log("preUrl:", `-${this.preUrl}-`);
-        console.log("event:", `-${event.url}-`);
-        if (this.preUrl != event.url && this.preUrl !== '') {
+        if (this.preUrl != event.url && (this.preUrl !== '' && this.preUrl !== '/login')) {
           console.log("cancel preUrl:", `-${this.preUrl}-`);
           console.log("cancel event:", `-${event.url}-`);
           this.httpCancelService.cancelPendingRequests();
