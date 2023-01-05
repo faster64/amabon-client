@@ -45,6 +45,9 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
 
   LoginStatus = LoginStatus;
 
+  @ViewChild("header", { static: true })
+  header!: ElementRef;
+
   @ViewChildren("modules")
   moduleInstances!: QueryList<ElementRef>;
 

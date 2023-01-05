@@ -1,0 +1,25 @@
+.logout {
+    height: 100%;
+    .logout-content {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 48px;
+        .text {
+            flex-basis: 100%;
+            font-size: 20px;
+            font-weight: 500px;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+        .icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 4px;
+            background-image: url(../../../../assets/img/loading_v2.svg);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    }
+}

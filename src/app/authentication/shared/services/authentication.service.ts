@@ -21,6 +21,8 @@ import { User } from '../models/user-model';
 import { CreateAccountRequest } from '../../components/register-v2/base-step/base-register-step.component';
 import { MFA } from '../models/mfa-model';
 import { PaginationRequest } from 'src/app/shared/models/base/pagination-request';
+import { Router } from '@angular/router';
+import { Routing } from 'src/app/shared/constants/common.constant';
 
 @Injectable({
   providedIn: 'root'
@@ -30,29 +32,11 @@ export class AuthenticationService {
   /**
    * auth api url
    */
-  private auth_api_url = `${environment.api_url}/aus`;
+  public auth_api_url = `${environment.api_url}/aus`;
 
   public cookieExprie = 7;
 
   public ipInformation: any;
-
-  /**
-   * List clear khi logout
-   */
-  private clearListLocal = [
-    CookieKey.USER_ID,
-    CookieKey.ACCESS_TOKEN,
-    CookieKey.ROLE_NAME,
-    CookieKey.REFRESH_TOKEN,
-    CookieKey.FIRST_NAME,
-    CookieKey.LAST_NAME,
-    CookieKey.SETTING,
-  ];
-
-  private clearListSession = [
-    SessionStorageKey.SIDEBAR_INDEX,
-    SessionStorageKey.PASSED_SECURITY,
-  ]
 
   /**
    * Thời gian ping check live token
@@ -68,9 +52,12 @@ export class AuthenticationService {
 
   public takingInfo = false;
 
+  public logoutCallback?: Function;
+
   constructor(
     public _httpService: HttpService,
-    public _transfer: TransferDataService
+    public _transfer: TransferDataService,
+    public router: Router,
   ) {
 
     const info = CookieHelper.getCookie(`${environment.team}_${CookieKey.IP_INFORMATION}`);
@@ -186,25 +173,8 @@ export class AuthenticationService {
    * Đăng xuất
    */
   logout(callback?: Function) {
-    const url = `${this.auth_api_url}/authentication/logout?uid=${this.getUserId()}`;
-
-    this._httpService.get<AuthenticationResponse>(url).subscribe(
-      response => {
-        this.clearListLocal.forEach(item => CookieHelper.removeCookie(`${environment.team}_${item}`));
-        this.clearListSession.forEach(item => sessionStorage.removeItem(`${environment.team}_${item}`));
-
-        CookieHelper.setCookie(`${environment.team}_${CookieKey.LOGGED_IN}`, "0", this.cookieExprie);
-        if (callback) {
-          callback(response);
-        }
-      },
-      err => {
-        CookieHelper.setCookie(`${environment.team}_${CookieKey.LOGGED_IN}`, "0", this.cookieExprie);
-        if (callback) {
-          callback(err);
-        }
-      }
-    );
+    this.logoutCallback = callback;
+    this.router.navigate([`/${Routing.LOGOUT.path}`]);
   }
 
   /**

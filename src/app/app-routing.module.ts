@@ -47,6 +47,13 @@ const routes: Routes = [
     }
   },
   {
+    path: Routing.LOGOUT.path,
+    loadChildren: () => import('./authentication/components/logout/logout.module').then(m => m.LogoutModule),
+    data: {
+      title: Routing.LOGOUT.name,
+    }
+  },
+  {
     path: Routing.VERIFY_LOGIN.path,
     loadChildren: () => import('./authentication/components/login-verification/login-verification.module').then(m => m.LoginVerificationModule),
     canActivate: [SignInUpGuard],

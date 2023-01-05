@@ -24,6 +24,7 @@ export class Routing {
   public static readonly NOT_FOUND = new RoutingConfig('not-found', 'Không tìm thấy :(');
   public static readonly ACCESS_DENIED = new RoutingConfig('access-denied', 'Truy cập bị từ chối');
   public static readonly LOGIN = new RoutingConfig('login', 'Đăng nhập');
+  public static readonly LOGOUT = new RoutingConfig('logout', 'Đăng xuất');
   public static readonly REGISTER = new RoutingConfig('register', 'Đăng ký');
   public static readonly VERIFY_REGISTER = new RoutingConfig('authentication/register-verification', 'Xác minh tài khoản');
   public static readonly VERIFY_LOGIN = new RoutingConfig('authentication/login-verification', 'Xác thực bảo mật');
