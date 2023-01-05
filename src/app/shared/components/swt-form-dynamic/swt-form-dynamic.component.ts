@@ -116,7 +116,9 @@ export class FormDynamicComponent extends BaseComponent {
   getFormData() {
     this.baseService.serviceName = this.serviceName;
     this.baseService.controller = this.controller;
+    this.isLoading = true;
     this.baseService.getById("", this.masterId).subscribe(response => {
+      this.isLoading = false;
       this.mapData(response.data);
       this.masterData = response.data;
     })
