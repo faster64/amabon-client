@@ -1,8 +1,21 @@
 .chart-top-payment {
     height: 100%;
     .no-data {
-        height: 100%;
+        flex-wrap: wrap;
+        width: 180px;
         font-size: 15px;
         font-weight: 550;
+        .no-data-img {
+            width: 140px;
+            height: 140px;
+            background-image: url(../../../../../assets/img/no-data-concept.webp);
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+        }
+        .text {
+            flex-basis: 100%;
+            text-align: center;
+        }
     }
 }
