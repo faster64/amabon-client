@@ -17,7 +17,6 @@ const routes: Routes = [
     resolve: {
       resolver: BaseResolver,
     },
-    runGuardsAndResolvers: 'always',
     data: {
       title: Routing.ACCESS_DENIED.name,
     }
@@ -29,7 +28,6 @@ const routes: Routes = [
     resolve: {
       resolver: BaseResolver,
     },
-    runGuardsAndResolvers: 'always',
     data: {
       title: Routing.REGISTER.name,
     }
@@ -41,7 +39,6 @@ const routes: Routes = [
     resolve: {
       resolver: BaseResolver,
     },
-    runGuardsAndResolvers: 'always',
     data: {
       title: Routing.LOGIN.name,
     }
@@ -60,7 +57,6 @@ const routes: Routes = [
     resolve: {
       resolver: BaseResolver,
     },
-    runGuardsAndResolvers: 'always',
     data: {
       title: Routing.VERIFY_LOGIN.name,
     }
