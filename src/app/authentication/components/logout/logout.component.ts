@@ -54,7 +54,7 @@ export class LogoutComponent implements OnInit {
         if (this.authenticationService.logoutCallback) {
           this.authenticationService.logoutCallback(response);
         } else {
-          this.router.navigate([`/${Routing.LOGIN.path}`]);
+          // this.router.navigate([`/${Routing.LOGIN.path}`]);
         }
       },
       err => {
@@ -63,7 +63,7 @@ export class LogoutComponent implements OnInit {
           this.authenticationService.logoutCallback(err);
         }
         else {
-          this.router.navigate([`/${Routing.LOGIN.path}`]);
+          // this.router.navigate([`/${Routing.LOGIN.path}`]);
         }
       }
     );
