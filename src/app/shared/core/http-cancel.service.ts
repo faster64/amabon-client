@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 })
 export class HttpCancelService {
 
-  private pendingHTTPRequests$ = new Subject<void>();
+  pendingHTTPRequests$ = new Subject<void>();
 
   constructor() { }
 

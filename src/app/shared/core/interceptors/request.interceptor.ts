@@ -3,7 +3,7 @@ import {
   HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpStatusCode
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActivationEnd, Router } from '@angular/router';
+import { ActivationEnd, NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, switchMap, take, takeUntil } from 'rxjs/operators';
 import { RefreshTokenModel } from 'src/app/authentication/shared/models/requests/refresh-token-model';
@@ -51,7 +51,7 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
   ) {
     this.router.events.subscribe(event => {
       // An event triggered at the end of the activation part of the Resolve phase of routing.
-      if (event instanceof ActivationEnd) {
+      if (event instanceof NavigationEnd) {
         // Cancel pending calls
         this.httpCancelService.cancelPendingRequests();
       }
