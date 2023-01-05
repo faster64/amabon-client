@@ -1,11 +1,11 @@
 import {
-  HttpClient,
   HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpStatusCode
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActivationEnd, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, switchMap, take, takeUntil } from 'rxjs/operators';
+import { LoginStatus } from 'src/app/authentication/shared/enums/login.enum';
 import { RefreshTokenModel } from 'src/app/authentication/shared/models/requests/refresh-token-model';
 import { AuthenticationResponse } from 'src/app/authentication/shared/models/responses/authentication-response';
 import { AuthenticationService } from 'src/app/authentication/shared/services/authentication.service';
@@ -14,13 +14,12 @@ import { MessageBox } from '../../components/message-box/message-box.component';
 import { SnackBar } from '../../components/snackbar/snackbar.component';
 import { CommonConstant, ErrorMessageConstant, PerrmisionConstant, Routing } from '../../constants/common.constant';
 import { CookieKey } from '../../constants/cookie.key';
-import { NotMessage } from './not-message';
+import { HttpStatusCodeExtension } from '../../enumerations/http-status-code-extension.enum';
 import { CookieHelper } from '../../helpers/cookie.hepler';
 import { Message } from '../../models/message/message';
 import { SnackBarParameter } from '../../models/snackbar/snackbar.param';
-import { LoginStatus } from 'src/app/authentication/shared/enums/login.enum';
-import { HttpStatusCodeExtension } from '../../enumerations/http-status-code-extension.enum';
 import { HttpCancelService } from '../http-cancel.service';
+import { NotMessage } from './not-message';
 @Injectable()
 export class RequestHandlingInterceptor implements HttpInterceptor {
 
@@ -44,16 +43,19 @@ export class RequestHandlingInterceptor implements HttpInterceptor {
     HttpStatusCode.BadGateway,
   ];
 
+  preUrl = "";
+
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
     private httpCancelService: HttpCancelService
   ) {
     this.router.events.subscribe(event => {
-      // An event triggered at the end of the activation part of the Resolve phase of routing.
       if (event instanceof NavigationEnd) {
-        // Cancel pending calls
-        this.httpCancelService.cancelPendingRequests();
+        if (this.preUrl != event.url && this.preUrl !== '') {
+          this.httpCancelService.cancelPendingRequests();
+        }
+        this.preUrl = event.url;
       }
     });
   }
