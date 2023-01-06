@@ -14,7 +14,7 @@ import { Routing } from '../../constants/common.constant';
 import { CookieKey } from '../../constants/cookie.key';
 import { ActionPermission } from '../../enumerations/permission.enum';
 import { CookieHelper } from '../../helpers/cookie.hepler';
-import { PermissionHelper } from '../../helpers/permission.helper';
+import { UserHelper } from '../../helpers/user.helper';
 import { StringHelper } from '../../helpers/string.helper';
 import { PaginationRequest } from '../../models/base/pagination-request';
 import { ServiceResult } from '../../models/base/service-result';
@@ -118,7 +118,7 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
     this.setFullName();
     this.intiModules();
     this.findCurrentModule();
-    if(this.loginStatus === LoginStatus.LoggedIn) {
+    if (this.loginStatus === LoginStatus.LoggedIn) {
       this.getAvatarUrl();
     }
   }
@@ -245,6 +245,16 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
       iconCheckedPosition: '-384px -272px',
       hint: '',
     });
+
+    if (UserHelper.USER_ROLES.findIndex(role => role == "root" || role == "admin") !== - 1) {
+      this.modules.push({
+        path: Routing.ADMIN.path,
+        moduleName: Routing.ADMIN.name,
+        iconPosition: '-288px -289px',
+        iconCheckedPosition: '-288px -289px',
+        hint: 'Phần quản trị dành cho quản trị viên',
+      });
+    }
   }
 
   calcToDisplayModules() {
@@ -267,18 +277,6 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
       }
     }
     this.cdr.detectChanges();
-  }
-
-  getWaitPostCount() {
-    if (PermissionHelper.getUserPermission() !== ActionPermission.All) {
-      const result = new ServiceResult();
-      result.success = false;
-      return of(result);
-    }
-
-    const paginationRequest = new PaginationRequest();
-    paginationRequest.pageSize = 1;
-    return this.baseService._http.post<ServiceResult>(`${this.baseService.getApiUrl()}/systempost/wait-approval-paging`, paginationRequest);
   }
 
   /**
@@ -357,6 +355,6 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
     config.position = position;
 
     const ref = this.avatarService.openUpdateAvatarPopup(config);
-    ref.afterClosed().pipe(takeUntil(this._onDestroySub)).subscribe( () => this.getAvatarUrl());
+    ref.afterClosed().pipe(takeUntil(this._onDestroySub)).subscribe(() => this.getAvatarUrl());
   }
 }

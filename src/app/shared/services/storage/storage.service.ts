@@ -35,7 +35,11 @@ export class StorageService extends BaseService {
 
   getFolderByName(folderName: string) {
     const url = `${this.getApiUrl()}/${this.serviceName}/folder/get-folder-by-name?folderName=${folderName}`;
-    return this.takeOriginHttpClient().get<ServiceResult>(url);
+    return this.takeOriginHttpClient().get<ServiceResult>(url, {
+      headers: {
+        "X-Secret-Key": CookieHelper.getCookie(`${environment.team}_${SessionStorageKey.SECRET_KEY}`) || ""
+      }
+    });
   }
 
   loadFilesInFolder(folderName: string) {

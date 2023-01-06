@@ -1,0 +1,33 @@
+@import url("https://www.w3schools.com/w3css/4/w3.css");
+
+.access-denied {
+  height: 100%;
+  background-color: black;
+  color: white;
+  .w3-display-middle {
+    width: 100%;
+    h1 {
+      color: red;
+    }
+
+    h5 {
+      color: rgb(236, 52, 52);
+    }
+    h6 {
+      font-size: 14px;
+      text-decoration: underline;
+      letter-spacing: 2px;
+      cursor: pointer;
+    }
+  }
+}
+
+@media screen and (max-width: 567px) {
+  code {
+    font-size: 44px !important;
+  }
+  h6 {
+    letter-spacing: initial !important;
+    text-decoration: initial !important;
+  }
+}

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SettingComponent } from './components/setting/setting.component';
 import { FirstCheckComponent } from './shared/components/first-check.component';
 import { Routing } from './shared/constants/common.constant';
+import { AdminGuard } from './shared/guard/admin.guard';
 import { BaseGuard } from './shared/guard/base.guard';
 import { SignInUpGuard } from './shared/guard/sign-in-up.guard';
 import { BaseResolver } from './shared/resolver/base.resolver';
@@ -62,18 +63,6 @@ const routes: Routes = [
     }
   },
   {
-    path: Routing.SETTING.path,
-    loadChildren: () => import('./components/setting/setting.module').then(m => m.SettingModule),
-    canActivate: [BaseGuard],
-    resolve: {
-      resolver: BaseResolver,
-    },
-    runGuardsAndResolvers: 'always',
-    data: {
-      title: Routing.SETTING.name,
-    }
-  },
-  {
     path: Routing.DASHBOARD.path,
     loadChildren: () => import('./components/dashboard/dashboard.module').then(m => m.DashboardModule),
     canActivate: [BaseGuard],
@@ -83,6 +72,30 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     data: {
       title: Routing.DASHBOARD.name,
+    }
+  },
+  {
+    path: Routing.ADMIN.path,
+    loadChildren: () => import('./components/user-management/user-management.module').then(m => m.UserManagementModule),
+    canActivate: [AdminGuard],
+    resolve: {
+      resolver: BaseResolver,
+    },
+    runGuardsAndResolvers: 'always',
+    data: {
+      title: Routing.ADMIN.name,
+    }
+  },
+  {
+    path: Routing.SETTING.path,
+    loadChildren: () => import('./components/setting/setting.module').then(m => m.SettingModule),
+    canActivate: [BaseGuard],
+    resolve: {
+      resolver: BaseResolver,
+    },
+    runGuardsAndResolvers: 'always',
+    data: {
+      title: Routing.SETTING.name,
     }
   },
   {

@@ -11,6 +11,7 @@ import { StringHelper } from '../../helpers/string.helper';
 import { ActionPermission } from '../../enumerations/permission.enum';
 import { CookieHelper } from '../../helpers/cookie.hepler';
 import { CookieKey } from '../../constants/cookie.key';
+import { UserHelper } from '../../helpers/user.helper';
 
 @Component({
   selector: 'swt-button',
@@ -183,28 +184,12 @@ export class SwtButton implements OnInit, AfterViewInit, OnDestroy {
 
     // Lấy quyền người dùng
     if (this.userPermission === 0)
-      this.userPermission = this.getUserPermission();
+      this.userPermission = UserHelper.USER_PERMISSION;
 
     if (this.userPermission === ActionPermission.All)
       return true;
 
     return this.actionPermissions.find(p => (this.userPermission & p) !== p) == null;
-  }
-
-  /**
-   * Trả về quyền của người dùng
-   */
-  getUserPermission(): number {
-    try {
-      const accessToken = CookieHelper.getCookie(`${environment.team}_${CookieKey.ACCESS_TOKEN}`);
-      if (accessToken) {
-        const permission = StringHelper.parseJwt(accessToken)["permission"];
-        return parseInt(permission + "");
-      }
-    } catch (e) {
-      return 0;
-    }
-    return 0;
   }
 
   /**

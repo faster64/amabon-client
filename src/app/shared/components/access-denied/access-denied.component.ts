@@ -20,45 +20,14 @@ export class AccessDeniedComponent implements OnInit {
     private authenticationService: AuthenticationService
   ) { }
 
-  @ViewChild("issueBtn")
-  issueBtn!: SwtButton;
-
-
   ngOnInit(): void {
   }
 
-  /**
-   * Quay lại
-   */
   back(e: any) {
     if (this.authenticationService.getLoginStatus() === LoginStatus.LoggedIn) {
       this.router.navigate([`/${Routing.DASHBOARD.path}`]);
     } else {
       this.router.navigate([`/${Routing.LOGIN.path}`]);
     }
-  }
-
-  /**
-   * Nếu có vấn đề
-   */
-  hasIssue(): boolean {
-    if (!(this.authenticationService.getLoginStatus() === LoginStatus.LoggedIn)) {
-      return true;
-    }
-
-    return false;
-  }
-
-  /**
-   * Xử lý sự cố
-   */
-  handleIssue() {
-    const message = new Message(this, { content: "Chương trình sẽ tự động đăng xuất sau khi xử lý sự cố", title: 'Cảnh báo' }, () => {
-      this.authenticationService.logout(() => {
-        this.router.navigate([`/${Routing.LOGIN.path}`]);
-      });
-    });
-
-    MessageBox.confirm(message).subscribe( r => this.issueBtn.isFinished = true);
   }
 }

@@ -97,8 +97,10 @@ export class StorageListComponent extends ListDynamicComponent {
       folder: this.grid.getCheckedItems()[0]
     }
 
-    this.dialog.open(CreateFolderPopupComponent, config).afterClosed().subscribe(() => {
-      this.reload();
+    this.dialog.open(CreateFolderPopupComponent, config).afterClosed().subscribe( response => {
+      if(response) {
+        this.reload();
+      }
     });
   }
 }

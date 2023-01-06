@@ -28,6 +28,7 @@ export class Routing {
   public static readonly REGISTER = new RoutingConfig('register', 'Đăng ký');
   public static readonly VERIFY_REGISTER = new RoutingConfig('authentication/register-verification', 'Xác minh tài khoản');
   public static readonly VERIFY_LOGIN = new RoutingConfig('authentication/login-verification', 'Xác thực bảo mật');
+  public static readonly ADMIN = new RoutingConfig('admin', 'Quản lý người dùng');
   public static readonly SETTING = new RoutingConfig('setting', 'Thiết lập');
   public static readonly DASHBOARD = new RoutingConfig('dashboard', 'Tổng quan');
   public static readonly STORAGE = new RoutingConfig('storage', 'Kho lưu trữ');
