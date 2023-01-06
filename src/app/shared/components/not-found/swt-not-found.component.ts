@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ButtonColor, IconButtonType } from '../../constants/button.constant';
+import { ButtonColor, ButtonType, IconButtonType } from '../../constants/button.constant';
 import { Routing } from '../../constants/common.constant';
 
 @Component({
@@ -10,6 +10,8 @@ import { Routing } from '../../constants/common.constant';
 })
 export class SwtNotFound implements OnInit {
   ButtonColor = ButtonColor;
+
+  ButtonType = ButtonType;
 
   IconButtonType = IconButtonType;
   constructor(
