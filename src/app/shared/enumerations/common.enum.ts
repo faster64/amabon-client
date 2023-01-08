@@ -94,3 +94,9 @@ export enum MonthEnum {
   November = 11,
   December = 12,
 }
+
+export enum DutyStatus {
+  Processing = 1,
+  Done = 2,
+  Overdue = 3,
+}

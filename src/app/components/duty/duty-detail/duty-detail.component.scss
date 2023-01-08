@@ -1,0 +1,123 @@
+.duty-create {
+    .duty-create-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 24px;
+        margin-bottom: 12px;
+        cursor: move;
+        p {
+            font-size: 16px;
+            font-weight: 500;
+            text-align: center;
+        }
+        .more {
+            width: 24px;
+            height: 36px;
+            margin: 0 7px 4px 16px;
+            border: 1px solid #ddd;
+            border-radius: 2px;
+            background-image: url(../../../../assets/img/icons.svg);
+            background-repeat: no-repeat;
+            background-position: -1030px -352px;
+            background-color: #fff;
+            transform: rotate(90deg);
+            transition: all 0.3s;
+            cursor: pointer;
+            &:hover {
+                background-color: #ddd;
+            }
+        }
+    }
+    .duty-create-body {
+        .body-content {
+             ::ng-deep .item {
+                margin-bottom: 12px;
+                position: relative;
+                .skeleton-loading {
+                    left: 8px !important;
+                    right: 8px !important;
+                }
+            }
+        }
+    }
+    .duty-create-footer {
+        height: 44px;
+    }
+}
+
+::ng-deep {
+    .dx-texteditor-label {
+        font-weight: 500;
+    }
+    .item.required {
+        .dx-texteditor-label {
+            .dx-label {
+                span::after {
+                    content: "*";
+                    color: red;
+                    margin-left: 4px;
+                }
+            }
+        }
+    }
+    .actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        .action-left,
+        .action-right {
+            display: flex;
+            align-items: center;
+        }
+        .action-right {
+            .add {
+                margin-left: 12px;
+            }
+        }
+    }
+}
+
+::ng-deep {
+    .more-content {
+        .item {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            transition: all 0.3s;
+            cursor: pointer;
+            .icon {
+                width: 16px;
+                height: 16px;
+                margin-right: 8px;
+                background-image: url(../../../../assets/img/icons_v2.svg);
+                background-repeat: no-repeat;
+            }
+            &:hover {
+                background-color: #ddd;
+            }
+        }
+        .item.completed {
+            .icon {
+                background-position: -111px -16px;
+            }
+        }
+        .item.uncompleted {
+            .icon {
+                background-position: -96px -16px;
+            }
+        }
+        .item.delete {
+            .icon {
+                background-position: -192px -128px;
+            }
+        }
+    }
+    .mat-menu-panel {
+        min-height: 16px !important;
+        .mat-menu-content:not(:empty) {
+            padding: 0;
+        }
+    }
+}

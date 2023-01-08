@@ -123,6 +123,18 @@ const routes: Routes = [
     }
   },
   {
+    path: Routing.DUTY.path,
+    loadChildren: () => import('./components/duty/duty.module').then(m => m.DutyModule),
+    canActivate: [BaseGuard],
+    resolve: {
+      resolver: BaseResolver,
+    },
+    runGuardsAndResolvers: 'always',
+    data: {
+      title: Routing.DUTY.name,
+    }
+  },
+  {
     path: Routing.CALENDAR_CONVERTER.path,
     loadChildren: () => import('./components/calendar-converter/calendar-converter.module').then(m => m.CalendarConverterModule),
     resolve: {

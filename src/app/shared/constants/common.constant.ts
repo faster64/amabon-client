@@ -33,6 +33,7 @@ export class Routing {
   public static readonly DASHBOARD = new RoutingConfig('dashboard', 'Tổng quan');
   public static readonly STORAGE = new RoutingConfig('storage', 'Kho lưu trữ');
   public static readonly NOTE_TAKING = new RoutingConfig('note-taking', 'Ghi chú');
+  public static readonly DUTY = new RoutingConfig('duty', 'Nhiệm vụ');
   public static readonly CONTACT = new RoutingConfig('contact', 'Liên hệ');
   public static readonly REPORT = new RoutingConfig('report', 'Báo cáo');
   public static readonly TAX_CONVERTER = new RoutingConfig('tax-converter', 'Bộ chuyển đổi thuế');

@@ -1,0 +1,135 @@
+<div class="duty-create">
+    <div class="duty-create-header" *ngIf="!isLoading" mat-dialog-title cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
+        <div class="header-left">
+            <p *ngIf="formMode === FormMode.Add">Tạo công việc</p>
+            <p *ngIf="formMode === FormMode.View">Thông tin chi tiết công việc</p>
+            <p *ngIf="formMode === FormMode.Edit">Chỉnh sửa công việc</p>
+        </div>
+        <div class="header-right">
+            <div class="more" *ngIf="formMode === FormMode.View" [matMenuTriggerFor]="more"></div>
+
+            <mat-menu #more="matMenu">
+                <div class="more-content">
+                    <div class="item completed" *ngIf="!duty.isCompleted" matTooltip="Đánh dấu là công việc này đã được hoàn thành" (click)="updateStatus(true, $event)">
+                        <div class="icon"></div>
+                        <div class="text">Đã hoàn thành</div>
+                    </div>
+
+                    <div class="item uncompleted" *ngIf="duty.isCompleted" matTooltip="Đánh dấu là công việc này chưa được hoàn thành" (click)="updateStatus(false, $event)">
+                        <div class="icon"></div>
+                        <div class="text">Chưa hoàn thành</div>
+                    </div>
+
+                    <div class="item delete" matTooltip="Xóa công việc này" (click)="confirmDelete()">
+                        <div class="icon"></div>
+                        <div class="text">Xóa</div>
+                    </div>
+                </div>
+            </mat-menu>
+        </div>
+    </div>
+    <mat-dialog-content class="duty-create-body">
+        <div class="body-content row">
+            <div class="item duty-name required col-12 col-md-12">
+                <dx-text-box class="item-input" [readOnly]="formMode === FormMode.View" label="Tên công việc" [(value)]="duty.dutyName"></dx-text-box>
+                <skeleton-loading *ngIf="isLoading"></skeleton-loading>
+            </div>
+
+            <div class="item duty-content required col-12 col-md-12">
+                <dx-text-area class="item-input" [readOnly]="formMode === FormMode.View" label="Nội dung công việc" [minHeight]="140" [(value)]="duty.content"></dx-text-area>
+                <skeleton-loading *ngIf="isLoading"></skeleton-loading>
+            </div>
+
+            <div class="item duty-content required col-12 col-md-12">
+                <dx-check-box class="item-input" [readOnly]="formMode === FormMode.View" [value]="duty.isCompleted" (onValueChanged)="changeStatus($event)"></dx-check-box>
+                <span style="display: inline-block; font-weight: 500; color: #999; margin-left: 16px; cursor: pointer;" (click)="checkedByLabel(duty)">Đã hoàn thành</span>
+                <skeleton-loading *ngIf="isLoading"></skeleton-loading>
+            </div>
+
+            <div class="item duty-fromDate required col-12" [ngClass]="formMode === FormMode.View ? 'col-md-6' : 'col-md-4' ">
+                <dx-date-box class="item-input" [readOnly]="formMode === FormMode.View" label="Ngày bắt đầu" [value]="duty.fromDate" (onValueChanged)="setDate($event, 'fromDate')"></dx-date-box>
+                <skeleton-loading *ngIf="isLoading"></skeleton-loading>
+            </div>
+
+            <div class="item duty-toDate required col-12" [ngClass]="formMode === FormMode.View ? 'col-md-6' : 'col-md-4' ">
+                <dx-date-box class="item-input" [readOnly]="formMode === FormMode.View" label="Ngày kết thúc" [value]="duty.toDate" (onValueChanged)="setDate($event, 'toDate')"></dx-date-box>
+                <skeleton-loading *ngIf="isLoading"></skeleton-loading>
+            </div>
+
+            <div class="item duty-estimate col-12" [ngClass]="formMode === FormMode.View ? 'col-md-6' : 'col-md-4' ">
+                <dx-number-box class="item-input" [readOnly]="true" label="Số ngày dự kiến" [value]="DateHelper.getDiffDays(DateHelper.getExactlyDate(duty.fromDate), DateHelper.getExactlyDate(duty.toDate))">
+                </dx-number-box>
+                <skeleton-loading *ngIf="isLoading"></skeleton-loading>
+            </div>
+
+            <div class="item duty-estimate col-12 col-md-6" *ngIf="formMode === FormMode.View && duty.isCompleted">
+                <dx-number-box class="item-input" [readOnly]="true" label="Số ngày thực tế" [value]="duty.actualDate">
+                </dx-number-box>
+                <skeleton-loading *ngIf="isLoading"></skeleton-loading>
+            </div>
+
+            <div class="item duty-assigned required col-12 col-md-12">
+                <dx-text-box class="item-input" [readOnly]="formMode === FormMode.View" label="Giao cho" [disabled]="true" value="Tôi"></dx-text-box>
+                <skeleton-loading *ngIf="isLoading"></skeleton-loading>
+            </div>
+
+            <div class="item duty-priority required col-12 col-md-6">
+                <dx-select-box class="item-input" [readOnly]="formMode === FormMode.View" label="Mức độ ưu tiên" placeholder="" [(value)]="duty.priority" [dataSource]="priotitySource" displayExpr="text" valueExpr="id" noDataText="Không có dữ liệu"></dx-select-box>
+                <skeleton-loading *ngIf="isLoading"></skeleton-loading>
+            </div>
+
+            <div class="item duty-category required col-12 col-md-6">
+                <dx-select-box class="item-input" [readOnly]="formMode === FormMode.View" label="Loại công việc" placeholder="" noDataText="Không có dữ liệu" [(value)]="duty.categoryId" [dataSource]="categories" displayExpr="categoryName" valueExpr="id" (onOpened)="getCategories($event)"></dx-select-box>
+                <skeleton-loading *ngIf="isLoading"></skeleton-loading>
+            </div>
+
+            <div class="item duty-content required col-12 col-md-12" matTooltip="Cho phép gửi thông báo về công việc này tới email của bạn theo 1 chu kỳ">
+                <dx-check-box class="item-input" [readOnly]="formMode === FormMode.View" [value]="duty.dutyPeriod.enableNotify" (onValueChanged)="changeNotifyStatus($event)"></dx-check-box>
+                <span style="display: inline-block; font-weight: 500; color: #999; margin-left: 16px; cursor: pointer;" (click)="checkedByNotifyLabel()">Cho phép gửi thông báo</span>
+                <skeleton-loading *ngIf="isLoading"></skeleton-loading>
+            </div>
+
+            <div class="item duty-priority required col-12 col-md-12" *ngIf="duty.dutyPeriod.enableNotify">
+                <dx-select-box class="item-input" [readOnly]="formMode === FormMode.View" label="Chu kỳ lặp" placeholder="" [(value)]="duty.dutyPeriod.period" [dataSource]="periodSource" displayExpr="text" valueExpr="id" noDataText="Không có dữ liệu"></dx-select-box>
+                <skeleton-loading *ngIf="isLoading"></skeleton-loading>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions *ngIf="!isLoading" class="duty-create-footer" cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
+        <div class="actions">
+            <div class="action-left">
+
+                <div class="cancel" *ngIf="formMode === FormMode.Add || formMode === FormMode.Edit">
+                    <swt-button text="Hủy bỏ" [color]="ButtonColor.BASIC" [height]="32" [width]="80" (onClick)="close()">
+                    </swt-button>
+                </div>
+
+                <div class="cancel" *ngIf="formMode === FormMode.View">
+                    <swt-button text="Đóng" [color]="ButtonColor.BASIC" [height]="32" [width]="80" (onClick)="close()">
+                    </swt-button>
+                </div>
+            </div>
+
+
+            <div class="action-right">
+                <div class="save-and-add" *ngIf="formMode === FormMode.Add">
+                    <swt-button #saveAndAddBtn [actionPermissions]="[ActionPermission.Add]" [iconButtonType]="IconButtonType.SAVE" text="Lưu và thêm" [color]="ButtonColor.BASIC" [height]="32" [width]="120" (onClick)="save(true)">
+                    </swt-button>
+                </div>
+
+                <div class="add" *ngIf="formMode === FormMode.Add">
+                    <swt-button #saveBtn [actionPermissions]="[ActionPermission.Add]" [iconButtonType]="IconButtonType.SAVE" text="Lưu" [height]="32" [width]="120" (onClick)="save()"></swt-button>
+                </div>
+
+                <div class="to-edit" *ngIf="formMode === FormMode.View">
+                    <swt-button #editBtn [actionPermissions]="[ActionPermission.Edit]" [buttonType]="ButtonType.STROKED" [iconButtonType]="IconButtonType.SAVE" text="Sửa công việc" [height]="32" [width]="120" (onClick)="edit()">
+                    </swt-button>
+                </div>
+
+                <div class="edit" *ngIf="formMode === FormMode.Edit">
+                    <swt-button #editBtn [actionPermissions]="[ActionPermission.Edit]" [iconButtonType]="IconButtonType.SAVE" text="Lưu" [height]="32" [width]="120" (onClick)="save()"></swt-button>
+                </div>
+            </div>
+        </div>
+    </mat-dialog-actions>
+</div>

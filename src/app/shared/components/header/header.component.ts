@@ -204,6 +204,13 @@ export class HeaderComponent extends BaseComponent implements AfterViewInit {
       hint: '',
     });
     this.modules.push({
+      path: Routing.DUTY.path,
+      moduleName: 'Quản lý công việc',
+      iconPosition: '-193px -473px',
+      iconCheckedPosition: '-208px -473px',
+      hint: '',
+    });
+    this.modules.push({
       path: Routing.CALENDAR_CONVERTER.path,
       moduleName: Routing.CALENDAR_CONVERTER.name,
       iconPosition: '-63px -272px',

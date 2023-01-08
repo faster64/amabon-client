@@ -1,0 +1,86 @@
+<div class="duty-overview">
+    <div id="duty-kanban">
+
+        <dx-scroll-view #rootView class="scrollable-board" direction="horizontal" showScrollbar="always">
+
+            <dx-sortable class="sortable-lists" itemOrientation="horizontal" handle=".category-title" (onReorder)="onCategoryReorder($event)">
+                <ng-container *ngIf="!isLoading">
+                    <div class="category" *ngFor="let category of dutyCategories; let listIndex = index">
+
+                        <div class="category-title dx-theme-text-color" [ngStyle]="{backgroundColor: category.colorCode}">
+                            <div class="text">
+                                <span *ngIf="editInstance.id != category.id">{{category['categoryName']}}</span>
+                                <dx-text-box *ngIf="editInstance.id == category.id" #editCategoryBox placeholder="Nhập tên nhóm công việc" height="48" [(value)]="editInstance.categoryName" (onEnterKey)="updateCategory($event)" (onBlur)="updateCategory($event)"></dx-text-box>
+                            </div>
+                            <div class="icon" [matMenuTriggerFor]="more"></div>
+
+                            <mat-menu #more="matMenu">
+                                <div class="more-content">
+                                    <div class="item delete" matTooltip="Xóa nhóm công việc này" (click)="confirmDelete(category)">
+                                        <div class="icon"></div>
+                                        <div class="text">Xóa nhóm công việc</div>
+                                    </div>
+
+                                    <div class="item edit" matTooltip="Chỉnh sửa nhóm công việc" (click)="editDutyCategory(category)">
+                                        <div class="icon"></div>
+                                        <div class="text">Chỉnh sửa</div>
+                                    </div>
+                                </div>
+                            </mat-menu>
+                        </div>
+
+                        <dx-scroll-view class="scrollable-list" direction="vertical" showScrollbar="onHover">
+                            <dx-sortable class="sortable-cards" group="cardsGroup" [data]="category" (onDragStart)="onTaskDragStart($event)" (onReorder)="onTaskDrop($event)" (onAdd)="onTaskDrop($event)">
+                                <div class="card dx-card dx-theme-text-color dx-theme-background-color" *ngFor="let duty of category.duties" (click)="openPopupCreateDuty(duty, FormMode.View)">
+                                    <div class="card-item card-status" [ngClass]="'st-' + duty.status">
+                                        <div class="icon"></div>
+                                        <div class="text">{{duty.statusText}}</div>
+                                    </div>
+                                    <div class="card-item card-title" [matTooltip]="duty.dutyName">
+                                        <div class="priority" [ngClass]="'priority-' + duty.priority">[{{duty.priorityText}}]</div>
+                                        <div class="duty-name">{{duty.dutyName}}</div>
+                                    </div>
+                                    <div class="card-item card-deadline">Hạn: {{duty.toDate | DateVietnamPipe}}</div>
+                                </div>
+
+                                <div class="create-duty" matTooltip="Tạo thêm công việc" (click)="openPopupCreateDuty(category, FormMode.Add)"></div>
+                            </dx-sortable>
+                        </dx-scroll-view>
+                    </div>
+
+                    <div class="category add-category">
+                        <div class="category-title-2 dx-theme-text-color" (click)="focusCategoryBox()">
+                            <div class="text" *ngIf="!onAddCategory">+ Thêm nhóm công việc</div>
+                            <div class="input" *ngIf="onAddCategory">
+                                <dx-text-box #addCategoryBox placeholder="Nhập tên nhóm công việc" height="48" (onEnterKey)="saveCategory($event)" (onBlur)="saveCategory($event)"></dx-text-box>
+                            </div>
+                            <swt-saving *ngIf="onSavingCategory"></swt-saving>
+
+                        </div>
+                        <dx-scroll-view class="scrollable-list" direction="vertical" showScrollbar="never"></dx-scroll-view>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="isLoading">
+                    <div class="loading">
+                        <spinner-loading></spinner-loading>
+                        <!-- <div class="col-loading" *ngFor="let col of [].constructor(maxLoadingColumn)">
+                        </div> -->
+                    </div>
+                </ng-container>
+
+            </dx-sortable>
+
+        </dx-scroll-view>
+
+        <div class="on-web" *ngIf="device === 'web'">
+            <div class="scroll-left" (mousedown)="scrollTo('left')" (mouseup)="stopHold()"></div>
+            <div class="scroll-right" (mousedown)="scrollTo('right')" (mouseup)="stopHold()"></div>
+        </div>
+
+        <div class="on-mobile" *ngIf="device === 'mobile'">
+            <div class="scroll-left" (pointerdown)="scrollTo('left')" (pointerup)="stopHold()"></div>
+            <div class="scroll-right" (pointerdown)="scrollTo('right')" (pointerup)="stopHold()"></div>
+        </div>
+    </div>
+</div>
