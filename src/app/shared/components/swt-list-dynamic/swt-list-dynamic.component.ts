@@ -224,8 +224,7 @@ export class ListDynamicComponent extends BaseComponent {
         } else {
           MessageBox.information(new Message(this, { content: response.message }));
         }
-      },
-      err => MessageBox.information(new Message(this, { content: err }))
+      }
     )
   }
 

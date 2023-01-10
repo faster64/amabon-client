@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, EventEmitter, NgZone, OnInit, Output, Vie
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MessageBox } from 'src/app/shared/components/message-box/message-box.component';
+import { SnackBar } from 'src/app/shared/components/snackbar/snackbar.component';
 import { SwtButton } from 'src/app/shared/components/swt-button/swt-button.component';
 import { ListDynamicComponent } from 'src/app/shared/components/swt-list-dynamic/swt-list-dynamic.component';
 import { SessionStorageKey } from 'src/app/shared/constants/sessionstorage.key';
@@ -10,8 +11,10 @@ import { CookieHelper } from 'src/app/shared/helpers/cookie.hepler';
 import { ObjectHelper } from 'src/app/shared/helpers/object.helper';
 import { ServiceResult } from 'src/app/shared/models/base/service-result';
 import { Message } from 'src/app/shared/models/message/message';
+import { SnackBarParameter } from 'src/app/shared/models/snackbar/snackbar.param';
 import { BaseService } from 'src/app/shared/services/base/base.service';
 import { PopupService } from 'src/app/shared/services/base/popup.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { environment } from 'src/environments/environment';
 import { CreateFolderPopupComponent } from '../folder-popup/folder-popup.component';
 
@@ -37,6 +40,7 @@ export class StorageListComponent extends ListDynamicComponent {
     ngZone: NgZone,
     cdr: ChangeDetectorRef,
     public popupService: PopupService,
+    public storageService: StorageService,
   ) {
     super(baseService, router, dialog, ngZone, cdr);
   }
@@ -102,5 +106,19 @@ export class StorageListComponent extends ListDynamicComponent {
         this.reload();
       }
     });
+  }
+
+  deleteCheckedItems() {
+    const ids = this.grid.getCheckedItems().map(item => item.id);
+    this.storageService.delete(`${this.baseService.getApiUrl()}/${this.serviceName}/${this.controller}/delete`, ids).subscribe(
+      response => {
+        if (response.success && response.data) {
+          SnackBar.openSnackBarSuccess(new SnackBarParameter(this, "Xóa thành công"));
+          this.reload();
+        } else {
+          MessageBox.information(new Message(this, { content: response.message }));
+        }
+      }
+    )
   }
 }

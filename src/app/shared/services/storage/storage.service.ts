@@ -6,7 +6,7 @@ import { CookieHelper } from '../../helpers/cookie.hepler';
 import { PaginationRequest } from '../../models/base/pagination-request';
 import { ServiceResult } from '../../models/base/service-result';
 import { BaseService } from '../base/base.service';
-import { HttpService } from '../base/http.service';
+import { HttpOption, HttpService } from '../base/http.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,11 @@ export class StorageService extends BaseService {
     super(http);
     this.serviceName = "ass";
     this.controller = "folder";
+    this._baseOptions = {
+      headers: {
+        "X-Secret-Key": CookieHelper.getCookie(`${environment.team}_${SessionStorageKey.SECRET_KEY}`) || ""
+      }
+    };
   }
 
   /**
