@@ -222,7 +222,8 @@ export class LoginComponent extends BaseComponent implements AfterViewInit {
       this.authenticationService.saveAuthConfig(response);
       CookieHelper.setCookie(`${environment.team}_${CookieKey.LOGGED_IN}`, '1', this.authenticationService.cookieExprie);
       this.transfer.initHeader.emit();
-      this.router.navigateByUrl(`/${Routing.DASHBOARD.path}`);
+
+      this.router.navigateByUrl(`/${Routing.SETTING.path}`);
     }
   }
 
