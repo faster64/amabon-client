@@ -15,15 +15,18 @@ import { SwtWindowModule } from 'src/app/shared/components/swt-window/swt-window
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
-import { DxTextBoxModule } from 'devextreme-angular';
+import { DxCheckBoxModule, DxDateBoxModule, DxNumberBoxModule, DxTextAreaModule, DxTextBoxModule } from 'devextreme-angular';
 import { IncomeCategoryListComponent } from './income-category-list/income-category-list.component';
 import { IncomeCategoryFormComponent } from './income-category-form/income-category-form.component';
+import { IncomeFormDynamicComponent } from './income-form-dynamic/income-form-dynamic.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
-  declarations: [IncomeListComponent, IncomeFormComponent, IncomeListDynamicComponent, IncomeCategoryListComponent, IncomeCategoryFormComponent],
+  declarations: [IncomeListComponent, IncomeFormComponent, IncomeListDynamicComponent, IncomeCategoryListComponent, IncomeCategoryFormComponent, IncomeFormDynamicComponent],
   imports: [
     CommonModule,
+    FormsModule,
     IncomeRoutingModule,
     SharedModule,
     SwtListDynamicModule,
@@ -38,6 +41,10 @@ import { IncomeCategoryFormComponent } from './income-category-form/income-categ
     MatRadioModule,
     SwtWindowModule,
     DxTextBoxModule,
+    DxNumberBoxModule,
+    DxDateBoxModule,
+    DxCheckBoxModule,
+    DxTextAreaModule,
   ]
 })
 export class IncomeModule { }

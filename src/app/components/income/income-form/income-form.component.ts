@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BaseFormComponent } from 'src/app/shared/components/swt-base-form/base-form.component';
-import { GroupBoxFieldType } from 'src/app/shared/enumerations/common.enum';
+import { FormMode, GroupBoxFieldType } from 'src/app/shared/enumerations/common.enum';
 import { BaseService } from 'src/app/shared/services/base/base.service';
 import { IncomeCategoryService } from 'src/app/shared/services/finance/income/income-category.service';
 import { IncomeService } from 'src/app/shared/services/finance/income/income.service';
+import { Utility } from 'src/app/shared/utils/utility';
 import { GroupBoxField } from '../../../shared/models/form-dynamic/group-box-field.model';
 
 
@@ -20,6 +21,8 @@ export class IncomeFormComponent extends BaseFormComponent {
     add: "",
     edit: ""
   }
+
+  allowedFileExtensions = Utility.imageExtensions.map(i => `.${i}`).join(",");
 
   constructor(
     baseService: BaseService,
@@ -48,13 +51,15 @@ export class IncomeFormComponent extends BaseFormComponent {
         required: true,
         type: GroupBoxFieldType.ComboBox,
         comboboxUrl: `${this.incomeCategoryService.serviceName}/${this.incomeCategoryService.controller}/paging`,
-        comboboxMap:  {
+        comboboxMap: {
           id: "id",
           value: "name"
         }
       },
       { fieldName: 'reason', title: 'Nội dung', value: null, scale: 12, required: true, type: GroupBoxFieldType.TextArea },
+      // { fieldName: 'invoices', title: 'Hóa đơn (nếu có)', value: null, scale: 12, required: false, type: GroupBoxFieldType.Image },
     ];
+
     this.groupBoxes.push({ name: "Thông tin chung", groupBoxFields: groupBoxFields })
   }
 

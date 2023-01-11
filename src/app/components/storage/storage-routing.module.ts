@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FilesInFolderComponent } from './files-in-folder/files-in-folder.component';
-import { SecretFilesComponent } from './secret-files.component';
+import { StorageComponent } from './storage.component';
 
 const routes: Routes = [
   {
@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'folders',
-    component: SecretFilesComponent
+    component: StorageComponent
   },
   {
     path: 'view-files/:folder',
@@ -22,4 +22,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SecretFilesRoutingModule { }
+export class StorageRoutingModule { }

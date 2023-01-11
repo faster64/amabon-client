@@ -100,7 +100,7 @@ const routes: Routes = [
   },
   {
     path: Routing.STORAGE.path,
-    loadChildren: () => import('./components/secret-files/secret-files.module').then(m => m.SecretFilesModule),
+    loadChildren: () => import('./components/storage/storage.module').then(m => m.StorageModule),
     canActivate: [BaseGuard],
     resolve: {
       resolver: BaseResolver,

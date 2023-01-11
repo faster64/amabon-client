@@ -22,7 +22,7 @@ export class StorageUploadPopupComponent extends BaseComponent {
     public storageService: StorageService,
     public activatedRoute: ActivatedRoute,
     public diaglog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data: {folderName: string, dialogRef: any},
+    @Inject(MAT_DIALOG_DATA) public data: { folderName: string, dialogRef: any },
     public dialogRef: MatDialogRef<StorageUploadPopupComponent>
   ) {
     super(baseService);
@@ -37,7 +37,13 @@ export class StorageUploadPopupComponent extends BaseComponent {
     this.uploadUrl = `${this.baseService.getApiUrl()}/${this.storageService.serviceName}/storage/upload?folder=${this.folderName}`;
   }
 
-  onUploaded(e: any) {
-    this.dialogRef.close(JSON.parse(e) as ServiceResult);
+  upload(e: any) {
+    const formData = new FormData();
+    (e as Array<File>).forEach(file => {
+      formData.append('files', file, file.name);
+    });
+    this.storageService.upload(this.folderName, formData).subscribe( response => {
+      this.dialogRef.close(response);
+    })
   }
 }

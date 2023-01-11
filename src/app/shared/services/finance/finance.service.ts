@@ -22,4 +22,9 @@ export class FinanceService extends BaseService {
     const url = `${this.getApiUrl()}/${this.serviceName}/${this.controller}/account-balance`;
     return this.http.get<ServiceResult>(url);
   }
+
+  uploadInvoices(invoices: FormData) {
+    const url = `${this.getApiUrl()}/${this.serviceName}/${this.controller}/upload-invoices`;
+    return this.http.post<ServiceResult>(url, invoices);
+  }
 }

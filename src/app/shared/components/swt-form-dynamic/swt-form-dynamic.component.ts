@@ -10,6 +10,7 @@ import { GroupBox } from '../../models/form-dynamic/group-box.model';
 import { Message } from '../../models/message/message';
 import { SnackBarParameter } from '../../models/snackbar/snackbar.param';
 import { BaseService } from '../../services/base/base.service';
+import { Utility } from '../../utils/utility';
 import { BaseComponent } from '../base-component';
 import { MessageBox } from '../message-box/message-box.component';
 import { SnackBar } from '../snackbar/snackbar.component';
@@ -36,7 +37,6 @@ export class FormDynamicComponent extends BaseComponent {
   @Input()
   formMode = FormMode.None;
 
-
   @Input()
   serviceName = "";
 
@@ -55,6 +55,9 @@ export class FormDynamicComponent extends BaseComponent {
 
   @Input()
   saveSuccessMessage = "Lưu thành công";
+
+  @Input()
+  allowedFileExtensions = Utility.videoExtensions.map(i => `.${i}`).concat(Utility.imageExtensions.map(i => `.${i}`)).join(",");
 
   @ViewChild("saveBtn")
   saveBtn!: SwtButton;

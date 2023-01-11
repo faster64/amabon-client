@@ -26,6 +26,15 @@ export class StorageService extends BaseService {
     };
   }
 
+  upload(folder: string, formData: FormData) {
+    const url = `${this.getApiUrl()}/${this.serviceName}/storage/upload?folder=${folder}`;
+    return this.takeOriginHttpClient().post<ServiceResult>(url, formData, {
+      headers: {
+        "X-Secret-Key": CookieHelper.getCookie(`${environment.team}_${SessionStorageKey.SECRET_KEY}`) || ""
+      }
+    });
+  }
+
   /**
    * override
    */

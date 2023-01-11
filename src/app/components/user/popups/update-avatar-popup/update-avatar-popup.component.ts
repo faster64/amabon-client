@@ -23,7 +23,7 @@ export class UpdateAvatarPopupComponent extends BaseComponent {
 
   uploadUrl = `${environment.api_url}/ums/avatar/update-avatar`;
 
-  allowedFileExtensions = Utility.imageExtensions.map(i => `.${i}`);
+  allowedFileExtensions = Utility.imageExtensions.map(i => `.${i}`).join(",");
 
   @ViewChild("fileUploader")
   fileUploader!: DxFileUploaderComponent;
@@ -40,18 +40,22 @@ export class UpdateAvatarPopupComponent extends BaseComponent {
     super.ngOnInit();
   }
 
-  onUploaded(event: string) {
-    const response = JSON.parse(event) as ServiceResult;
-    if (response) {
-      if (response.success) {
-        MessageBox.information(new Message(null, { content: 'Cập nhật ảnh đại diện thành công' }));
+  upload(event: any) {
+    const formData = new FormData();
+    (event as Array<File>).forEach(file => {
+      formData.append('files', file, file.name);
+    });
+    this.baseService.takeOriginHttpClient().post<ServiceResult>(this.uploadUrl, formData).subscribe(response => {
+      if (response) {
+        if (response.success) {
+          MessageBox.information(new Message(null, { content: 'Cập nhật ảnh đại diện thành công' }));
+        } else {
+          MessageBox.information(new Message(null, { content: ErrorMessageConstant.HAS_ERROR_MESSAGE }));
+        }
       } else {
         MessageBox.information(new Message(null, { content: ErrorMessageConstant.HAS_ERROR_MESSAGE }));
       }
-    } else {
-      MessageBox.information(new Message(null, { content: ErrorMessageConstant.HAS_ERROR_MESSAGE }));
-    }
-
-    this.dialogRef.close();
+      this.dialogRef.close();
+    })
   }
 }

@@ -27,11 +27,11 @@ import { DeviceType } from 'src/app/shared/enumerations/device.enum';
 import { StringHelper } from 'src/app/shared/helpers/string.helper';
 
 @Component({
-  selector: 'app-secret-files',
-  templateUrl: './secret-files.component.html',
-  styleUrls: ['./secret-files.component.scss']
+  selector: 'app-storage',
+  templateUrl: './storage.component.html',
+  styleUrls: ['./storage.component.scss']
 })
-export class SecretFilesComponent extends BaseComponent {
+export class StorageComponent extends BaseComponent {
 
   passSecurity = false;
 

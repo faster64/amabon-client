@@ -1,50 +1,18 @@
 <div class="swt-uploader">
-  <div class="widget-container flex-box">
-    <div
-      id="dropzone-external"
-      class="flex-box"
-      [ngClass]="
-        isDropZoneActive
-          ? ['dx-theme-accent-as-border-color', 'dropzone-active']
-          : ['dx-theme-border-color']
-      "
-    >
-      <img id="dropzone-image" [src]="imageSource" *ngIf="imageSource" alt="" />
-      <div id="dropzone-text" class="flex-box" *ngIf="textVisible">
-        <span>Kéo và thả ảnh vào đây</span>
-        <span>Hoặc ấn vào để chọn ảnh</span>
-      </div>
-      <dx-progress-bar
-        #uploadProgress
-        [min]="0"
-        [max]="100"
-        width="30%"
-        [showStatus]="false"
-        [visible]="progressVisible"
-        [value]="progressValue"
-      ></dx-progress-bar>
-    </div>
-    <dx-file-uploader
-      #fileUploader
-      dialogTrigger="#dropzone-external"
-      dropZone="#dropzone-external"
-      [multiple]="multiple"
-      accept="*"
-      [uploadMode]="uploadMode"
-      [visible]="false"
-      [name]="name"
-      uploadMethod="POST"
-      [uploadHeaders]="headers"
-      [uploadUrl]="uploadUrl"
-      (onDropZoneEnter)="onDropZoneEnter($event)"
-      (onDropZoneLeave)="onDropZoneLeave($event)"
-      (onUploaded)="onUploaded($event)"
-      (onProgress)="onProgress($event)"
-      (onUploadStarted)="onUploadStarted($event)"
-    ></dx-file-uploader>
+
+  <div class="uploader">
+    <ngx-dropzone (change)="onSelect($event)" [multiple]="multiple" [accept]="allowedFileExtensions" [expandable]="false" [disabled]="disabled">
+      <ngx-dropzone-label>
+        <div>Kéo và thả ảnh vào đây</div>
+        <div>Hoặc ấn vào để chọn ảnh</div>
+      </ngx-dropzone-label>
+      <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+      </ngx-dropzone-preview>
+    </ngx-dropzone>
   </div>
 
+  <div class="upload-btn" *ngIf="!emitAutomatically">
+    <swt-button #uploadBtn text="Tải lên" (onClick)="upload()" [disabled]="files.length === 0"></swt-button>
+  </div>
 </div>
-
-<!-- [allowedFileExtensions]="allowedFileExtensions" -->
-
