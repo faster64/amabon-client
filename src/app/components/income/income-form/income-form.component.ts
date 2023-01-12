@@ -57,7 +57,7 @@ export class IncomeFormComponent extends BaseFormComponent {
         }
       },
       { fieldName: 'reason', title: 'Nội dung', value: null, scale: 12, required: true, type: GroupBoxFieldType.TextArea },
-      // { fieldName: 'invoices', title: 'Hóa đơn (nếu có)', value: null, scale: 12, required: false, type: GroupBoxFieldType.Image },
+      { fieldName: 'invoices', title: 'Hóa đơn', value: null, scale: 12, required: false, type: GroupBoxFieldType.Image },
     ];
 
     this.groupBoxes.push({ name: "Thông tin chung", groupBoxFields: groupBoxFields })

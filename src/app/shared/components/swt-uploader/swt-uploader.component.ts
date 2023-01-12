@@ -32,13 +32,14 @@ export class SwtUploaderComponent implements OnInit {
   @Input()
   emitAutomatically = false;
 
+  @Input()
+  files: File[] = [];
+
   @Output()
   onUpload = new EventEmitter();
 
   @ViewChild("uploadBtn")
   uploadBtn!: SwtButton;
-
-  files: File[] = [];
 
   constructor() {
   }

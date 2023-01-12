@@ -110,7 +110,12 @@
               <!-- image  -->
               <div *ngSwitchCase="FormFieldType.Image" class="uploader">
                 <div class="title">{{field.title}} <span *ngIf="field.required" style="color: red">*</span></div>
-                <swt-uploader [multiple]="true" [emitAutomatically]="true" [allowedFileExtensions]="allowedFileExtensions" [disabled]="formMode == FormMode.View" (onUpload)="field.value = $event"></swt-uploader>
+                <swt-uploader *ngIf="formMode == FormMode.Add || formMode == FormMode.Edit" [multiple]="true" [emitAutomatically]="true" [allowedFileExtensions]="allowedFileExtensions" (onUpload)="field.value = $event"></swt-uploader>
+                <div *ngIf="formMode == FormMode.View" class="invoices">
+                  <div class="invoice" *ngFor="let src of field.value">
+                    <img [src]="src" alt="ảnh hóa đơn">
+                  </div>
+                </div>
               </div>
 
 

@@ -1,14 +1,15 @@
 <div class="swt-uploader">
 
   <div class="uploader">
-    <ngx-dropzone (change)="onSelect($event)" [multiple]="multiple" [accept]="allowedFileExtensions" [expandable]="false" [disabled]="disabled">
+    <ngx-dropzone (change)="onSelect($event)" [multiple]="multiple" [accept]="allowedFileExtensions"
+      [expandable]="false" [disabled]="disabled">
       <ngx-dropzone-label>
         <div>Kéo và thả ảnh vào đây</div>
         <div>Hoặc ấn vào để chọn ảnh</div>
       </ngx-dropzone-label>
-      <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
-        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-      </ngx-dropzone-preview>
+      <ngx-dropzone-image-preview *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+        <!-- <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
+      </ngx-dropzone-image-preview>
     </ngx-dropzone>
   </div>
 

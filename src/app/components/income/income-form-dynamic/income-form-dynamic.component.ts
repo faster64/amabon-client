@@ -46,9 +46,9 @@ export class IncomeFormDynamicComponent extends FormDynamicComponent {
     }
 
     // Save
+    this.isSaving = true;
     const data = this.getDynamicData();
 
-    this.resetButtons();
     // Nếu có invoices thì đẩy invoices lên trước
     if (data["invoices"] != null) {
       const formData = new FormData();
@@ -88,7 +88,6 @@ export class IncomeFormDynamicComponent extends FormDynamicComponent {
 
     const api = this.formMode === FormMode.Add ? this.baseService._http.post<ServiceResult>(url, [data]) : this.baseService._http.put<ServiceResult>(url, data)
 
-    this.isSaving = true;
     api.subscribe(response => {
       this.isSaving = false;
       this.resetButtons();
