@@ -17,7 +17,9 @@ import { SwtWindowModule } from 'src/app/shared/components/swt-window/swt-window
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
-import { DxTextBoxModule } from 'devextreme-angular';
+import { DxCheckBoxModule, DxDateBoxModule, DxNumberBoxModule, DxTextAreaModule, DxTextBoxModule } from 'devextreme-angular';
+import { PaymentFormDynamicComponent } from './payment-form-dynamic/payment-form-dynamic.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -26,10 +28,12 @@ import { DxTextBoxModule } from 'devextreme-angular';
     PaymentFormComponent,
     PaymentCategoryFormComponent,
     PaymentCategoryListComponent,
-    PaymentListDynamicComponent
+    PaymentListDynamicComponent,
+    PaymentFormDynamicComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
     PaymentRoutingModule,
     SharedModule,
     SwtListDynamicModule,
@@ -44,6 +48,10 @@ import { DxTextBoxModule } from 'devextreme-angular';
     MatRadioModule,
     SwtWindowModule,
     DxTextBoxModule,
+    DxNumberBoxModule,
+    DxDateBoxModule,
+    DxCheckBoxModule,
+    DxTextAreaModule,
   ]
 })
 export class PaymentModule { }
