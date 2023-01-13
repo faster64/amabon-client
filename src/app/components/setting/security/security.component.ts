@@ -26,6 +26,10 @@ export class SecurityComponent extends BaseComponent {
 
   displayColumn: ColumnGrid[] = [];
 
+  current = 0;
+
+  total = 0;
+
   @Output("loaded") loaded = new EventEmitter<boolean>();
 
   constructor(
@@ -65,6 +69,8 @@ export class SecurityComponent extends BaseComponent {
           this.logs = this.logs.map((log: LoginLog) => {
             return Object.assign(log, { ...log.IpInformation, Address:  log.IpInformation.City + ' - ' + log.IpInformation.Country});
           });
+          this.current = response.data.length;
+          this.total = response.total;
         }
       },
       () => this.isLoadingLoginLog = false
