@@ -1,11 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { CookieKey } from '../../constants/cookie.key';
-import { SessionStorageKey } from '../../constants/sessionstorage.key';
-import { CookieHelper } from '../../helpers/cookie.hepler';
-import { BaseService } from '../../services/base/base.service';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { NgxDropzoneComponent } from 'ngx-dropzone';
 import { Utility } from '../../utils/utility';
-import { BaseComponent } from '../base-component';
 import { SwtButton } from '../swt-button/swt-button.component';
 
 @Component({
@@ -13,7 +8,7 @@ import { SwtButton } from '../swt-button/swt-button.component';
   templateUrl: './swt-uploader.component.html',
   styleUrls: ['./swt-uploader.component.scss']
 })
-export class SwtUploaderComponent implements OnInit {
+export class SwtUploaderComponent implements OnInit, AfterViewInit {
 
   formData = new FormData();
 
@@ -41,14 +36,22 @@ export class SwtUploaderComponent implements OnInit {
   @ViewChild("uploadBtn")
   uploadBtn!: SwtButton;
 
-  constructor() {
-  }
+  @ViewChild("dropzone")
+  dropzone!: NgxDropzoneComponent;
+
+
+  constructor() { }
+
   ngOnInit() {
+  }
+
+  ngAfterViewInit(): void {
+    const url = 'https://amabon-s3.s3.ap-southeast-1.amazonaws.com/amabon/c4834021-7e4c-476d-83c5-80cfb9ee598f.jpg?AWSAccessKeyId=AKIAYD7XRCZIY4PC7FEI&Expires=1705113859&Signature=e1bc%2B09rx%2FcPNrNQYvjwgnQXI1I%3D';
   }
 
   onSelect(event: any) {
     this.files.push(...event.addedFiles);
-    if(this.emitAutomatically) {
+    if (this.emitAutomatically) {
       this.upload();
     }
   }
